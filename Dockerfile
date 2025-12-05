@@ -16,7 +16,7 @@ RUN npm run build
 
 
 # --- Runtime Stage ---
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged 
 
 # Copy built static files from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
