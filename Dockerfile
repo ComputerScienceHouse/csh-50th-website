@@ -21,10 +21,16 @@ FROM nginx:alpine
 # Copy built static files from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Create directories for nginx to write to
-RUN mkdir -p /tmp/nginx/cache /tmp/nginx/run && \
+# Create directories for nginx to write to (including all temp subdirectories)
+RUN mkdir -p /tmp/nginx/cache/client_temp \
+             /tmp/nginx/cache/proxy_temp \
+             /tmp/nginx/cache/fastcgi_temp \
+             /tmp/nginx/cache/uwsgi_temp \
+             /tmp/nginx/cache/scgi_temp \
+             /tmp/nginx/run && \
     chown -R nginx:nginx /tmp/nginx && \
-    chown -R nginx:nginx /usr/share/nginx/html
+    chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod -R 755 /tmp/nginx
 
 # Create custom nginx configuration that works with non-root user
 RUN echo 'pid /tmp/nginx/run/nginx.pid; \
