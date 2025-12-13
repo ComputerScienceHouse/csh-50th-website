@@ -154,10 +154,11 @@ function timeToRowStart(time: string): number {
   const startWithTimeOfDay = time.split(" - ")[0];
 
   var hhmm = startWithTimeOfDay.split(" "); // process the time into something usable by the function
-
+  
   if(hhmm[1] == "PM"){ // convert to military time if needed
-    const startTime = hhmm[0].split[":"];
-    hhmm[0] = (parseInt(startTime[0], 10) * 12).toString() + startTime[1];
+    const startTime = hhmm[0].split(":");
+
+    hhmm[0] = (parseInt(startTime[0], 10) + 12).toString() + ":" + startTime[1];
   }
 
   const [hString, mString] = hhmm[0].split(":");
@@ -182,12 +183,12 @@ function durationToRowSpan(time: string): number {
   var end = endWithTimeOfDay.split(" ");
 
   if(start[1] == "PM"){ // convert to military time if needed
-    const startTime = start[0].split[":"];
-    start[0] = (parseInt(startTime[0], 10) * 12).toString() + startTime[1];
+    const startTime = start[0].split(":");
+    start[0] = (parseInt(startTime[0], 10) + 12).toString() + ":" + startTime[1];
   }
   if(end[1] == "PM"){ // convert to military time if needed
-    const endTime = end[0].split[":"];
-    end[0] = (parseInt(endTime[0], 10) * 12).toString() + endTime[1];
+    const endTime = end[0].split(":");
+    end[0] = (parseInt(endTime[0], 10) + 12).toString() + ":" + endTime[1];
   }
 
   const toMinutes = (t: string) => { // helper function for 
@@ -270,7 +271,7 @@ const Schedule = () => {
 
               {/* Create Timeline on the left */}
               {times.map(time => (
-                <div className={cn("col-start-1 col-span-1 row-span-4 ")}>
+                <div key={time.id} className={cn("col-start-1 col-span-1 row-span-4 ")}>
                     <div className={cn("row-span-1 border-b-2 border-t-4 border-solid")}>
                       {time.hour} {time.timeOfDay} -
                     </div>
@@ -291,9 +292,13 @@ const Schedule = () => {
                 <div
                   key={index}
                   className={cn(
-                    "col-start-2 col-span-3 row-span-4 overflow-y-auto glass rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-gradient-csh",
+                    "col-start-2 col-span-3 row-span-4 overflow-y-auto border-4 border-csh-magenta p-12 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-pink-300",
                     event.type === "main" && "border-2 border-primary/50 glow-csh"
                   )}
+                  style={{
+                    gridRowStart: timeToRowStart(event.time),
+                    gridRowEnd: `span ${durationToRowSpan(event.time)}`,
+                  }}
                 >
                   <div className="flex flex-col md:flex-row md:items-start gap-4">
                     {/* Time */}
