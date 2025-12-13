@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Clock, MapPin, Users } from "lucide-react";
+import { Clock, Grid, Grid2X2, MapPin, Users } from "lucide-react";
 
 type Day = "friday" | "saturday" | "sunday";
 
@@ -12,6 +12,29 @@ interface ScheduleEvent {
   location: string;
   type: "social" | "main" | "food" | "activity";
 }
+
+const times = [
+    { id: 1, hour: '05', timeOfDay: "am"},
+    { id: 2, hour: '06', timeOfDay: "am"},
+    { id: 3, hour: '07', timeOfDay: "am"},
+    { id: 4, hour: '08', timeOfDay: "am"},
+    { id: 5, hour: '09', timeOfDay: "am"},
+    { id: 6, hour: '10', timeOfDay: "am"},
+    { id: 7, hour: '11', timeOfDay: "am"},
+    { id: 8, hour: '12', timeOfDay: "am"},
+    { id: 9, hour: '01', timeOfDay: "pm"},
+    { id: 10, hour: '02', timeOfDay: "pm"},
+    { id: 11, hour: '03', timeOfDay: "pm"},
+    { id: 12, hour: '04', timeOfDay: "pm"},
+    { id: 13, hour: '05', timeOfDay: "pm"},
+    { id: 14, hour: '06', timeOfDay: "pm"},
+    { id: 15, hour: '07', timeOfDay: "pm"},
+    { id: 16, hour: '08', timeOfDay: "pm"},
+    { id: 17, hour: '09', timeOfDay: "pm"},
+    { id: 18, hour: '10', timeOfDay: "pm"},
+    { id: 19, hour: '11', timeOfDay: "pm"},
+    { id: 20, hour: '12', timeOfDay: "pm"},
+  ]
 
 // PLACEHOLDER: Update all event times, descriptions, and locations as they are finalized
 const scheduleData: Record<Day, ScheduleEvent[]> = {
@@ -120,6 +143,63 @@ const typeColors: Record<string, string> = {
   activity: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
 };
 
+const baseHour = 5; // the first viable hour (currently 5am)
+/**
+ *  // calculate the row index an event should start at given its start time (in military time)
+ * @param hhmm (In military time. Ex: 18:00 == 06:00pm)
+ * @returns index of the row
+ */
+function timeToRowStart(time: string): number {
+
+  const startWithTimeOfDay = time.split(" - ")[0];
+
+  var hhmm = startWithTimeOfDay.split(" "); // process the time into something usable by the function
+
+  if(hhmm[1] == "PM"){ // convert to military time if needed
+    const startTime = hhmm[0].split[":"];
+    hhmm[0] = (parseInt(startTime[0], 10) * 12).toString() + startTime[1];
+  }
+
+  const [hString, mString] = hhmm[0].split(":");
+  const h = parseInt(hString, 10);
+  const m = parseInt(mString, 10);
+  const hourOffset = (h - baseHour) * 4; // calculate the hour
+  const quarterOffset = Math.floor(m / 15); // calculate the quarter in the hour
+  return hourOffset + quarterOffset + 1; // return the row index
+}
+
+/**
+ * Duration in rows based on 15-minute slots.
+ * @param start time given in military time (13:00)
+ * @param end time given in military time (18:00)
+ * @returns the number of rows that the given time frame spans 
+ */
+function durationToRowSpan(time: string): number {
+
+  const [startWithTimeOfDay, endWithTimeOfDay] = time.split(" - ");
+
+  var start = startWithTimeOfDay.split(" "); // process the time into something usable by the function
+  var end = endWithTimeOfDay.split(" ");
+
+  if(start[1] == "PM"){ // convert to military time if needed
+    const startTime = start[0].split[":"];
+    start[0] = (parseInt(startTime[0], 10) * 12).toString() + startTime[1];
+  }
+  if(end[1] == "PM"){ // convert to military time if needed
+    const endTime = end[0].split[":"];
+    end[0] = (parseInt(endTime[0], 10) * 12).toString() + endTime[1];
+  }
+
+  const toMinutes = (t: string) => { // helper function for 
+    const [hStr, mStr] = t.split(":");
+    return parseInt(hStr, 10) * 60 + parseInt(mStr, 10);
+  };
+
+  const minutes = toMinutes(end[0]) - toMinutes(start[0]);
+  return Math.max(1, Math.ceil(minutes / 15));
+}
+
+
 const Schedule = () => {
   const [selectedDay, setSelectedDay] = useState<Day>("friday");
 
@@ -133,7 +213,7 @@ const Schedule = () => {
               Event <span className="text-gradient">Schedule</span>
             </h1>
             <p className="text-muted-foreground text-lg">
-              Three days of events, activities, and celebrations. Click on a day to see what's happening.
+              Three days of events, activities, and celebrations.
             </p>
           </div>
         </div>
@@ -164,8 +244,12 @@ const Schedule = () => {
 
       {/* TODO: Change the Event to look more like Google Calendar and get the events to open a Expanded Dialog to show the Venue, where it is, and an expanded description*/}
       {/* Schedule Timeline */}
+      {/* Plan: Make a grid and set the starting column to the start time and have it span columns a value of the time rounded to 15 or one of those time sections*/}
       <section className="py-12">
-        <div className="container mx-auto px-4">
+        <div className={cn(
+                    "container mx-auto px-4 glass rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02]",
+                    "border-2 border-primary/50"
+                  )}>
           <div className="max-w-3xl mx-auto">
             {/* Day Header */}
             <div className="text-center mb-12">
@@ -177,13 +261,37 @@ const Schedule = () => {
               </p>
             </div>
 
-            {/* Events */}
-            <div className="space-y-6">
+            {/* Events */} {/* Adding grid rows*/}
+            <div className={cn(
+                    "grid grid-rows-[repeat(76, minmax(0, 1fr))] grid-cols-4 grid-flow-row-dense glass rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02]",
+                    "border-2 border-primary/50"
+                  )}
+            >
+
+              {/* Create Timeline on the left */}
+              {times.map(time => (
+                <div className={cn("col-start-1 col-span-1 row-span-4 ")}>
+                    <div className={cn("row-span-1 border-b-2 border-t-4 border-solid")}>
+                      {time.hour} {time.timeOfDay} -
+                    </div>
+                    <div className={cn("row-span-1 border-b-2 border-dotted text-sm")}>
+                    -{time.hour}:15 -
+                    </div>
+                    <div className={cn("row-span-1 border-b-2 border-dotted text-sm")}>
+                    -{time.hour}:30 -
+                    </div>
+                    <div className={cn("row-span-1 border-b-2 border-dotted text-sm")}>
+                    -{time.hour}:45 -
+                    </div>
+                </div>
+              ))}
+
+              {/* Display the events on the right of the timeline*/}
               {scheduleData[selectedDay].map((event, index) => (
                 <div
                   key={index}
                   className={cn(
-                    "glass rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02]",
+                    "col-start-2 col-span-3 row-span-4 overflow-y-auto glass rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-gradient-csh",
                     event.type === "main" && "border-2 border-primary/50 glow-csh"
                   )}
                 >
@@ -209,13 +317,13 @@ const Schedule = () => {
                           {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
                         </span>
                       </div>
-                      <p className="text-muted-foreground mb-3">
+                      {/* <p className="text-muted-foreground mb-3">
                         {event.description}
                       </p>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <MapPin className="w-4 h-4" />
                         {event.location}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -225,8 +333,8 @@ const Schedule = () => {
         </div>
       </section>
 
-      {/* Remove this portion */}
-      {/* Legend */}
+      {/* Remove this portion
+      {/* Legend }
       <section className="py-12 bg-card/50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
@@ -251,7 +359,7 @@ const Schedule = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </Layout>
   );
 };
