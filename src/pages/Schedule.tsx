@@ -26,7 +26,7 @@ const times = [
     { id: 5, hour: '09', timeOfDay: "am"},
     { id: 6, hour: '10', timeOfDay: "am"},
     { id: 7, hour: '11', timeOfDay: "am"},
-    { id: 8, hour: '12', timeOfDay: "am"},
+    { id: 8, hour: '12', timeOfDay: "pm"},
     { id: 9, hour: '01', timeOfDay: "pm"},
     { id: 10, hour: '02', timeOfDay: "pm"},
     { id: 11, hour: '03', timeOfDay: "pm"},
@@ -38,7 +38,7 @@ const times = [
     { id: 17, hour: '09', timeOfDay: "pm"},
     { id: 18, hour: '10', timeOfDay: "pm"},
     { id: 19, hour: '11', timeOfDay: "pm"},
-    { id: 20, hour: '12', timeOfDay: "pm"},
+    { id: 20, hour: '12', timeOfDay: "am"},
   ]
 
 /**
@@ -167,7 +167,9 @@ function timeToRowStart(time: string): number {
   if(hhmm[1] == "PM"){ // convert to military time if needed
     const startTime = hhmm[0].split(":");
 
-    hhmm[0] = (parseInt(startTime[0], 10) + 12).toString() + ":" + startTime[1];
+    if(parseInt(startTime[0], 10) != 12){ // ignore 12pm
+      hhmm[0] = (parseInt(startTime[0], 10) + 12).toString() + ":" + startTime[1];
+    }
   }
 
   const [hString, mString] = hhmm[0].split(":");
@@ -192,11 +194,23 @@ function durationToRowSpan(time: string): number {
 
   if(start[1] == "PM"){ // convert to military time if needed
     const startTime = start[0].split(":");
-    start[0] = (parseInt(startTime[0], 10) + 12).toString() + ":" + startTime[1];
+    
+    if(parseInt(startTime[0], 10) != 12){ // ignore 12pm
+      start[0] = (parseInt(startTime[0], 10) + 12).toString() + ":" + startTime[1];
+    }
   }
   if(end[1] == "PM"){ // convert to military time if needed
     const endTime = end[0].split(":");
-    end[0] = (parseInt(endTime[0], 10) + 12).toString() + ":" + endTime[1];
+
+    if(parseInt(endTime[0], 10) != 12){ // ignore 12pm
+      end[0] = (parseInt(endTime[0], 10) + 12).toString() + ":" + endTime[1];
+    }
+  }
+  else if(end[1] == "AM"){ // convert to military time if needed
+    const endTime = end[0].split(":");
+    if(endTime[0] == "12"){ // can end at 12AM
+      end[0] = (parseInt(endTime[0], 10) + 12).toString() + ":" + endTime[1];
+    }
   }
 
   const toMinutes = (t: string) => { // helper function for 
@@ -206,6 +220,14 @@ function durationToRowSpan(time: string): number {
 
   const minutes = toMinutes(end[0]) - toMinutes(start[0]);
   return Math.max(1, Math.ceil(minutes / 15));
+}
+
+var currentCol = 2;
+function nextColumn(): number{
+  if(currentCol > 4){
+    currentCol = 2;
+  }
+  return currentCol++;
 }
 
 
@@ -254,13 +276,12 @@ const Schedule = () => {
 
       {/* TODO: Change the Event to look more like Google Calendar and get the events to open a Expanded Dialog to show the Venue, where it is, and an expanded description*/}
       {/* Schedule Timeline */}
-      {/* Plan: Make a grid and set the starting column to the start time and have it span columns a value of the time rounded to 15 or one of those time sections*/}
       <section className="py-12">
         <div className={cn(
-                    "container mx-auto px-4 glass rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02]",
+                    "container mx-auto px-4 glass rounded-2xl p-6 w-full transition-all duration-300",
                     "border-2 border-primary/50"
                   )}>
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-8xl mx-auto">
             {/* Day Header */}
             <div className="text-center mb-12">
               <h2 className="text-3xl font-display font-bold">
@@ -273,14 +294,13 @@ const Schedule = () => {
 
             {/* Events */} {/* Adding grid rows*/}
             <div className={cn(
-                    "grid grid-rows-[repeat(76, minmax(0, 1fr))] grid-cols-4 grid-flow-row-dense glass rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02]",
+                    "grid grid-rows-[repeat(76, minmax(0, 1fr))] grid-cols-4 grid-flow-row-dense glass rounded-2xl p-6 transition-all duration-300",
                     "border-2 border-primary/50"
                   )}
             >
-
               {/* Create Timeline on the left */}
               {times.map(time => (
-                <div key={time.id} className={cn("col-start-1 col-span-1 row-span-4 ")}>
+                <div key={time.id} className={cn("col-start-1 col-span-1 row-span-4 text-xl")}>
                     <div className={cn("row-span-1 border-b-2 border-t-4 border-solid")}>
                       {time.hour} {time.timeOfDay} -
                     </div>
@@ -301,25 +321,23 @@ const Schedule = () => {
                 <div
                   key={index}
                   className={cn(
-                    "col-start-2 col-span-full row-span-1 overflow-y-auto border-4 border-csh-magenta p-12 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-pink-300",
+                    "col-start-2 col-span-1 row-span-1 overflow-y-auto flex flex-wrap border-4 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-pink-300",
                     event.type === "main" && "border-2 border-primary/50 glow-csh"
                   )}
                   style={{
                     gridRowStart: timeToRowStart(event.time),
                     gridRowEnd: `span ${durationToRowSpan(event.time)}`,
+                    gridColumnStart: nextColumn(),
                   }}
                 >
-                  <div className="flex flex-col md:flex-row md:items-start gap-4">
-                    {/* Time */}
-                    <div className="md:w-48 flex-shrink-0">
+                  <div className="flex flex-row items-start gap-4">
+                    {/* Content */}
+                    <div className="flex-1">
+                      {/* Time */}
                       <div className="flex items-center gap-2 text-csh-magenta font-semibold">
                         <Clock className="w-4 h-4" />
                         {event.time}
                       </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-3 mb-2">
                         <h3 className="text-xl font-display font-semibold">
                           {event.title}
