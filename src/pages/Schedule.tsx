@@ -212,6 +212,9 @@ function durationToRowSpan(time: string): number {
       end[0] = (parseInt(endTime[0], 10) + 12).toString() + ":" + endTime[1];
     }
   }
+  else if(end[0].toLowerCase() == "late"){ // treat late as if it was 1am
+      end[0] = "25:00";
+  }
 
   const toMinutes = (t: string) => { // helper function for 
     const [hStr, mStr] = t.split(":");
@@ -222,6 +225,9 @@ function durationToRowSpan(time: string): number {
   return Math.max(1, Math.ceil(minutes / 15));
 }
 
+/**
+ * Calculate the next column to place events in. (iterates between columns 2, 3, and 4)
+ */
 var currentCol = 2;
 function nextColumn(): number{
   if(currentCol > 4){
@@ -276,10 +282,10 @@ const Schedule = () => {
 
       {/* TODO: Change the Event to look more like Google Calendar and get the events to open a Expanded Dialog to show the Venue, where it is, and an expanded description*/}
       {/* Schedule Timeline */}
-      <section className="py-12">
+      <section className="py-12 flex border-collapse">
         <div className={cn(
-                    "container mx-auto px-4 glass rounded-2xl p-6 w-full transition-all duration-300",
-                    "border-2 border-primary/50"
+                    "container mx-auto px-4 rounded-2xl p-6 w-auto transition-all duration-300",
+                    "border-8 border-primary/50"
                   )}>
           <div className="max-w-8xl mx-auto">
             {/* Day Header */}
@@ -322,7 +328,7 @@ const Schedule = () => {
                   key={index}
                   className={cn(
                     "col-start-2 col-span-1 row-span-1 overflow-y-auto flex flex-wrap border-4 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-pink-300",
-                    event.type === "main" && "border-2 border-primary/50 glow-csh"
+                    event.type === "main" && "border-8 border-primary/100 glow-csh"
                   )}
                   style={{
                     gridRowStart: timeToRowStart(event.time),
@@ -362,7 +368,7 @@ const Schedule = () => {
               ))}
             </div>
           </div>
-        </div>
+        </div>  
       </section>
 
       {/* Remove this portion
