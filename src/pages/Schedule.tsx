@@ -151,6 +151,11 @@ const typeColors: Record<string, string> = {
   activity: "bg-emerald-500/70 text-emerald-200 border-emerald-500/30",
 };
 
+/**
+ * The number of sections in the grid
+ */
+var SectionCount = 0;
+
 //----- Helper Functions -----//
 /**
  *  // calculate the row index an event should start at given its start time (in military time)
@@ -237,9 +242,74 @@ function nextColumn(): number{
 }
 
 
+/**
+ * Increments the SectionCount by 1
+ */
+function incrementSectionCount(): void{
+  SectionCount++;
+}
+
+/**
+ * Increments the SectionCount by (i)
+ */
+function incrementSectionCountBy(i: number): void{
+  SectionCount += i;
+}
+
+/**
+ * Resets the SectionCount to 0
+ */
+function resetSectionCount(){
+  SectionCount = 0;
+}
+
+/**
+ * Returns the number of unused cells in the grid
+ * @returns number
+ */
+function getEmptySpacesCount(): number{
+  return (240);// - SectionCount;
+}
+
+/**
+ * Given an index, returns the spacer's column
+ * @param index index of the spacer
+ * @returns number
+ */
+function setSpacerColumn(index: number): number {
+  if(index % 3 == 0){
+    return 2;
+  }
+  else if((index - 1) % 3 == 0){
+    return 3;
+  }
+  else if((index - 2) % 3 == 0){
+    return 4;
+  }
+}
+
+/**
+ * Given an index, returns the spacer's row
+ * @param index index of the spacer
+ * @returns number
+ */
+function setSpacerRow(index: number): number {
+  if(index % 3 == 0){
+    return (index / 3) + 1;
+  }
+  else if((index - 1) % 3 == 0){
+    return ((index - 1) / 3) + 1;
+  }
+  else if((index - 2) % 3 == 0){
+    return ((index - 2) / 3) + 1;
+  }
+}
+
+
 //----- Webpage HTML -----//
 const Schedule = () => {
   const [selectedDay, setSelectedDay] = useState<Day>("friday");
+  resetSectionCount(); // reset the section count on the page reloading
 
   return (
     <Layout>
@@ -264,7 +334,7 @@ const Schedule = () => {
             {(Object.keys(scheduleData) as Day[]).map((day) => (
               <button
                 key={day}
-                onClick={() => setSelectedDay(day)}
+                onClick={() => {resetSectionCount(), setSelectedDay(day)}}
                 className={cn(
                   "px-4 md:px-8 py-3 rounded-xl font-medium transition-all duration-300",
                   selectedDay === day
@@ -280,7 +350,6 @@ const Schedule = () => {
         </div>
       </section>
 
-      {/* TODO: Change the Event to look more like Google Calendar and get the events to open a Expanded Dialog to show the Venue, where it is, and an expanded description*/}
       {/* Schedule Timeline */}
       <section className="py-12 flex border-collapse">
         <div className={cn(
@@ -306,24 +375,40 @@ const Schedule = () => {
             >
               {/* Create Timeline on the left */}
               {times.map(time => (
-                <div key={time.id} className={cn("col-start-1 col-span-1 row-span-4 text-xl")}>
-                    <div className={cn("row-span-1 border-b-2 border-t-4 border-solid")}>
+                <>
+                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-t-4 border-solid text-xl")}>
                       {time.hour} {time.timeOfDay} -
                     </div>
-                    <div className={cn("row-span-1 border-b-2 border-dotted text-sm")}>
+                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted text-sm")}>
                     - {time.hour}:15 -
                     </div>
-                    <div className={cn("row-span-1 border-b-2 border-dotted text-sm")}>
+                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted text-sm")}>
                     - {time.hour}:30 -
                     </div>
-                    <div className={cn("row-span-1 border-b-2 border-dotted text-sm")}>
+                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted text-sm")}>
                     - {time.hour}:45 -
                     </div>
-                </div>
+                </>
+              ))}
+
+              {/* Fill in empty spaces */}
+              {Array.from({ length: getEmptySpacesCount() }, (_, index) => (
+                <div key={index} className={cn("col-span-1 row-span-1 border-b-2 border-dotted p-6 text-center text-sm",
+                  (index % 12 == 0) && "border-t-4 border-solid",
+                  ((index - 1) % 12 == 0) && "border-t-4 border-solid",
+                  ((index - 2) % 12 == 0) && "border-t-4 border-solid",
+                )}
+                style={{
+                  gridColumnStart: setSpacerColumn(index),
+                  gridColumnEnd: setSpacerColumn(index),
+                  gridRowStart: setSpacerRow(index),
+                  gridRowEnd: setSpacerRow(index),
+                }}></div>
               ))}
 
               {/* Display events on the right of timeline */}
               {scheduleData[selectedDay].map((event, index) => (
+                incrementSectionCountBy(durationToRowSpan(event.time)), // increment the section count to have how many events are on the page
                 <div
                   key={index}
                   className={cn(
@@ -366,6 +451,7 @@ const Schedule = () => {
                   </div>
                 </div>
               ))}
+
             </div>
           </div>
         </div>  
