@@ -228,13 +228,19 @@ function durationToRowSpan(time: string): number {
  * Calculate the next column to place events in. (iterates between columns 2, 3, and 4)
  */
 var currentCol = 2;
-function nextColumn(): number{
+function nextColumn(): number {
   if(currentCol > 4){
     currentCol = 2;
   }
   return currentCol++;
 }
 
+/**
+ * Reset the currentCol to 2
+ */
+function resetCurrentCol(): void {
+  currentCol = 2;
+}
 
 /**
  * Increments the SectionCount by 1
@@ -305,6 +311,7 @@ const Schedule = () => {
   const [openEvent, setOpenEvent] = useState<ScheduleEvent | null>(null);
 
   resetSectionCount(); // reset the section count on the page reloading
+  resetCurrentCol(); // reset the currentCol on page refresh
 
   /**
    * Given an event, returns an EventPopup element
@@ -429,33 +436,32 @@ const Schedule = () => {
                 >
                   <button
                     onClick={() => {openEventPopup(event)}}
+                    className="flex flex-row items-start gap-4"
                   >
-                    <div className="flex flex-row items-start gap-4">
-                      {/* Content */}
-                      <div className="flex-1">
-                        {/* Time */}
-                        <div className="flex items-center gap-2 text-csh-magenta font-semibold py-2">
-                          <Clock className="w-4 h-4" />
-                          {event.time}
-                        </div>
-                        <div className="flex flex-wrap items-center gap-3 mb-2">
-                          <h3 className="text-xl font-display font-semibold">
-                            {event.title}
-                          </h3>
-                          <span className={cn(
-                            "px-3 py-1 rounded-full text-xs font-medium border",
-                            typeColors[event.type]
-                          )}>
-                            {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
-                          </span>
-                        </div>
-                        <p className="text-csh-foreground mb-3 text-csh-magenta">
-                          {event.description}
-                        </p>
-                        <div className="flex items-center gap-2 text-sm text-csh-magenta font-semibold">
-                          <MapPin className="w-4 h-4" />
-                          {event.location}
-                        </div>
+                    {/* Content */}
+                    <div className="flex-1">
+                      {/* Time */}
+                      <div className="flex items-center gap-2 text-csh-magenta font-semibold py-2">
+                        <Clock className="w-4 h-4" />
+                        {event.time}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3 mb-2">
+                        <h3 className="text-xl font-display font-semibold">
+                          {event.title}
+                        </h3>
+                        <span className={cn(
+                          "px-3 py-1 rounded-full text-xs font-medium border",
+                          typeColors[event.type]
+                        )}>
+                          {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                        </span>
+                      </div>
+                      <p className="text-csh-foreground mb-3 text-csh-magenta">
+                        {event.description}
+                      </p>
+                      <div className="flex items-center gap-2 text-sm text-csh-magenta font-semibold">
+                        <MapPin className="w-4 h-4" />
+                        {event.location}
                       </div>
                     </div>
                   </button>
@@ -474,6 +480,7 @@ const Schedule = () => {
             location={openEvent.location}
             type={openEvent.type}
             onClose={() => setOpenEvent(null)}
+            typeColors = {typeColors}
           />
         )}
 

@@ -6,10 +6,11 @@ import { ScheduleEvent } from "./ScheduleEvent";
  * EventPopupProp that allows onClose() to be passed in
  */
 interface EventPopupProps extends ScheduleEvent {
-  onClose: () => void
+  onClose: () => void,
+  typeColors: Record<string, string>
 }
 
-export default function EventPopup(event: EventPopupProps,){
+export default function EventPopup(event: EventPopupProps){
 
   return (
     <div // gray background
@@ -47,7 +48,7 @@ export default function EventPopup(event: EventPopupProps,){
                     </h3>
                     <span className={cn(
                         "px-3 py-1 rounded-full text-xs font-medium border",
-                        // typeColors[event.type]
+                        event.typeColors[event.type]
                     )}>
                         {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
                     </span>
