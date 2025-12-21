@@ -351,12 +351,12 @@ const Schedule = () => {
       </section>
 
       {/* Schedule Timeline */}
-      <section className="py-12 flex border-collapse">
+      <section className="py-12 border-collapse">
         <div className={cn(
-                    "container mx-auto px-4 rounded-2xl p-6 w-auto transition-all duration-300",
+                    "container max-w-dvw mx-auto px-4 rounded-2xl p-6 w-full transition-all duration-300",
                     "border-8 border-primary/50"
                   )}>
-          <div className="max-w-8xl mx-auto">
+          <div className="w-full">
 
             {/* Day Header */}
             <div className="text-center mb-12">
@@ -370,23 +370,23 @@ const Schedule = () => {
 
             {/* Events */} {/* Adding grid rows*/}
             <div className={cn(
-                    "grid grid-rows-[repeat(76, minmax(0, 1rem))] grid-cols-4 grid-flow-row-dense glass rounded-2xl p-6 transition-all duration-300",
+                    "grid grid-rows-[repeat(76, minmax(0, 1rem))] grid-cols-[repeat(4, minmax(0, 1fr))] grid-flow-row-dense glass rounded-2xl p-6 transition-all duration-300",
                     "border-2 border-primary/50"
                   )}
             >
               {/* Create Timeline on the left */}
               {times.map(time => (
                 <>
-                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-t-4 border-solid text-xl")}>
+                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-t-4 border-solid pr-6 sm:text-sm md:text-xl")}>
                       {time.hour} {time.timeOfDay} -
                     </div>
-                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted text-sm")}>
+                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
                     - {time.hour}:15 -
                     </div>
-                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted text-sm")}>
+                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
                     - {time.hour}:30 -
                     </div>
-                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted text-sm")}>
+                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
                     - {time.hour}:45 -
                     </div>
                 </>
