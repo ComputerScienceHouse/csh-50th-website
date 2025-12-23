@@ -16,30 +16,16 @@ RUN npm run build
 
 
 # --- Runtime Stage ---
-FROM nginxinc/nginx-unprivileged 
+FROM nginxinc/nginx-unprivileged:stable-alpine
+
+# Remove the user directive from the nginx configuration
+RUN sed -i '/^user/d' /etc/nginx/nginx.conf
 
 # Copy built static files from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Create nginx configuration for SPA routing
-RUN echo 'server { \
-    listen 8080; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
-
-# Non-root user (required for OKD)
-RUN chown -R nginx:nginx /usr/share/nginx/html && \
-    chown -R nginx:nginx /var/cache/nginx && \
-    chown -R nginx:nginx /var/log/nginx && \
-    chown -R nginx:nginx /etc/nginx/conf.d && \
-    touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run/nginx.pid
-
-USER nginx
+# Copy nginx config
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose application port
 EXPOSE 8080
