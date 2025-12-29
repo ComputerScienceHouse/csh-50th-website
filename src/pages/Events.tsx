@@ -2,96 +2,8 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Clock, Users, Sparkles, ArrowRight, Ticket } from "lucide-react";
 import { Link } from "react-router-dom";
-// import { events } from "./EventsData";
 
-// PLACEHOLDER: Update all event details as they are finalized
-const events = [
-  {
-    id: 1,
-    title: "50th Anniversary Gala Dinner",
-    description: "The highlight of the weekend! Join us for an elegant formal dinner celebrating 50 years of CSH. Enjoy a delicious meal, keynote speeches from notable alumni, awards ceremony honoring CSH's legacy, and plenty of time to reconnect with friends.",
-    date: "Saturday, April 11, 2026",
-    time: "6:00 PM - 11:00 PM",
-    location: "VENUE", // PLACEHOLDER: Replace with actual venue name
-    address: "TBD, Rochester, NY", // PLACEHOLDER: Replace with actual address
-    capacity: "500 guests",
-    dressCode: "Formal/Black Tie Optional",
-    isMain: true,
-  },
-  {
-    id: 2,
-    title: "Welcome Reception",
-    description: "Kick off the anniversary weekend with a casual welcome reception. Light refreshments will be served as you reconnect with old friends and meet current CSH members.",
-    date: "Friday, April 10, 2026",
-    time: "6:00 PM - 8:00 PM",
-    location: "TBD", // PLACEHOLDER: Confirm location
-    address: "TBD", // PLACEHOLDER: Confirm address
-    capacity: "Open to all attendees",
-    dressCode: "Casual",
-    isMain: false,
-  },
-  {
-    id: 3,
-    title: "CSH Floor Tours",
-    description: "Take a trip down memory lane or see what CSH looks like today. Guided tours will show you the projects, equipment, and spaces that make CSH special.",
-    date: "Friday & Saturday",
-    time: "Various times",
-    location: "CSH Floor, DSP",
-    address: "Rochester Institute of Technology",
-    capacity: "Multiple sessions",
-    dressCode: "Casual",
-    isMain: false,
-  },
-  {
-    id: 4,
-    title: "Alumni Panel Discussions",
-    description: "Hear from successful CSH alumni about their career journeys, how CSH shaped them, and their advice for current members. Q&A session included.",
-    date: "Saturday, April 11, 2026",
-    time: "2:00 PM - 4:00 PM",
-    location: "TBD",
-    address: "Rochester Institute of Technology",
-    capacity: "200 seats",
-    dressCode: "Smart Casual",
-    isMain: false,
-  },
-  {
-    id: 5,
-    title: "Alumni Mixer",
-    description: "An informal evening gathering for alumni to catch up over drinks. Share stories, reconnect, and make new memories.",
-    date: "Friday, April 10, 2026",
-    time: "8:00 PM - Late",
-    location: "TBD", // PLACEHOLDER: Confirm location
-    address: "TBD", // PLACEHOLDER: Confirm address
-    capacity: "Open to all alumni",
-    dressCode: "Casual",
-    isMain: false,
-  },
-  {
-    id: 6,
-    title: "Farewell Brunch",
-    description: "Before you head home, join us for a farewell brunch. Last chance to exchange contact info, take group photos, and say your goodbyes.",
-    date: "Sunday, April 12, 2026",
-    time: "9:00 AM - 11:00 AM",
-    location: "TBD", // PLACEHOLDER: Confirm location
-    address: "TBD", // PLACEHOLDER: Confirm address
-    capacity: "Open to all attendees",
-    dressCode: "Casual",
-    isMain: false,
-  },
-  {
-    id: 7,
-    title: "Campus Tours",
-    description: "Explore RIT campus and see how it has changed since your time here. Visit new buildings, facilities, and learn about the university's growth.",
-    date: "Saturday, April 11, 2026",
-    time: "10:00 AM - 12:00 PM",
-    location: "Meet at TBD", // PLACEHOLDER: Confirm meeting point
-    address: "Rochester Institute of Technology",
-    capacity: "Multiple groups",
-    dressCode: "Casual (comfortable walking shoes)",
-    isMain: false,
-  },
-];
-
+import { events } from "./EventsData";
 
 const Events = () => {
   return (
@@ -137,7 +49,7 @@ const Events = () => {
       {/* Main Event Highlight */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          {events.filter(e => e.isMain).map(event => (
+          {events.filter(e => e.type.toLowerCase() == "main").map(event => (
             <div key={event.id} className="glass rounded-3xl p-8 md:p-12 border-2 border-primary/30 glow-csh">
               <div className="flex items-center gap-2 mb-4">
                 <Sparkles className="w-5 h-5 text-csh-magenta" />
@@ -195,7 +107,7 @@ const Events = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.filter(e => !e.isMain).map(event => (
+            {events.filter(e => (e.type.toLowerCase() != "main")).map(event => (
               <div 
                 key={event.id} 
                 className="glass rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300"
