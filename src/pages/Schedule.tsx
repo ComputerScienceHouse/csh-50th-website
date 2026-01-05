@@ -318,7 +318,7 @@ const Schedule = () => {
         <section className="py-12 border-collapse">
           <div className={cn(
                       "container max-w-dvw mx-auto px-4 rounded-2xl p-6 w-full transition-all duration-300",
-                      "border-8 border-primary/50"
+                      "border-2"
                     )}>
             <div className="w-full">
 
@@ -379,8 +379,8 @@ const Schedule = () => {
                     onClick={() => {openEventPopup(event)}}
 
                     className={cn(
-                      "col-start-2 col-span-1 row-span-1 overflow-y-auto flex flex-wrap border-4 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-pink-300",
-                      event.type === "main" && "border-8 border-primary/100 glow-csh"
+                      "col-start-2 col-span-1 row-span-1 overflow-y-auto flex flex-wrap border-2 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-black",
+                      event.type === "main" && "border-4 border-primary/100 glow-csh"
                     )}
                     style={{
                       gridRowStart: timeToRowStart(event.time),
@@ -391,7 +391,7 @@ const Schedule = () => {
                     {/* Content */}
                     <div className="flex-1">
                       {/* Time */}
-                      <div className="flex items-center gap-2 text-csh-magenta font-semibold py-2">
+                      <div className="flex items-center gap-2 font-semibold py-2 text-csh-magenta">
                         <Clock className="w-4 h-4" />
                         {event.time}
                       </div>
@@ -406,10 +406,10 @@ const Schedule = () => {
                           {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
                         </span>
                       </div>
-                      <p className="text-csh-foreground mb-3 text-csh-magenta text-left">
+                      <p className="text-muted-foreground mb-3 text-left">
                         {event.description}
                       </p>
-                      <div className="flex items-center gap-2 text-sm text-csh-magenta font-semibold">
+                      <div className="text-muted-foreground flex items-center gap-2 text-sm font-semibold">
                         <MapPin className="w-4 h-4" />
                         {event.location}
                       </div>
@@ -531,7 +531,7 @@ const Schedule = () => {
                   <div
                     key={index}
                     className={cn(
-                      "glass rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02]",
+                      "rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] border-2 border-csh-magenta ",
                       event.type === "main" && "border-2 border-primary/50 glow-csh"
                     )}
                   >
