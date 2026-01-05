@@ -1,10 +1,15 @@
 /**
- * Interface for an Event on the schedule
+ * Interface for an Event
  */
 export interface ScheduleEvent {
-  time: string,
+  id: number,
   title: string,
   description: string,
+  date: string,
+  time: string,
   location: string,
+  address: string,
+  capacity: string,
+  dressCode: string,
   type: "social" | "main" | "food" | "activity"
 }
