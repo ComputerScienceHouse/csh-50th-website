@@ -472,7 +472,106 @@ const Schedule = () => {
   }
   else{
     return (
-      <div>I'm a mobile device!!!</div>
+      <Layout>
+        {/* Header */}
+        <section className="pt-12 pb-8">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto">
+              <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
+                Event <span className="text-gradient">Schedule</span>
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Three days of events, activities, and celebrations. Click on a day to see what's happening.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Day Selector */}
+        <section className="sticky top-16 md:top-20 z-40 py-4 glass">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center gap-2 md:gap-4">
+              {(Object.keys(scheduleData) as Day[]).map((day) => (
+                <button
+                  key={day}
+                  onClick={() => setSelectedDay(day)}
+                  className={cn(
+                    "px-4 md:px-8 py-3 rounded-xl font-medium transition-all duration-300",
+                    selectedDay === day
+                      ? "bg-gradient-csh text-primary-foreground shadow-lg glow-csh"
+                      : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
+                  )}
+                >
+                  <span className="hidden md:inline">{dayLabels[day].name}, </span>
+                  {dayLabels[day].date}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Schedule Timeline */}
+        <section className="py-12">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              {/* Day Header */}
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-display font-bold">
+                  {dayLabels[selectedDay].name}
+                </h2>
+                <p className="text-muted-foreground">
+                  {dayLabels[selectedDay].date}, 2026
+                </p>
+              </div>
+
+              {/* Events */}
+              <div className="space-y-6">
+                {scheduleData[selectedDay].map((event, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      "glass rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02]",
+                      event.type === "main" && "border-2 border-primary/50 glow-csh"
+                    )}
+                  >
+                    <div className="flex flex-col md:flex-row md:items-start gap-4">
+                      {/* Time */}
+                      <div className="md:w-48 flex-shrink-0">
+                        <div className="flex items-center gap-2 text-csh-magenta font-semibold">
+                          <Clock className="w-4 h-4" />
+                          {event.time}
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                          <h3 className="text-xl font-display font-semibold">
+                            {event.title}
+                          </h3>
+                          <span className={cn(
+                            "px-3 py-1 rounded-full text-xs font-medium border",
+                            typeColors[event.type]
+                          )}>
+                            {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                          </span>
+                        </div>
+                        <p className="text-muted-foreground mb-3">
+                          {event.description}
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <MapPin className="w-4 h-4" />
+                          {event.location}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </Layout>
     );
   }
 }; 
