@@ -266,7 +266,7 @@ const Schedule = () => {
 
 
   if(!isMobile){
-    return (
+    return ( // Desktop Layout
       <Layout>
         {/* Notice Banner */}
         <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
@@ -421,6 +421,7 @@ const Schedule = () => {
             </div>
           </div>  
 
+          {/* Popup */}
           {openEvent && (
             <EventPopup
               id={openEvent.id}
@@ -471,7 +472,7 @@ const Schedule = () => {
     );
   }
   else{
-    return (
+    return ( // Mobile Layout
       <Layout>
         {/* Header */}
         <section className="pt-12 pb-8">
@@ -556,7 +557,8 @@ const Schedule = () => {
                             {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
                           </span>
                         </div>
-                        <p className="text-muted-foreground mb-3">
+                        <p className={cn("text-muted-foreground mb-3",
+                           "max-[299px]:w-[20ch] max-[299px]:overflow-hidden max-[299px]:whitespace-nowrap max-[299px]:text-ellipsis")}>
                           {event.description}
                         </p>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
