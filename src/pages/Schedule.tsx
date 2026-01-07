@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Clock, MapPin } from "lucide-react";
 import { ScheduleEvent } from "./ScheduleEvent";
@@ -224,10 +224,33 @@ function setSpacerRow(index: number): number {
   }
 }
 
+/* | Check screen size if mobile or desktop | */
+/**
+ * Returns a boolean for true if the screen is under 800px wide, and false otherwise
+ * @returns true/false
+ */
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia("(max-width: 649px)").matches
+  );
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 649px)");
+    const listener = () => setIsMobile(media.matches);
+
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, []);
+
+  return isMobile;
+}
+
 //----- Webpage HTML -----//
 const Schedule = () => {
   const [selectedDay, setSelectedDay] = useState<Day>("friday");
   const [openEvent, setOpenEvent] = useState<ScheduleEvent | null>(null);
+  
+  const isMobile = useIsMobile();
 
   resetSectionCount(); // reset the section count on the page reloading
   resetCurrentCol(); // reset the currentCol on page refresh
@@ -238,213 +261,321 @@ const Schedule = () => {
    * @returns EventPopup
    */
   function openEventPopup(event: ScheduleEvent) {
-    console.log("I WAS RAN")
     setOpenEvent(event);
   }
 
-  return (
-    <Layout>
-      {/* Notice Banner */}
-      <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
-        <div className="container mx-auto text-center">
-          <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-            ⚠️ This website is a work in progress. Some contents (including the schedule) are just a placeholder and are subject to change. Some links, including the RSVP and ticket links, do not work.
-          </p>
-        </div>
-      </div>
 
-      {/* Header */}
-      <section className="pt-12 pb-8">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
-              Event <span className="text-gradient">Schedule</span>
-            </h1>
-            <p className="text-muted-foreground text-lg">
-              Three days of events, activities, and celebrations.
+  if(!isMobile){
+    return ( // Desktop Layout
+      <Layout>
+        {/* Notice Banner */}
+        <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
+          <div className="container mx-auto text-center">
+            <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
+              ⚠️ This website is a work in progress. Some contents (including the schedule) are just a placeholder and are subject to change. Some links, including the RSVP and ticket links, do not work.
             </p>
           </div>
         </div>
-      </section>
 
-      {/* Day Selector */}
-      <section className="sticky top-16 md:top-20 z-40 py-4 glass">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center gap-2 md:gap-4">
-            {(Object.keys(scheduleData) as Day[]).map((day) => (
-              <button
-                key={day}
-                onClick={() => {resetSectionCount(), setSelectedDay(day)}}
-                className={cn(
-                  "px-4 md:px-8 py-3 rounded-xl font-medium transition-all duration-300",
-                  selectedDay === day
-                    ? "bg-gradient-csh text-primary-foreground shadow-lg glow-csh"
-                    : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
-                )}
-              >
-                <span className="hidden md:inline">{dayLabels[day].name}, </span>
-                {dayLabels[day].date}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Schedule Timeline */}
-      <section className="py-12 border-collapse">
-        <div className={cn(
-                    "container max-w-dvw mx-auto px-4 rounded-2xl p-6 w-full transition-all duration-300",
-                    "border-8 border-primary/50"
-                  )}>
-          <div className="w-full">
-
-            {/* Day Header */}
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-display font-bold">
-                {dayLabels[selectedDay].name}
-              </h2>
-              <p className="text-muted-foreground">
-                {dayLabels[selectedDay].date}, 2026
+        {/* Header */}
+        <section className="pt-12 pb-8">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto">
+              <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
+                Event <span className="text-gradient">Schedule</span>
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Three days of events, activities, and celebrations.
               </p>
             </div>
+          </div>
+        </section>
 
-            {/* Events */} {/* Adding grid rows*/}
-            <div className={cn(
-                    "grid grid-rows-[repeat(76, minmax(0, 1rem))] grid-cols-[repeat(4, minmax(0, 1fr))] grid-flow-row-dense glass rounded-2xl p-6 transition-all duration-300",
-                    "border-2 border-primary/50"
-                  )}
-            >
-              {/* Create Timeline on the left */}
-              {times.map(time => ( // source of Warning:(react_jsx-dev-runtime.js?v=7f273f88:64 Warning: Each child in a list should have a unique "key" prop.), because of <></>
-                <> 
-                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-t-4 border-solid pr-6 sm:text-sm md:text-xl")}>
-                      {time.hour} {time.timeOfDay} -
-                    </div>
-                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
-                    - {time.hour}:15 -
-                    </div>
-                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
-                    - {time.hour}:30 -
-                    </div>
-                    <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
-                    - {time.hour}:45 -
-                    </div>
-                </>
-              ))}
-
-              {/* Fill in empty spaces */}
-              {Array.from({ length: getEmptySpacesCount() }, (_, index) => (
-                <div key={index} className={cn("col-span-1 row-span-1 border-b-2 border-dotted text-center text-sm",
-                  (index % 12 == 0) && "border-t-4 border-solid",
-                  ((index - 1) % 12 == 0) && "border-t-4 border-solid",
-                  ((index - 2) % 12 == 0) && "border-t-4 border-solid",
-                )}
-                style={{
-                  gridColumnStart: setSpacerColumn(index),
-                  gridColumnEnd: setSpacerColumn(index),
-                  gridRowStart: setSpacerRow(index),
-                  gridRowEnd: setSpacerRow(index),
-                }}></div>
-              ))}
-
-              {/* Display events on the right of timeline */}
-              {scheduleData[selectedDay].map((event, index) => (
-                incrementSectionCountBy(durationToRowSpan(event.time)), // increment the section count to have how many events are on the page
+        {/* Day Selector */}
+        <section className="sticky top-16 md:top-20 z-40 py-4 glass">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center gap-2 md:gap-4">
+              {(Object.keys(scheduleData) as Day[]).map((day) => (
                 <button
-                  key={index}
-                  onClick={() => {openEventPopup(event)}}
-
+                  key={day}
+                  onClick={() => {resetSectionCount(), setSelectedDay(day)}}
                   className={cn(
-                    "col-start-2 col-span-1 row-span-1 overflow-y-auto flex flex-wrap border-4 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-pink-300",
-                    event.type === "main" && "border-8 border-primary/100 glow-csh"
+                    "px-4 md:px-8 py-3 rounded-xl font-medium transition-all duration-300",
+                    selectedDay === day
+                      ? "bg-gradient-csh text-primary-foreground shadow-lg glow-csh"
+                      : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
                   )}
-                  style={{
-                    gridRowStart: timeToRowStart(event.time),
-                    gridRowEnd: `span ${durationToRowSpan(event.time)}`,
-                    gridColumnStart: nextColumn(),
-                  }}
                 >
-                  {/* Content */}
-                  <div className="flex-1">
-                    {/* Time */}
-                    <div className="flex items-center gap-2 text-csh-magenta font-semibold py-2">
-                      <Clock className="w-4 h-4" />
-                      {event.time}
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3 mb-2">
-                      <h3 className="text-xl font-display font-semibold">
-                        {event.title}
-                      </h3>
-                      <span className={cn(
-                        "px-3 py-1 rounded-full text-xs font-medium border",
-                        typeColors[event.type]
-                      )}>
-                        {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
-                      </span>
-                    </div>
-                    <p className="text-csh-foreground mb-3 text-csh-magenta text-left">
-                      {event.description}
-                    </p>
-                    <div className="flex items-center gap-2 text-sm text-csh-magenta font-semibold">
-                      <MapPin className="w-4 h-4" />
-                      {event.location}
-                    </div>
-                  </div>
+                  <span className="hidden md:inline">{dayLabels[day].name}, </span>
+                  {dayLabels[day].date}
                 </button>
               ))}
-
             </div>
           </div>
-        </div>  
+        </section>
 
-        {openEvent && (
-          <EventPopup
-            id={openEvent.id}
-            title={openEvent.title}
-            description={openEvent.description}
-            date={openEvent.date}
-            time={openEvent.time}
-            location={openEvent.location}
-            address={openEvent.address}
-            capacity={openEvent.capacity}
-            dressCode={openEvent.dressCode}
-            type={openEvent.type}
-            onClose={() => setOpenEvent(null)}
-            typeColors = {typeColors}
-          />
-        )}
+        {/* Schedule Timeline */}
+        <section className="py-12 border-collapse">
+          <div className={cn(
+                      "container max-w-dvw mx-auto px-4 rounded-2xl p-6 w-full transition-all duration-300",
+                      "border-2"
+                    )}>
+            <div className="w-full">
 
-      </section>
+              {/* Day Header */}
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-display font-bold">
+                  {dayLabels[selectedDay].name}
+                </h2>
+                <p className="text-muted-foreground">
+                  {dayLabels[selectedDay].date}, 2026
+                </p>
+              </div>
 
-      {/* Remove this portion
-      {/* Legend }
-      <section className="py-12 bg-card/50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h3 className="text-lg font-display font-semibold mb-4 text-center">Event Types</h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex items-center gap-2">
-                <span className={cn("w-4 h-4 rounded", typeColors.main.split(" ")[0])} />
-                <span className="text-sm text-muted-foreground">Main Event</span>
+              {/* Events */} {/* Adding grid rows*/}
+              <div className={cn(
+                      "grid grid-rows-[repeat(76, minmax(0, 1rem))] grid-cols-[repeat(4, minmax(0, 1fr))] grid-flow-row-dense glass rounded-2xl p-6 transition-all duration-300",
+                      "border-2 border-primary/50"
+                    )}
+              >
+                {/* Create Timeline on the left */}
+                {times.map(time => ( // source of Warning:(react_jsx-dev-runtime.js?v=7f273f88:64 Warning: Each child in a list should have a unique "key" prop.), because of <></>
+                  <> 
+                      <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-t-4 border-solid pr-6 sm:text-sm md:text-xl")}>
+                        {time.hour} {time.timeOfDay} -
+                      </div>
+                      <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
+                      - {time.hour}:15 -
+                      </div>
+                      <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
+                      - {time.hour}:30 -
+                      </div>
+                      <div className={cn("col-start-1 col-span-1 row-span-1 border-b-2 border-dotted sm:text-xs md:text-sm")}>
+                      - {time.hour}:45 -
+                      </div>
+                  </>
+                ))}
+
+                {/* Fill in empty spaces */}
+                {Array.from({ length: getEmptySpacesCount() }, (_, index) => (
+                  <div key={index} className={cn("col-span-1 row-span-1 border-b-2 border-dotted text-center text-sm",
+                    (index % 12 == 0) && "border-t-4 border-solid",
+                    ((index - 1) % 12 == 0) && "border-t-4 border-solid",
+                    ((index - 2) % 12 == 0) && "border-t-4 border-solid",
+                  )}
+                  style={{
+                    gridColumnStart: setSpacerColumn(index),
+                    gridColumnEnd: setSpacerColumn(index),
+                    gridRowStart: setSpacerRow(index),
+                    gridRowEnd: setSpacerRow(index),
+                  }}></div>
+                ))}
+
+                {/* Display events on the right of timeline */}
+                {scheduleData[selectedDay].map((event, index) => (
+                  incrementSectionCountBy(durationToRowSpan(event.time)), // increment the section count to have how many events are on the page
+                  <button
+                    key={index}
+                    onClick={() => {openEventPopup(event)}}
+
+                    className={cn(
+                      "col-start-2 col-span-1 row-span-1 overflow-y-auto flex flex-wrap border-2 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-black",
+                      event.type === "main" && "border-4 border-primary/100 glow-csh"
+                    )}
+                    style={{
+                      gridRowStart: timeToRowStart(event.time),
+                      gridRowEnd: `span ${durationToRowSpan(event.time)}`,
+                      gridColumnStart: nextColumn(),
+                    }}
+                  >
+                    {/* Content */}
+                    <div className="flex-1">
+                      {/* Time */}
+                      <div className="flex items-center gap-2 font-semibold py-2 text-csh-magenta">
+                        <Clock className="w-4 h-4" />
+                        {event.time}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3 mb-2">
+                        <h3 className="text-xl font-display font-semibold">
+                          {event.title}
+                        </h3>
+                        <span className={cn(
+                          "px-3 py-1 rounded-full text-xs font-medium border",
+                          typeColors[event.type]
+                        )}>
+                          {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                        </span>
+                      </div>
+                      <p className="text-muted-foreground mb-3 text-left">
+                        {event.description}
+                      </p>
+                      <div className="text-muted-foreground flex items-center gap-2 text-sm font-semibold">
+                        <MapPin className="w-4 h-4" />
+                        {event.location}
+                      </div>
+                    </div>
+                  </button>
+                ))}
+
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-4 h-4 rounded bg-blue-500/30" />
-                <span className="text-sm text-muted-foreground">Social</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-4 h-4 rounded bg-emerald-500/30" />
-                <span className="text-sm text-muted-foreground">Activity</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-4 h-4 rounded bg-amber-500/30" />
-                <span className="text-sm text-muted-foreground">Food</span>
+            </div>
+          </div>  
+
+          {/* Popup */}
+          {openEvent && (
+            <EventPopup
+              id={openEvent.id}
+              title={openEvent.title}
+              description={openEvent.description}
+              date={openEvent.date}
+              time={openEvent.time}
+              location={openEvent.location}
+              address={openEvent.address}
+              capacity={openEvent.capacity}
+              dressCode={openEvent.dressCode}
+              type={openEvent.type}
+              onClose={() => setOpenEvent(null)}
+              typeColors = {typeColors}
+            />
+          )}
+
+        </section>
+
+        {/* Remove this portion
+        {/* Legend }
+        <section className="py-12 bg-card/50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <h3 className="text-lg font-display font-semibold mb-4 text-center">Event Types</h3>
+              <div className="flex flex-wrap justify-center gap-4">
+                <div className="flex items-center gap-2">
+                  <span className={cn("w-4 h-4 rounded", typeColors.main.split(" ")[0])} />
+                  <span className="text-sm text-muted-foreground">Main Event</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-blue-500/30" />
+                  <span className="text-sm text-muted-foreground">Social</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-emerald-500/30" />
+                  <span className="text-sm text-muted-foreground">Activity</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-amber-500/30" />
+                  <span className="text-sm text-muted-foreground">Food</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section> */}
-    </Layout>
-  );
+        </section> */}
+      </Layout>
+    );
+  }
+  else{
+    return ( // Mobile Layout
+      <Layout>
+        {/* Header */}
+        <section className="pt-12 pb-8">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto">
+              <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
+                Event <span className="text-gradient">Schedule</span>
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Three days of events, activities, and celebrations. Click on a day to see what's happening.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Day Selector */}
+        <section className="sticky top-16 md:top-20 z-40 py-4 glass">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center gap-2 md:gap-4">
+              {(Object.keys(scheduleData) as Day[]).map((day) => (
+                <button
+                  key={day}
+                  onClick={() => setSelectedDay(day)}
+                  className={cn(
+                    "px-4 md:px-8 py-3 rounded-xl font-medium transition-all duration-300",
+                    selectedDay === day
+                      ? "bg-gradient-csh text-primary-foreground shadow-lg glow-csh"
+                      : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
+                  )}
+                >
+                  <span className="hidden md:inline">{dayLabels[day].name}, </span>
+                  {dayLabels[day].date}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Schedule Timeline */}
+        <section className="py-12">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              {/* Day Header */}
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-display font-bold">
+                  {dayLabels[selectedDay].name}
+                </h2>
+                <p className="text-muted-foreground">
+                  {dayLabels[selectedDay].date}, 2026
+                </p>
+              </div>
+
+              {/* Events */}
+              <div className="space-y-6">
+                {scheduleData[selectedDay].map((event, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      "rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] border-2 border-csh-magenta ",
+                      event.type === "main" && "border-2 border-primary/50 glow-csh"
+                    )}
+                  >
+                    <div className="flex flex-col md:flex-row md:items-start gap-4">
+                      {/* Time */}
+                      <div className="md:w-48 flex-shrink-0">
+                        <div className="flex items-center gap-2 text-csh-magenta font-semibold">
+                          <Clock className="w-4 h-4" />
+                          {event.time}
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                          <h3 className="text-xl font-display font-semibold">
+                            {event.title}
+                          </h3>
+                          <span className={cn(
+                            "px-3 py-1 rounded-full text-xs font-medium border",
+                            typeColors[event.type]
+                          )}>
+                            {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                          </span>
+                        </div>
+                        <p className={cn("text-muted-foreground mb-3",
+                           "max-[299px]:w-[20ch] max-[299px]:overflow-hidden max-[299px]:whitespace-nowrap max-[299px]:text-ellipsis")}>
+                          {event.description}
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <MapPin className="w-4 h-4" />
+                          {event.location}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
 }; 
 
 export default Schedule;
