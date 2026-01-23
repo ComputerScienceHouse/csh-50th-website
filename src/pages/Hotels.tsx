@@ -6,43 +6,43 @@ import { MapPin, Phone, Globe, Car, Plane, Bus, ExternalLink, Star, DollarSign }
 const hotels = [
   {
     id: 1,
-    name: "Hotel Name 1", // PLACEHOLDER: Replace with actual hotel name
-    description: "Conveniently located near RIT campus with special rates for CSH 50th attendees.",
-    address: "123 Example Street, Rochester, NY 14623", // PLACEHOLDER: Replace with actual address
-    phone: "(585) 555-0100", // PLACEHOLDER: Replace with actual phone
-    website: "PLACEHOLDER", // PLACEHOLDER: Replace with actual booking URL
-    distance: "5 minutes from RIT",
+    name: "Hampton Inn & Suites Rochester/Henrietta", 
+    description: "Conveniently located near RIT campus with locked special rates for CSH 50th attendees. There are 25 spots per night reserved from April 10-12, 2026.",
+    address: "280 Clay Road, Rochester, NY 14623",
+    phone: "(585) 475-1300",
+    website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCHEHX&groupCode=CHHCSC&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT",
+    distance: "12 minutes from RIT",
     priceRange: "$$",
-    amenities: ["Free WiFi", "Parking", "Breakfast Included", "Shuttle to RIT"],
-    specialRate: "$XX/night", // PLACEHOLDER: Replace with actual negotiated rate
-    bookingCode: "CSH50", // PLACEHOLDER: Replace with actual booking code if applicable
+    amenities: ["Free WiFi", "Free Parking", "Breakfast Included 6:00-10:00AM", "Indoor Pool", "Fitness Center", "Pet-Friendly Rooms"],
+    specialRate: "$159/night", 
+    bookingCode: null,
     featured: true,
   },
   {
     id: 2,
-    name: "Hotel Name 2", // PLACEHOLDER: Replace with actual hotel name
-    description: "Modern accommodations with easy access to the venue and campus.",
-    address: "456 Example Avenue, Rochester, NY 14623", // PLACEHOLDER: Replace with actual address
-    phone: "(585) 555-0200", // PLACEHOLDER: Replace with actual phone
-    website: "PLACEHOLDER", // PLACEHOLDER: Replace with actual booking URL
-    distance: "10 minutes from RIT",
-    priceRange: "$$$",
-    amenities: ["Free WiFi", "Pool", "Fitness Center", "Restaurant"],
-    specialRate: "$XX/night", // PLACEHOLDER: Replace with actual negotiated rate
-    bookingCode: "CSH50", // PLACEHOLDER: Replace with actual booking code if applicable
+    name: "Courtyard by Marriott Rochester Brighton", 
+    description: "Located in a good mid-point between RIT and the venue, with a free shuttle to and from Rochester airport. There are 10 rooms per night reserved from April 10-13, 2026.",
+    address: "33 Corporate Woods, Rochester, NY 14623", 
+    phone: "(585) 292-1000", 
+    website: "https://app.marriott.com/reslink?id=1768599322125&key=GRP&app=resvlink",
+    distance: "12 minutes from RIT",
+    priceRange: "$$",
+    amenities: ["Free WiFi", "On-site Restaurant", "Pool", "Fitness Center", "Business Center", "EV Charging Stations", "Free Parking", "Meeting/Event Space"],
+    specialRate: "$154/night", 
+    bookingCode: null, // PLACEHOLDER: Replace with actual booking code if applicable
     featured: false,
   },
   {
     id: 3,
-    name: "Hotel Name 3", // PLACEHOLDER: Replace with actual hotel name
-    description: "Budget-friendly option with reliable amenities.",
-    address: "789 Example Boulevard, Rochester, NY 14623", // PLACEHOLDER: Replace with actual address
-    phone: "(585) 555-0300", // PLACEHOLDER: Replace with actual phone
-    website: "PLACEHOLDER", // PLACEHOLDER: Replace with actual booking URL
-    distance: "15 minutes from RIT",
-    priceRange: "$",
+    name: "Hilton Garden Inn Rochester Downtown",
+    description: "Located in downtown Rochester, it is a block away from the venue. There are 25 rooms per night reserved from April 10-12, 2026.",
+    address: "155 E Main St, Rochester, NY 14604", 
+    phone: "(585) 232-5000", 
+    website: "TBD", 
+    distance: "20 minutes from RIT",
+    priceRange: "$$",
     amenities: ["Free WiFi", "Parking", "Continental Breakfast"],
-    specialRate: "$XX/night", // PLACEHOLDER: Replace with actual negotiated rate
+    specialRate: "$169/night", // PLACEHOLDER: Replace with actual negotiated rate
     bookingCode: null,
     featured: false,
   },
@@ -200,7 +200,7 @@ const Hotels = () => {
           
           <p className="text-center text-muted-foreground text-sm mt-8">
             {/* PLACEHOLDER: Update booking deadline when known */}
-            Book by [DATE TBD] to secure the special CSH rate. Rooms are limited!
+            Book by March 11th to secure the special CSH rate. Rooms are limited!
           </p>
         </div>
       </section>
@@ -280,8 +280,7 @@ const Hotels = () => {
                 View FAQ
               </Button>
             </a>
-            {/* PLACEHOLDER: Replace with actual contact email */}
-            <a href="mailto:PLACEHOLDER@csh.rit.edu">
+            <a href="mailto:50th@csh.rit.edu">
               <Button variant="glass">
                 Contact Us
               </Button>
