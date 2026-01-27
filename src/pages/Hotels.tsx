@@ -35,13 +35,13 @@ const hotels = [
   {
     id: 3,
     name: "Hilton Garden Inn Rochester Downtown",
-    description: "Located in downtown Rochester, it is a block away from the venue. There are 25 rooms per night reserved from April 10-12, 2026.",
+    description: "Located in downtown Rochester, it is a block away from the venue. There are 25 rooms per night reserved from April 10-12, 2026 for a single King bed.",
     address: "155 E Main St, Rochester, NY 14604", 
     phone: "(585) 232-5000", 
-    website: "TBD", 
+    website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCEMGI&groupCode=91I&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT", 
     distance: "20 minutes from RIT",
     priceRange: "$$",
-    amenities: ["Free WiFi", "Parking", "Continental Breakfast"],
+    amenities: ["Free WiFi", "Non-smoking rooms", "On-site restaurant", "Indoor pool", "Fitness center", "Pet-friendly rooms"],
     specialRate: "$169/night", // PLACEHOLDER: Replace with actual negotiated rate
     bookingCode: null,
     featured: false,
