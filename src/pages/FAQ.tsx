@@ -69,7 +69,7 @@ const faqCategories = [
       },
       {
         question: "Is parking available?",
-        answer: "Yes, parking is available at RIT and at the event venues. Details will be provided in your confirmation email.", // PLACEHOLDER: Update with specific parking info
+        answer: "Yes, parking is available at RIT. For events that aren't at RIT, street parking will be available.", // PLACEHOLDER: Update with specific parking info
       },
     ],
   },
@@ -99,15 +99,15 @@ const faqCategories = [
     questions: [
       {
         question: "How can I help or volunteer?",
-        answer: "We welcome volunteers! Please reach out to the organizing committee at [EMAIL] if you'd like to help.", // PLACEHOLDER: Replace with actual email
+        answer: "We welcome any help! Please reach out to the 50th planning committee by joining the #50th channel on Slack, or by emailing 50th@csh.rit.edu",
       },
       {
         question: "I'm a current CSH member. How do I get involved?",
-        answer: "Current members should speak with the CSH 50th planning committee for opportunities to help and participate.", // PLACEHOLDER: Add specific contact info
+        answer: "Current members should speak with the CSH 50th planning committee for opportunities to help and participate. The best way to get involved is by joining the #50th channel on CSH Slack.",
       },
       {
         question: "Who do I contact with questions?",
-        answer: "For general inquiries, please email [EMAIL]. We'll respond as quickly as possible.", // PLACEHOLDER: Replace with actual email
+        answer: "For general inquiries, please email 50th@csh.rit.edu or join the #50th channel on CSH Slack. We'll respond as quickly as possible.",
       },
       {
         question: "Will there be photography/video at the event?",

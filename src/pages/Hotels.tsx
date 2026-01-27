@@ -52,7 +52,7 @@ const transportOptions = [
   {
     icon: Plane,
     title: "By Air",
-    description: "Fly into Greater Rochester International Airport (ROC), located about 15 minutes from RIT campus.",
+    description: "Fly into Greater Rochester International Airport (ROC), located about 15 minutes from RIT campus or from downtown Rochester.",
     details: [
       "Major airlines: Delta, American, United, Southwest",
       "Rental cars available at the airport",
@@ -65,7 +65,7 @@ const transportOptions = [
     description: "Rochester is accessible via I-90 (NY Thruway) and I-390.",
     details: [
       "Free parking available at hotels",
-      "Campus parking available for registered guests", // PLACEHOLDER: Confirm parking details
+      "Street parking available at off-campus venues",
       "RIT address: 1 Lomb Memorial Drive, Rochester, NY 14623",
     ],
   },
@@ -74,8 +74,8 @@ const transportOptions = [
     title: "Local Transport",
     description: "Getting around Rochester during the event weekend.",
     details: [
-      "Shuttle service between hotels and venues (TBD)", // PLACEHOLDER: Confirm if shuttle will be provided
-      "Rideshare services recommended",
+      "Shuttle service between recommended hotels and gala dinner (note: not available for Hilton Garden Inn Rochester Downtown)",
+      "Rideshare services recommended (Uber, Lyft)",
       "RTS public bus system available",
     ],
   },

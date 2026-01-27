@@ -7,8 +7,7 @@ interface TimeLeft {
   seconds: number;
 }
 
-// PLACEHOLDER: Update this date to the actual event start date/time
-const EVENT_DATE = new Date("2026-04-10T17:00:00");
+const EVENT_DATE = new Date("2026-04-10T09:00:00");
 
 export function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
