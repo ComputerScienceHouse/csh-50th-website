@@ -15,7 +15,7 @@ const faqCategories = [
     questions: [
       {
         question: "When is the CSH 50th Anniversary celebration?",
-        answer: "The celebration will take place from Friday, April 10th to Sunday, April 12th, 2026 at Rochester Institute of Technology in Rochester, NY.",
+        answer: "The celebration will take place from Friday, April 10th to Sunday, April 12th, 2026 at Rochester Institute of Technology and the surrounding area in Rochester, NY.",
       },
       {
         question: "Who can attend the 50th anniversary events?",
