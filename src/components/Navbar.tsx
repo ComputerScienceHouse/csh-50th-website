@@ -22,9 +22,11 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-xl md:text-2xl font-display font-bold text-gradient">
-              CSH 50th
-            </span>
+            <img 
+              src="/csh-50th-logo.png" 
+              alt="CSH 50th Anniversary" 
+              className="h-10 md:h-12 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}

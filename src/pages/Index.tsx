@@ -26,20 +26,21 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 animate-fade-up">
+            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 mt-12 animate-fade-up">
               <Sparkles className="w-4 h-4 text-csh-magenta" />
               <span className="text-sm font-medium text-muted-foreground">
                 April 10-12, 2026 • Rochester, NY
               </span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              <span className="text-foreground">CSH </span>
-              <span className="text-gradient">50th</span>
-              <br />
-              <span className="text-foreground">Anniversary</span>
-            </h1>
+            {/* Main Headline - Logo */}
+            <div className="mb-6 animate-fade-up flex justify-center" style={{ animationDelay: "0.1s" }}>
+              <img 
+                src="/csh-50th-logo.png" 
+                alt="CSH 50th Anniversary" 
+                className="w-full max-w-md h-auto"
+              />
+            </div>
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
