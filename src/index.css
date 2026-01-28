@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* CSH Brand Colors - Dark Theme */
+    /* Golden Anniversary - Dark Theme */
     --background: 240 10% 6%;
     --foreground: 0 0% 98%;
 
@@ -16,35 +16,35 @@
     --popover: 240 10% 10%;
     --popover-foreground: 0 0% 98%;
 
-    /* Primary: CSH Magenta #B0197E */
-    --primary: 322 78% 39%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary: Rich Goldenrod #DAA520 */
+    --primary: 43 74% 49%;
+    --primary-foreground: 240 10% 6%;
 
-    /* Secondary: CSH Red #E11C52 */
-    --secondary: 346 79% 50%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary: Warm Gold */
+    --secondary: 45 85% 55%;
+    --secondary-foreground: 240 10% 6%;
 
     --muted: 240 10% 16%;
     --muted-foreground: 240 5% 65%;
 
-    --accent: 322 78% 39%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 43 74% 49%;
+    --accent-foreground: 240 10% 6%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 240 10% 20%;
     --input: 240 10% 20%;
-    --ring: 322 78% 39%;
+    --ring: 43 74% 49%;
 
     --radius: 0.75rem;
 
-    /* Custom CSH tokens */
-    --csh-magenta: 322 78% 39%;
-    --csh-red: 346 79% 50%;
-    --csh-gradient: linear-gradient(135deg, hsl(322, 78%, 39%) 0%, hsl(346, 79%, 50%) 100%);
-    --csh-gradient-soft: linear-gradient(135deg, hsl(322, 78%, 39%, 0.2) 0%, hsl(346, 79%, 50%, 0.2) 100%);
-    --csh-glow: 0 0 60px hsl(322, 78%, 39%, 0.4);
+    /* Golden Anniversary tokens */
+    --csh-magenta: 43 74% 49%;
+    --csh-red: 45 85% 55%;
+    --csh-gradient: linear-gradient(135deg, hsl(43, 74%, 49%) 0%, hsl(45, 85%, 55%) 100%);
+    --csh-gradient-soft: linear-gradient(135deg, hsl(43, 74%, 49%, 0.2) 0%, hsl(45, 85%, 55%, 0.2) 100%);
+    --csh-glow: 0 0 60px hsl(43, 74%, 49%, 0.4);
     
     /* Glass effect */
     --glass-bg: hsl(240, 10%, 10%, 0.8);
@@ -121,8 +121,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 30px hsl(322, 78%, 39%, 0.3); }
-  50% { box-shadow: 0 0 60px hsl(346, 79%, 50%, 0.5); }
+  0%, 100% { box-shadow: 0 0 30px hsl(43, 74%, 49%, 0.3); }
+  50% { box-shadow: 0 0 60px hsl(45, 85%, 55%, 0.5); }
 }
 
 @keyframes fade-up {

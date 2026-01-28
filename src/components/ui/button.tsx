@@ -16,8 +16,8 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // CSH branded variants
-        hero: "bg-gradient-to-r from-[hsl(322,78%,39%)] to-[hsl(346,79%,50%)] text-white font-semibold shadow-lg shadow-[hsl(322,78%,39%)]/30 hover:scale-105 hover:shadow-xl hover:shadow-[hsl(322,78%,39%)]/40",
-        "hero-outline": "border-2 border-[hsl(322,78%,39%)] bg-transparent text-foreground hover:bg-[hsl(322,78%,39%)]/10 hover:border-[hsl(346,79%,50%)]",
+        hero: "bg-gradient-to-r from-[hsl(43,74%,49%)] to-[hsl(45,85%,55%)] text-black font-semibold shadow-lg shadow-[hsl(43,74%,49%)]/30 hover:scale-105 hover:shadow-xl hover:shadow-[hsl(43,74%,49%)]/40",
+        "hero-outline": "border-2 border-[hsl(43,74%,49%)] bg-transparent text-foreground hover:bg-[hsl(43,74%,49%)]/10 hover:border-[hsl(45,85%,55%)]",
         glass: "bg-[hsl(240,10%,10%)]/80 backdrop-blur-xl border border-[hsl(240,10%,25%)]/50 text-foreground hover:bg-[hsl(240,10%,16%)]/80",
       },
       size: {
