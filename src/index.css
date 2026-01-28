@@ -6,54 +6,54 @@
 
 @layer base {
   :root {
-    /* CSH Brand Colors - Dark Theme */
-    --background: 240 10% 6%;
-    --foreground: 0 0% 98%;
+    /* CSH Brand Colors - Gold Theme */
+    --background: 45 80% 65%;
+    --foreground: 240 10% 10%;
 
-    --card: 240 10% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 45 70% 55%;
+    --card-foreground: 240 10% 10%;
 
-    --popover: 240 10% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 45 70% 55%;
+    --popover-foreground: 240 10% 10%;
 
-    /* Primary: CSH Magenta #B0197E */
-    --primary: 322 78% 39%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary: Dark Gray/Black for buttons */
+    --primary: 240 10% 10%;
+    --primary-foreground: 45 80% 65%;
 
-    /* Secondary: CSH Red #E11C52 */
-    --secondary: 346 79% 50%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary: Darker shade */
+    --secondary: 240 10% 20%;
+    --secondary-foreground: 45 80% 65%;
 
-    --muted: 240 10% 16%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 45 60% 50%;
+    --muted-foreground: 240 10% 25%;
 
-    --accent: 322 78% 39%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 240 10% 10%;
+    --accent-foreground: 45 80% 65%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 10% 20%;
-    --input: 240 10% 20%;
-    --ring: 322 78% 39%;
+    --border: 45 40% 45%;
+    --input: 45 40% 45%;
+    --ring: 240 10% 10%;
 
     --radius: 0.75rem;
 
-    /* Custom CSH tokens */
-    --csh-magenta: 322 78% 39%;
-    --csh-red: 346 79% 50%;
-    --csh-gradient: linear-gradient(135deg, hsl(322, 78%, 39%) 0%, hsl(346, 79%, 50%) 100%);
-    --csh-gradient-soft: linear-gradient(135deg, hsl(322, 78%, 39%, 0.2) 0%, hsl(346, 79%, 50%, 0.2) 100%);
-    --csh-glow: 0 0 60px hsl(322, 78%, 39%, 0.4);
+    /* Custom CSH tokens - Updated for gold theme */
+    --csh-magenta: 240 10% 10%;
+    --csh-red: 240 10% 20%;
+    --csh-gradient: linear-gradient(135deg, hsl(240, 10%, 10%) 0%, hsl(240, 10%, 20%) 100%);
+    --csh-gradient-soft: linear-gradient(135deg, hsl(240, 10%, 10%, 0.2) 0%, hsl(240, 10%, 20%, 0.2) 100%);
+    --csh-glow: 0 0 60px hsl(240, 10%, 10%, 0.4);
     
     /* Glass effect */
-    --glass-bg: hsl(240, 10%, 10%, 0.8);
-    --glass-border: hsl(240, 10%, 25%, 0.5);
+    --glass-bg: hsl(45, 70%, 55%, 0.8);
+    --glass-border: hsl(45, 40%, 45%, 0.5);
   }
 
   .dark {
-    --background: 240 10% 6%;
-    --foreground: 0 0% 98%;
+    --background: 45 80% 65%;
+    --foreground: 240 10% 10%;
   }
 }
 

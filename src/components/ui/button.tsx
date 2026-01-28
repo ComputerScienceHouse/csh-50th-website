@@ -16,9 +16,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // CSH branded variants
-        hero: "bg-gradient-to-r from-[hsl(322,78%,39%)] to-[hsl(346,79%,50%)] text-white font-semibold shadow-lg shadow-[hsl(322,78%,39%)]/30 hover:scale-105 hover:shadow-xl hover:shadow-[hsl(322,78%,39%)]/40",
-        "hero-outline": "border-2 border-[hsl(322,78%,39%)] bg-transparent text-foreground hover:bg-[hsl(322,78%,39%)]/10 hover:border-[hsl(346,79%,50%)]",
-        glass: "bg-[hsl(240,10%,10%)]/80 backdrop-blur-xl border border-[hsl(240,10%,25%)]/50 text-foreground hover:bg-[hsl(240,10%,16%)]/80",
+        hero: "bg-gradient-to-r from-[hsl(240,10%,10%)] to-[hsl(240,10%,20%)] text-[hsl(45,80%,65%)] font-semibold shadow-lg shadow-[hsl(240,10%,10%)]/30 hover:scale-105 hover:shadow-xl hover:shadow-[hsl(240,10%,10%)]/40",
+        "hero-outline": "border-2 border-[hsl(240,10%,10%)] bg-transparent text-[hsl(240,10%,10%)] hover:bg-[hsl(240,10%,10%)]/10 hover:border-[hsl(240,10%,20%)]",
+        glass: "bg-[hsl(45,70%,55%)]/80 backdrop-blur-xl border border-[hsl(45,40%,45%)]/50 text-[hsl(240,10%,10%)] hover:bg-[hsl(45,60%,50%)]/80",
       },
       size: {
         default: "h-10 px-4 py-2",
