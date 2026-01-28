@@ -12,7 +12,7 @@ export function Footer() {
             </span>
             <p className="mt-4 text-muted-foreground max-w-md">
               Celebrating 50 years of Computer Science House. 
-              Join us for a weekend of memories, connections, and innovation.
+              Join us for a weekend of memories, connections, and celebration.
             </p>
           </div>
 
