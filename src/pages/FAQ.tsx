@@ -82,7 +82,7 @@ const faqCategories = [
       },
       {
         question: "Where is the gala dinner being held?",
-        answer: "The Saturday evening gala dinner will be held at VENUE in Rochester. Exact address and directions will be provided closer to the event.", // PLACEHOLDER: Replace VENUE with actual venue name
+        answer: "The Saturday evening gala dinner will be held at The Wintergarden in Rochester. Exact address and directions will be provided closer to the event.",
       },
       {
         question: "Can I attend just the gala dinner?",

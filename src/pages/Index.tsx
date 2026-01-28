@@ -3,8 +3,20 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Ticket, Calendar, MapPin, Users, ArrowRight, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const Index = () => {
+  const [wordIndex, setWordIndex] = useState(0);
+  const words = ["Remember", "Celebrate", "Reconnect"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % words.length);
+    }, 3000); // Change word every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Layout>
       {/* Notice Banner */}
@@ -44,8 +56,7 @@ const Index = () => {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Celebrating 50 years of innovation, community, and excellence at 
-              Computer Science House. Join 500+ alumni and members for an unforgettable weekend.
+              Celebrating 50 years of Computer Science House. Join us for an unforgettable celebration.
             </p>
 
             {/* CTA Buttons */}
@@ -82,10 +93,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-              A Weekend to <span className="text-gradient">Remember</span>
+              A Weekend to <span className="text-gradient inline-block min-w-[200px] animate-[fadeInUp_0.6s_ease-out]" key={wordIndex} style={{ animation: 'fadeInUp 0.6s ease-out' }}>{words[wordIndex]}</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Three days of events, reconnections, and celebrations with the CSH community.
+              Three days of events, reconnections, and celebrations with CSH.
             </p>
           </div>
 
@@ -97,7 +108,7 @@ const Index = () => {
               </div>
               <h3 className="text-xl font-display font-semibold mb-2">Friday, April 10</h3>
               <p className="text-muted-foreground mb-4">
-                Kick off the weekend with arrival, registration, and casual meetups with fellow alumni.
+                Kick off the weekend with campus and floor tours, photo hunt, and a happy hour with fellow alumni.
               </p>
               <Link to="/schedule" className="text-csh-magenta hover:text-csh-red transition-colors font-medium inline-flex items-center gap-1">
                 View Schedule <ArrowRight className="w-4 h-4" />
@@ -111,8 +122,7 @@ const Index = () => {
               </div>
               <h3 className="text-xl font-display font-semibold mb-2">Saturday, April 11</h3>
               <p className="text-muted-foreground mb-4">
-                {/* PLACEHOLDER: Update venue name when confirmed */}
-                The main event! Tours, activities during the day, and formal dinner at VENUE in the evening.
+                Celebrate 5 decades of CSH with a formal dinner at The Wintergarden.
               </p>
               <Link to="/events" className="text-csh-magenta hover:text-csh-red transition-colors font-medium inline-flex items-center gap-1">
                 View Events <ArrowRight className="w-4 h-4" />
@@ -153,9 +163,8 @@ const Index = () => {
                 </h2>
                 <p className="text-muted-foreground mb-6">
                   {/* PLACEHOLDER: Update venue name and details when confirmed */}
-                  Join us for an elegant evening celebrating five decades of CSH at VENUE. 
-                  Enjoy a formal dinner, keynote speeches, awards ceremony, and time to reconnect 
-                  with friends old and new.
+                  Join us at The Wintergarden for an elegant evening, celebrating five decades of CSH.
+                  Enjoy a formal dinner, keynote speeches, and time to reconnect with friends old and new.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-muted-foreground">
@@ -165,7 +174,7 @@ const Index = () => {
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <MapPin className="w-5 h-5 text-csh-magenta" />
                     {/* PLACEHOLDER: Update venue name and address when confirmed */}
-                    <span>VENUE • Rochester, NY</span>
+                    <span>The Wintergarden • Rochester, NY</span>
                   </div>
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <Users className="w-5 h-5 text-csh-magenta" />
@@ -209,7 +218,7 @@ const Index = () => {
                   Full Schedule
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  See all events and times across the weekend
+                  See the timing for all events during the weekend
                 </p>
               </div>
             </Link>
