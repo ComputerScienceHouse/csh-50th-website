@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Ticket } from "lucide-react";
+import { Menu, X, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -49,13 +49,12 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            {/* PLACEHOLDER: Replace with actual RIT ticket purchase URL */}
-            <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer">
+            <Link to="/registration">
               <Button variant="hero" size="lg">
-                <Ticket className="w-4 h-4" />
-                Buy Tickets
+                <UserPlus className="w-4 h-4" />
+                Register
               </Button>
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
