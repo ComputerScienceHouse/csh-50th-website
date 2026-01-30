@@ -84,14 +84,6 @@ const transportOptions = [
 const Hotels = () => {
   return (
     <Layout>
-      {/* Notice Banner */}
-      <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
-        <div className="container mx-auto text-center">
-          <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-            ⚠️ This website is a work in progress. Some contents (including the schedule) are just a placeholder and are subject to change. Some links, including the RSVP and ticket links, do not work.
-          </p>
-        </div>
-      </div>
       {/* Header */}
       <section className="pt-12 pb-8">
         <div className="container mx-auto px-4">

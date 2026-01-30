@@ -19,26 +19,17 @@ const Index = () => {
 
   return (
     <Layout>
-      {/* Notice Banner */}
-      <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
-        <div className="container mx-auto text-center">
-          <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-            ⚠️ This website is a work in progress. Some contents (including the schedule) are just a placeholder and are subject to change. Some links, including the RSVP and ticket links, do not work.
-          </p>
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-8">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-csh-magenta/20 rounded-full blur-[120px] animate-pulse-glow" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-csh-red/20 rounded-full blur-[120px] animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center -mt-8">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 mt-12 animate-fade-up">
+            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 animate-fade-up">
               <Sparkles className="w-4 h-4 text-csh-magenta" />
               <span className="text-sm font-medium text-muted-foreground">
                 April 10-12, 2026 • Rochester, NY
