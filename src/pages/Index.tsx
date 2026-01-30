@@ -2,7 +2,7 @@ import { Layout } from "@/components/Layout";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Ticket, Calendar, MapPin, Users, ArrowRight, Sparkles } from "lucide-react";
+import { UserPlus, Calendar, MapPin, Users, ArrowRight, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const Index = () => {
@@ -61,20 +61,12 @@ const Index = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              {/* PLACEHOLDER: Replace with actual RIT ticket purchase URL */}
-              <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer">
+              <Link to="/registration">
                 <Button variant="hero" size="xl" className="w-full sm:w-auto">
-                  <Ticket className="w-5 h-5" />
-                  Buy Tickets
+                  <UserPlus className="w-5 h-5" />
+                  Register
                 </Button>
-              </a>
-              {/* PLACEHOLDER: Replace with actual alumni RSVP form URL */}
-              <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer">
-                <Button variant="hero-outline" size="xl" className="w-full sm:w-auto">
-                  Alumni RSVP
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </a>
+              </Link>
             </div>
 
             {/* Countdown */}

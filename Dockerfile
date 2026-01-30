@@ -25,7 +25,7 @@ RUN sed -i '/^user/d' /etc/nginx/nginx.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy nginx config
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose application port
 EXPOSE 8080
