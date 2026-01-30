@@ -117,17 +117,8 @@ const Hotels = () => {
             {hotels.map(hotel => (
               <div 
                 key={hotel.id} 
-                className={`glass rounded-2xl p-6 flex flex-col ${
-                  hotel.featured ? "border-2 border-primary/30 lg:scale-105" : ""
-                }`}
+                className="glass rounded-2xl p-6 flex flex-col"
               >
-                {hotel.featured && (
-                  <div className="flex items-center gap-2 mb-3">
-                    <Star className="w-4 h-4 text-csh-magenta fill-csh-magenta" />
-                    <span className="text-csh-magenta font-semibold text-sm">Recommended</span>
-                  </div>
-                )}
-                
                 <h3 className="text-xl font-display font-semibold mb-2">
                   {hotel.name}
                 </h3>
@@ -188,7 +179,7 @@ const Hotels = () => {
                   rel="noopener noreferrer"
                   className="mt-auto"
                 >
-                  <Button variant={hotel.featured ? "hero" : "hero-outline"} className="w-full">
+                  <Button variant="hero" className="w-full">
                     <Globe className="w-4 h-4" />
                     Book Now
                     <ExternalLink className="w-4 h-4" />
