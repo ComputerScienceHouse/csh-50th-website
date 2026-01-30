@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Globe, Car, Plane, Bus, ExternalLink, Star, DollarSign } from "lucide-react";
+import { MapPin, Phone, Globe, Car, Plane, Bus, Train, ExternalLink, Star } from "lucide-react";
 
 // PLACEHOLDER: Update all hotel and transport information as deals are confirmed
 const hotels = [
@@ -67,6 +67,16 @@ const transportOptions = [
       "Free parking available at hotels",
       "Street parking available at off-campus venues",
       "RIT address: 1 Lomb Memorial Drive, Rochester, NY 14623",
+    ],
+  },
+  {
+    icon: Train,
+    title: "By Train",
+    description: "Rochester is accessible via Amtrak at the Louise M. Slaughter Station, about 20 minutes from RIT.",
+    details: [
+      "Connects to major Northeast Corridor cities (NYC, Philadelphia, Boston, DC)",
+      "Station address: 320 Central Ave, Rochester, NY 14605",
+      "Rideshare recommended for transport from station",
     ],
   },
   {
