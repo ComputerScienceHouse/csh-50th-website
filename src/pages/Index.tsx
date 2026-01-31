@@ -121,8 +121,8 @@ const Index = () => {
               <p className="text-muted-foreground mb-4">
                 Wrap up with farewell brunch, final goodbyes, and departures.
               </p>
-              <Link to="/schedule" className="text-csh-magenta hover:text-csh-red transition-colors font-medium inline-flex items-center gap-1">
-                View Schedule <ArrowRight className="w-4 h-4" />
+              <Link to="/events" className="text-csh-magenta hover:text-csh-red transition-colors font-medium inline-flex items-center gap-1">
+                View Events <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>

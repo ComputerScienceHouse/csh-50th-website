@@ -50,42 +50,22 @@ export function Footer() {
               {/* PLACEHOLDER: Replace with actual URLs */}
               <li>
                 <a 
-                  href="PLACEHOLDER" 
+                  href="/registration" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Buy Tickets
+                  Registration
                 </a>
               </li>
               <li>
                 <a 
-                  href="PLACEHOLDER" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Alumni RSVP Form
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="PLACEHOLDER" 
+                  href="https://csh.rit.edu" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   CSH Website
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="PLACEHOLDER" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  RIT Website
                 </a>
               </li>
             </ul>
@@ -94,10 +74,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2025 Computer Science House. All rights reserved.
-          </p>
-          <p className="text-sm text-muted-foreground">
-            April 10-12, 2026 • Rochester, NY
+            © 2026 Computer Science House. All rights reserved.
           </p>
         </div>
       </div>
