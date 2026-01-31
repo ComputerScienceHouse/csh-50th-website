@@ -9,7 +9,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     title: "Check-in + RIT Archives Storybooth",
     description: "Pick up your badge, swag bag, and event materials.",
     date: "Friday, April 10, 2026",
-    time: "9:00 AM - 8:00 PM",
+    time: "9:00 AM - 8:30 PM",
     location: "CSH Floor, DSP", // PLACEHOLDER: Confirm location
     address: "Rochester Institute of Technology",
     capacity: "all attendees",
@@ -21,7 +21,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     title: "Campus & Floor Tours",
     description: "See how CSH has evolved over the years with guided tours of the floor.",
     date: "Friday",
-    time: "9:00 AM - 8:00 PM",
+    time: "9:00 AM - 8:30 PM",
     location: "CSH Floor, DSP", // PLACEHOLDER: Confirm location
     address: "Rochester Institute of Technology",
     capacity: "N/A",
@@ -57,8 +57,8 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     title: "Open Sauce Mixer",
     description: "",
     date: "Friday, April 10, 2026",
-    time: "5:30 PM - 7:30 PM",
-    location: "CSH Floor, DSP", // PLACEHOLDER: Confirm location
+    time: "6:30 PM - 8:30 PM",
+    location: "Douglass Sprague Perry Hall (DSP) 1250", // PLACEHOLDER: Confirm location
     address: "TBD",
     capacity: "Open to all attendees",
     dressCode: "Casual",
@@ -69,10 +69,10 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     title: "Alumni Happy Hour",
     description: "Informal eventing gathering for alumni to catch up over drinks.",
     date: "Friday, April 10, 2026",
-    time: "8:00 PM - 11:00 PM",
-    location: "TBD", // PLACEHOLDER: Confirm location
+    time: "8:30 PM - 11:00 PM",
+    location: "Bars of Alumni Choosing", // PLACEHOLDER: Confirm location
     address: "TBD",
-    capacity: "Open to all attendees",
+    capacity: "",
     dressCode: "Casual",
     type: "social",
 
@@ -95,7 +95,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     description: "Explore RIT campus and see how it has changed since your time here. Visit new buildings, facilities, and learn about the university's growth.",
     date: "Saturday, April 11, 2026",
     time: "9:00 AM - 1:00 PM",
-    location: "Meet at SHED 1300", // PLACEHOLDER: Confirm meeting point
+    location: "Start at SHED 1300", // PLACEHOLDER: Confirm meeting point
     address: "Rochester Institute of Technology",
     capacity: "Multiple groups",
     dressCode: "Casual (comfortable walking shoes)",
@@ -106,15 +106,27 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     title: "University Advancement Donor Breakfast",
     description: "",
     date: "Saturday, April 11, 2026",
-    time: "10:00 AM - 12:30 PM",
-    location: "TBD", // PLACEHOLDER: Confirm location
-    address: "Rochester Institute of Technology",
+    time: "9:30 AM - 11:30 AM",
+    location: "Tait Preserve", // Confirm location
+    address: "",
     capacity: "200 seats",
     dressCode: "TBD",
     type: "food",
   },
   {
     id: 10,
+    title: "Lunch",
+    description: "",
+    date: "Saturday, April 11, 2026",
+    time: "12:00 PM - 2:00 PM",
+    location: "TBD", // PLACEHOLDER: Confirm location
+    address: "",
+    capacity: "",
+    dressCode: "",
+    type: "food",
+  },
+  {
+    id: 11,
     title: "Dismiss for Dinner",
     description: "",
     date: "Saturday, April 11, 2026",
@@ -126,7 +138,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "social",
   },
   {
-    id: 11,
+    id: 12,
     title: "Bus Runs To The Wintergarden",
     description: "",
     date: "Saturday, April 11, 2026",
@@ -138,7 +150,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "social",
   },
   {
-    id: 12,
+    id: 13,
     title: "CSH 50th Dinner",
     description: "The highlight of the weekend! Join us for an elegant formal dinner celebrating 50 years of CSH. Enjoy a delicious meal, keynote speeches from notable alumni, awards ceremony honoring CSH's legacy, and plenty of time to reconnect with friends.",
     date: "Saturday, April 11, 2026",
@@ -150,7 +162,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "main",
   },
   {
-    id: 13,
+    id: 14,
     title: "Photo Hunt Ends",
     description: "",
     date: "Saturday, April 11, 2026",
@@ -162,7 +174,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "activity",
   },
   {
-    id: 14,
+    id: 15,
     title: "Showcase of Photo Hunt (Not Judged)",
     description: "",
     date: "Saturday, April 11, 2026",
@@ -187,14 +199,14 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
   },
   {
     id: 16,
-    title: "Brunch",
+    title: "After Party at Swillburger",
     description: "Before you head home, join us for a farewell brunch. Last chance to exchange contact info, take group photos, and say your goodbyes.",
     date: "Sunday, April 12, 2026",
-    time: "11:00 AM - 1:00 PM",
-    location: "TBD", // PLACEHOLDER: Confirm location
-    address: "TBD",
-    capacity: "Open to all attendees",
-    dressCode: "Casual",
+    time: "11:00 AM - 3:00 PM",
+    location: "", // Confirm location
+    address: "",
+    capacity: "",
+    dressCode: "TBD",
     type: "food",
   }
 ]
