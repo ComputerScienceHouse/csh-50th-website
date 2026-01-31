@@ -85,12 +85,12 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              {/* PLACEHOLDER: Replace with actual RIT ticket purchase URL */}
               <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer" className="mt-2">
-                <Button variant="hero" className="w-full">
-                  <Ticket className="w-4 h-4" />
-                  Buy Tickets
-                </Button>
+                <Link to="/registration">
+                  <Button variant="hero" className="w-full">
+                    Buy Tickets
+                  </Button>
+                </Link>
               </a>
             </div>
           </div>
