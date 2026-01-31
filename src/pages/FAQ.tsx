@@ -19,15 +19,19 @@ const faqCategories = [
       },
       {
         question: "Who can attend the 50th anniversary events?",
-        answer: "The event is open to CSH alumni, current members, and their guests. Some events may have capacity limits, so we encourage early registration.",
+        answer: "The event is open to CSH alumni, advisors, honorary members, current members, and their guests..",
       },
       {
         question: "How much does it cost to attend?",
-        answer: "Ticket prices vary by event. The main gala dinner requires a separate ticket purchase. Please check the ticket page for current pricing and packages.", // PLACEHOLDER: Update with actual pricing when available
+        answer: "Ticket prices vary by event. The main gala dinner, the open sauce mixer, and Sunday brunch require their own ticket purchases. Tickets will be available for purchase soon.",
       },
       {
         question: "Is there a dress code?",
-        answer: "The Saturday evening gala dinner is a formal event (black tie optional). Other events throughout the weekend are casual unless otherwise noted.",
+        answer: "Yes, the dress code for our Saturday evening gala dinner is black tie option. This means tuxedos, floor-length gowns, dark colored suits, or cocktail dresses. For all other events over the weekend, the dress code is casual.",
+      },
+      {
+        question: "Will there be merchandise?",
+        answer: "Yes, there will be merchandise available for purchase.",
       },
     ],
   },
@@ -36,19 +40,19 @@ const faqCategories = [
     questions: [
       {
         question: "How do I register for the event?",
-        answer: "You can register and purchase tickets through the official ticket page (link in navigation). Alumni should also fill out the RSVP form to help us plan accordingly.", // PLACEHOLDER: Clarify registration process
+        answer: "To register, please fill out the registration form. A button is at the top of this page.",
       },
       {
         question: "Can I get a refund if I can't attend?",
-        answer: "Refund policies will be detailed on the ticket purchase page. Generally, refunds are available up to [X] days before the event.", // PLACEHOLDER: Update with actual refund policy
+        answer: "Refund policies will be detailed on the ticket purchase page when that is finalized.",
       },
       {
         question: "Can I bring guests?",
-        answer: "Yes! When purchasing tickets, you can add guest tickets. Please register all guests so we can plan accordingly.",
+        answer: "Yes! The registration form must be filled out individually for all guests, so please fill it out on their behalf or send it to them accordingly. Guests must also have their own ticket for each event, or you can purchase one on their behalf.",
       },
       {
         question: "Is there a deadline to register?",
-        answer: "While there's no strict deadline, we encourage early registration to help us plan. Some events may reach capacity, so registering early ensures your spot.", // PLACEHOLDER: Add actual deadline if applicable
+        answer: "The deadline to register is March 15th at 11:59PM.",
       },
     ],
   },
@@ -57,7 +61,7 @@ const faqCategories = [
     questions: [
       {
         question: "Are there hotel room blocks available?",
-        answer: "Yes! We've secured special rates at several hotels near RIT. Visit the Hotels page for details and booking codes.",
+        answer: "Yes! We've secured special rates at two hotels near RIT and one hotel in downtown Rochester. Visit the Hotels page for details and booking links.",
       },
       {
         question: "What's the closest airport?",
@@ -65,11 +69,11 @@ const faqCategories = [
       },
       {
         question: "Will there be shuttle service?",
-        answer: "We're working on arranging shuttle service between hotels and event venues. Details will be updated as they're confirmed.", // PLACEHOLDER: Update when shuttle plans are finalized
+        answer: "Yes, there will a shuttle service for the main gala dinner. Buses will depart at 3:30PM and will do 3 rounds. Routes will include Hampton Inn (Henrietta), Courtyard Marriot (Brighton), and the RIT campus. They do NOT include Hilton Garden Inn Rochester Downtown. After the gala dinner, all buses will depart the venue at 10PM and stop one time at all three locations. The buses are first come, first serve, and space is not guaranteed.",
       },
       {
         question: "Is parking available?",
-        answer: "Yes, parking is available at RIT. For events that aren't at RIT, street parking will be available.", // PLACEHOLDER: Update with specific parking info
+        answer: "Yes, parking is available at RIT. For events that aren't at RIT, street parking will be available.",
       },
     ],
   },
@@ -78,7 +82,7 @@ const faqCategories = [
     questions: [
       {
         question: "What events are included with registration?",
-        answer: "Registration includes access to daytime events, floor tours, panels, and social gatherings. The formal gala dinner requires a separate ticket purchase.", // PLACEHOLDER: Clarify what's included
+        answer: "Registration includes access to daytime events, floor tours, panels, and social gatherings. The formal gala dinner, the open sauce mixer, and the Sunday brunch require a separate ticket purchase.",
       },
       {
         question: "Where is the gala dinner being held?",
@@ -86,11 +90,11 @@ const faqCategories = [
       },
       {
         question: "Can I attend just the gala dinner?",
-        answer: "Yes, you can purchase tickets for just the gala dinner if you can't attend the full weekend.", // PLACEHOLDER: Confirm this is accurate
+        answer: "Yes, you can purchase tickets for just the gala dinner if you can't attend the full weekend.",
       },
       {
         question: "Will there be activities for families/children?",
-        answer: "The weekend events are primarily designed for adults. Please contact us if you have specific questions about bringing children.", // PLACEHOLDER: Update based on actual family policy
+        answer: "The weekend events are primarily designed for adults, although children are welcome at most events, including the gala dinner. Please contact us if you have specific questions about bringing children.",
       },
     ],
   },
@@ -110,8 +114,8 @@ const faqCategories = [
         answer: "For general inquiries, please email 50th@csh.rit.edu or join the #50th channel on CSH Slack. We'll respond as quickly as possible.",
       },
       {
-        question: "Will there be photography/video at the event?",
-        answer: "Yes, we'll have official photographers and videographers capturing the celebration. By attending, you consent to being photographed for CSH promotional materials.",
+        question: "Will there be photography/video during the weekend?",
+        answer: "There will be photography/video during the gala dinner. During all other events, you are encouraged to take your own photos and videos. By attending, you consent to be photographed for CSH promotional material.",
       },
     ],
   },

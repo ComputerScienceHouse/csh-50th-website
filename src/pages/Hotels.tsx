@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Globe, Car, Plane, Bus, ExternalLink, Star, DollarSign } from "lucide-react";
+import { MapPin, Phone, Globe, Car, Plane, Bus, Train, ExternalLink, Star } from "lucide-react";
 
 // PLACEHOLDER: Update all hotel and transport information as deals are confirmed
 const hotels = [
@@ -11,8 +11,8 @@ const hotels = [
     address: "280 Clay Road, Rochester, NY 14623",
     phone: "(585) 475-1300",
     website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCHEHX&groupCode=CHHCSC&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT",
-    distance: "12 minutes from RIT",
-    priceRange: "$$",
+    distance: "10 minutes from RIT",
+    distanceToVenue: "15 minutes from The Wintergarden",
     amenities: ["Free WiFi", "Free Parking", "Breakfast Included 6:00-10:00AM", "Indoor Pool", "Fitness Center", "Pet-Friendly Rooms"],
     specialRate: "$159/night", 
     bookingCode: null,
@@ -25,8 +25,8 @@ const hotels = [
     address: "33 Corporate Woods, Rochester, NY 14623", 
     phone: "(585) 292-1000", 
     website: "https://app.marriott.com/reslink?id=1768599322125&key=GRP&app=resvlink",
-    distance: "12 minutes from RIT",
-    priceRange: "$$",
+    distance: "10 minutes from RIT",
+    distanceToVenue: "15 minutes from The Wintergarden",
     amenities: ["Free WiFi", "On-site Restaurant", "Pool", "Fitness Center", "Business Center", "EV Charging Stations", "Free Parking", "Meeting/Event Space"],
     specialRate: "$154/night", 
     bookingCode: null, // PLACEHOLDER: Replace with actual booking code if applicable
@@ -40,7 +40,7 @@ const hotels = [
     phone: "(585) 232-5000", 
     website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCEMGI&groupCode=91I&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT", 
     distance: "20 minutes from RIT",
-    priceRange: "$$",
+    distanceToVenue: "2 minutes (walking) from The Wintergarden",
     amenities: ["Free WiFi", "Non-smoking rooms", "On-site restaurant", "Indoor pool", "Fitness center", "Pet-friendly rooms"],
     specialRate: "$169/night", // PLACEHOLDER: Replace with actual negotiated rate
     bookingCode: null,
@@ -67,6 +67,16 @@ const transportOptions = [
       "Free parking available at hotels",
       "Street parking available at off-campus venues",
       "RIT address: 1 Lomb Memorial Drive, Rochester, NY 14623",
+    ],
+  },
+  {
+    icon: Train,
+    title: "By Train",
+    description: "Rochester is accessible via Amtrak at the Louise M. Slaughter Station, about 20 minutes from RIT.",
+    details: [
+      "Connects to major Northeast Corridor cities (NYC, Philadelphia, Boston, DC)",
+      "Station address: 320 Central Ave, Rochester, NY 14605",
+      "Rideshare recommended for transport from station",
     ],
   },
   {
@@ -115,14 +125,9 @@ const Hotels = () => {
                   {hotel.name}
                 </h3>
                 
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex flex-col gap-1 mb-3">
                   <span className="text-muted-foreground text-sm">{hotel.distance}</span>
-                  <span className="text-muted-foreground">•</span>
-                  <span className="flex items-center gap-1 text-muted-foreground text-sm">
-                    {Array.from({ length: hotel.priceRange.length }).map((_, i) => (
-                      <DollarSign key={i} className="w-3 h-3" />
-                    ))}
-                  </span>
+                  <span className="text-muted-foreground text-sm">{hotel.distanceToVenue}</span>
                 </div>
                 
                 <p className="text-muted-foreground text-sm mb-4 flex-grow">
