@@ -19,15 +19,15 @@ const faqCategories = [
       },
       {
         question: "Who can attend the 50th anniversary events?",
-        answer: "The event is open to CSH alumni, advisors, honorary members, current members, and their guests..",
+        answer: "The event is open to CSH alumni, advisors, honorary members, current members, and their guests.",
       },
       {
         question: "How much does it cost to attend?",
-        answer: "Ticket prices vary by event. The main gala dinner, the open sauce mixer, and Sunday brunch require their own ticket purchases. Tickets will be available for purchase soon.",
+        answer: "Attending CSH 50th is free. A few events however will require paid tickets. Ticket prices vary by event. Ticketed events include the Open Sauce Mixer on Friday, the Formal Dinner at Wintergarden on Saturday, and the After Party at Swillburger/The Playhouse on Sunday. If you indicate when registering that you are interested in these events, we will reach out to you when tickets become available to purchase.",
       },
       {
         question: "Is there a dress code?",
-        answer: "Yes, the dress code for our Saturday evening gala dinner is black tie option. This means tuxedos, floor-length gowns, dark colored suits, or cocktail dresses. For all other events over the weekend, the dress code is casual.",
+        answer: "Yes, the dress code for our Formal Dinner at The Wintergarden is black tie option. This means tuxedos, floor-length gowns, dark colored suits, or cocktail dresses. For all other events over the weekend, the dress code is casual.",
       },
       {
         question: "Will there be merchandise?",
@@ -39,7 +39,7 @@ const faqCategories = [
     title: "Registration & Tickets",
     questions: [
       {
-        question: "How do I register for the event?",
+        question: "How do I register for CSH 50th?",
         answer: "To register, please fill out the registration form. A button is at the top of this page.",
       },
       {
@@ -61,7 +61,7 @@ const faqCategories = [
     questions: [
       {
         question: "Are there hotel room blocks available?",
-        answer: "Yes! We've secured special rates at two hotels near RIT and one hotel in downtown Rochester. Visit the Hotels page for details and booking links.",
+        answer: "Yes! We have three hotels. Visit the Hotels page for details and booking links.",
       },
       {
         question: "What's the closest airport?",
@@ -69,11 +69,11 @@ const faqCategories = [
       },
       {
         question: "Will there be shuttle service?",
-        answer: "Yes, there will a shuttle service for the main gala dinner. Buses will depart at 3:30PM and will do 3 rounds. Routes will include Hampton Inn (Henrietta), Courtyard Marriot (Brighton), and the RIT campus. They do NOT include Hilton Garden Inn Rochester Downtown. After the gala dinner, all buses will depart the venue at 10PM and stop one time at all three locations. The buses are first come, first serve, and space is not guaranteed.",
+        answer: "Yes, there will a shuttle service for the Formal Dinner at The Wintergarden. Buses will depart at 3:30PM and will do 3 rounds. Routes will include Hampton Inn (Henrietta), Courtyard Marriot (Brighton), and the RIT campus. They do NOT include Hilton Garden Inn Rochester Downtown. After the Formal Dinner at The Wintergarden, all buses will depart the venue at 10PM and stop one time at all three locations. The buses are first come, first serve, and space is not guaranteed.",
       },
       {
         question: "Is parking available?",
-        answer: "Yes, parking is available at RIT. For events that aren't at RIT, street parking will be available.",
+        answer: "Yes, parking is available at RIT. For events that aren't at RIT, street parking will be available. https://www.rit.edu/parking/visitors",
       },
     ],
   },
@@ -82,19 +82,19 @@ const faqCategories = [
     questions: [
       {
         question: "What events are included with registration?",
-        answer: "Registration includes access to daytime events, floor tours, panels, and social gatherings. The formal gala dinner, the open sauce mixer, and the Sunday brunch require a separate ticket purchase.",
+        answer: "Registration includes access to daytime events, floor tours, panels, and social gatherings. The Formal Dinner at The Wintergarden, the Open Sauce Mixer, and the After Party at Swillburger/The Playhouse will require a separate ticket purchase that is not included in your registration.",
       },
       {
-        question: "Where is the gala dinner being held?",
-        answer: "The Saturday evening gala dinner will be held at The Wintergarden in Rochester. Exact address and directions will be provided closer to the event.",
+        question: "Where is the Formal Dinner being held?",
+        answer: "The Saturday evening Formal Dinner will be held at The Wintergarden in Rochester. Exact address and directions will be provided closer to the event. There will also be a bus service",
       },
       {
-        question: "Can I attend just the gala dinner?",
-        answer: "Yes, you can purchase tickets for just the gala dinner if you can't attend the full weekend.",
+        question: "Can I attend just the Formal Dinner at the Wintergarden?",
+        answer: "Yes, you can purchase tickets for just the Formal Dinner if you can't attend the full weekend.",
       },
       {
         question: "Will there be activities for families/children?",
-        answer: "The weekend events are primarily designed for adults, although children are welcome at most events, including the gala dinner. Please contact us if you have specific questions about bringing children.",
+        answer: "The weekend events are primarily designed for adults, although children are welcome at most events, including the Formal Dinner at the Wintergarden. Please contact us if you have specific questions about bringing children.",
       },
     ],
   },
@@ -103,11 +103,11 @@ const faqCategories = [
     questions: [
       {
         question: "How can I help or volunteer?",
-        answer: "We welcome any help! Please reach out to the 50th planning committee by joining the #50th channel on Slack, or by emailing 50th@csh.rit.edu",
+        answer: "We welcome any help! Please reach out to the CSH 50th Planning Committee by joining the #50th channel on Slack, or by emailing 50th@csh.rit.edu",
       },
       {
         question: "I'm a current CSH member. How do I get involved?",
-        answer: "Current members should speak with the CSH 50th planning committee for opportunities to help and participate. The best way to get involved is by joining the #50th channel on CSH Slack.",
+        answer: "Current members should speak with the CSH 50th Planning Committee for opportunities to help and participate. The best way to get involved is by joining the #50th channel on CSH Slack.",
       },
       {
         question: "Who do I contact with questions?",
@@ -115,7 +115,7 @@ const faqCategories = [
       },
       {
         question: "Will there be photography/video during the weekend?",
-        answer: "There will be photography/video during the gala dinner. During all other events, you are encouraged to take your own photos and videos. By attending, you consent to be photographed for CSH promotional material.",
+        answer: "There will be photography/video during the Formal Dinner at The Wintergarden. During all other events, you are encouraged to take your own photos and videos. By attending, you consent to be photographed for CSH promotional material. There will also be a modified Photohunt occurring during the 50th, which encourages all participants to take as many cool pictures as they can. These photos will be shown at the Formal Dinner.",
       },
     ],
   },
@@ -218,9 +218,9 @@ const FAQ = () => {
               <Button variant="glass">Hotels & Travel</Button>
             </a>
             {/* PLACEHOLDER: Replace with actual ticket URL */}
-            <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer">
+            {/* <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer">
               <Button variant="glass">Buy Tickets</Button>
-            </a>
+            </a> */}
           </div>
         </div>
       </section>
