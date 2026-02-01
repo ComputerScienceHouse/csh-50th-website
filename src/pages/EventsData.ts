@@ -158,7 +158,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     location: "The Wintergarden", // PLACEHOLDER: Replace with actual venue name
     address: "TBD, Rochester, NY",
     capacity: "500 guests",      
-    dressCode: "Formal",
+    dressCode: "Black Tie Optional",
     type: "main",
   },
   {
