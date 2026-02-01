@@ -23,7 +23,7 @@ const faqCategories = [
       },
       {
         question: "How much does it cost to attend?",
-        answer: "Attending CSH 50th is free. A few events however will require paid tickets. Ticket prices vary by event. Ticketed events include the Open Sauce Mixer on Friday, the Formal Dinner at Wintergarden on Saturday, and the After Party at Swillburger/The Playhouse on Sunday. If you indicate when registering that you are interested in these events, we will reach out to you when tickets become available to purchase.",
+        answer: "Attending CSH 50th is free. A few events however will require paid tickets. Ticket prices vary by event. Ticketed events include the Open Sauce Mixer on Friday, the Formal Dinner at Wintergarden on Saturday, and the Farewell Party at Swillburger/The Playhouse on Sunday. If you indicate when registering that you are interested in these events, we will reach out to you when tickets become available to purchase.",
       },
       {
         question: "Is there a dress code?",
@@ -82,7 +82,7 @@ const faqCategories = [
     questions: [
       {
         question: "What events are included with registration?",
-        answer: "Registration includes access to daytime events, floor tours, panels, and social gatherings. The Formal Dinner at The Wintergarden, the Open Sauce Mixer, and the After Party at Swillburger/The Playhouse will require a separate ticket purchase that is not included in your registration.",
+        answer: "Registration includes access to daytime events, floor tours, panels, and social gatherings. The Formal Dinner at The Wintergarden, the Open Sauce Mixer, and the Farewell Party at Swillburger/The Playhouse will require a separate ticket purchase that is not included in your registration.",
       },
       {
         question: "Where is the Formal Dinner being held?",
