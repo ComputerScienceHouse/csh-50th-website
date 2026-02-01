@@ -189,13 +189,12 @@ const FAQ = () => {
                   Email Us
                 </Button>
               </a>
-              {/* PLACEHOLDER: Replace with actual CSH website/contact page */}
-              <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer">
+              {/* <a href="https://csh.rit.edu" target="_blank" rel="noopener noreferrer">
                 <Button variant="hero-outline" size="lg">
                   CSH Website
                   <ExternalLink className="w-5 h-5" />
                 </Button>
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

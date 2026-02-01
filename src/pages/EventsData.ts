@@ -103,18 +103,6 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
   },
   {
     id: 9,
-    title: "University Advancement Donor Breakfast",
-    description: "",
-    date: "Saturday, April 11, 2026",
-    time: "9:30 AM - 11:30 AM",
-    location: "Tait Preserve", // Confirm location
-    address: "",
-    capacity: "200 seats",
-    dressCode: "TBD",
-    type: "food",
-  },
-  {
-    id: 10,
     title: "Lunch",
     description: "",
     date: "Saturday, April 11, 2026",
@@ -126,7 +114,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "food",
   },
   {
-    id: 11,
+    id: 10,
     title: "Dismiss for Dinner",
     description: "",
     date: "Saturday, April 11, 2026",
@@ -138,7 +126,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "social",
   },
   {
-    id: 12,
+    id: 11,
     title: "Bus Runs To The Wintergarden",
     description: "",
     date: "Saturday, April 11, 2026",
@@ -150,7 +138,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "social",
   },
   {
-    id: 13,
+    id: 12,
     title: "CSH 50th Dinner",
     description: "The highlight of the weekend! Join us for an elegant formal dinner celebrating 50 years of CSH. Enjoy a delicious meal, keynote speeches from notable alumni, awards ceremony honoring CSH's legacy, and plenty of time to reconnect with friends.",
     date: "Saturday, April 11, 2026",
@@ -162,7 +150,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "main",
   },
   {
-    id: 14,
+    id: 13,
     title: "Photo Hunt Ends",
     description: "",
     date: "Saturday, April 11, 2026",
@@ -174,7 +162,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     type: "activity",
   },
   {
-    id: 15,
+    id: 14,
     title: "Showcase of Photo Hunt (Not Judged)",
     description: "",
     date: "Saturday, April 11, 2026",

@@ -88,7 +88,7 @@ export function Navbar() {
               <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer" className="mt-2">
                 <Link to="/registration">
                   <Button variant="hero" className="w-full">
-                    Buy Tickets
+                    Register
                   </Button>
                 </Link>
               </a>
