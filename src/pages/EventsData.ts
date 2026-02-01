@@ -187,7 +187,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
   },
   {
     id: 16,
-    title: "After Party at Swillburger",
+    title: "Farewell Party at Swillburger",
     description: "Before you head home, join us for a farewell brunch. Last chance to exchange contact info, take group photos, and say your goodbyes.",
     date: "Sunday, April 12, 2026",
     time: "11:00 AM - 3:00 PM",
