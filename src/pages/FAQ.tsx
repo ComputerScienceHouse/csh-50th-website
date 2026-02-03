@@ -27,7 +27,7 @@ const faqCategories = [
       },
       {
         question: "Is there a dress code?",
-        answer: "Yes, the dress code for our Formal Dinner at The Wintergarden is black tie optional. This means tuxedos, floor-length gowns, dark colored suits, or cocktail dresses. For all other events over the weekend, the dress code is casual.",
+        answer: "Yes, the dress code for our Formal Dinner at The Wintergarden is cocktail semi formal. This means dark colored suits or cocktail dresses. For all other events over the weekend, the dress code is casual.",
       },
       {
         question: "Will there be merchandise?",

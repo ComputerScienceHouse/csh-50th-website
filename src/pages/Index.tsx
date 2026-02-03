@@ -169,7 +169,7 @@ const Index = () => {
               <div className="flex justify-center lg:justify-end">
                 <div className="bg-gradient-csh rounded-2xl p-1">
                   <div className="bg-card rounded-xl p-8 text-center">
-                    <p className="text-sm text-muted-foreground mb-2">Black Tie Optional</p>
+                    <p className="text-sm text-muted-foreground mb-2">Cocktail Semi Formal</p>
                     <p className="text-6xl font-display font-bold text-gradient mb-2">50</p>
                     <p className="text-xl font-display font-semibold">Years of CSH</p>
                     <p className="text-muted-foreground text-sm mt-4">1976 - 2026</p>
