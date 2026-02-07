@@ -10,6 +10,7 @@ import Hotels from "./pages/Hotels";
 import FAQ from "./pages/FAQ";
 import Registration from "./pages/Registration";
 import NotFound from "./pages/NotFound";
+import OtherEvents from "./pages/OtherEvents";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/otherevents" element={<OtherEvents />} />
           <Route path="/hotels" element={<Hotels />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/registration" element={<Registration />} />
