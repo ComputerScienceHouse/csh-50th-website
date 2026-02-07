@@ -57,11 +57,12 @@ const dayLabels: Record<Day, { name: string; date: string }> = {
   sunday: { name: "Sunday", date: "April 12" },
 };
 
-const typeColors: Record<string, string> = {
+export const typeColors: Record<string, string> = {
   social: "bg-blue-500/70 text-blue-200 border-blue-500/30",
   main: "bg-gradient-csh text-primary-foreground",
   food: "bg-amber-500/70 text-amber-200 border-amber-500/30",
   activity: "bg-emerald-500/70 text-emerald-200 border-emerald-500/30",
+  external: "bg-orange-500/70 text-orange-200 border-orange-500/30"
 };
 
 /**
@@ -373,48 +374,52 @@ const Schedule = () => {
 
                 {/* Display events on the right of timeline */}
                 {scheduleData[selectedDay].map((event, index) => (
-                  incrementSectionCountBy(durationToRowSpan(event.time)), // increment the section count to have how many events are on the page
-                  <button
-                    key={index}
-                    onClick={() => {openEventPopup(event)}}
+                  event.type === "external" 
+                    ? null 
+                    : (
+                    incrementSectionCountBy(durationToRowSpan(event.time)), // increment the section count to have how many events are on the page
+                    <button
+                      key={index}
+                      onClick={() => {openEventPopup(event)}}
 
-                    className={cn(
-                      "col-start-2 col-span-1 row-span-1 overflow-y-auto flex flex-wrap border-2 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-black",
-                      event.type === "main" && "border-4 border-primary/100 glow-csh"
-                    )}
-                    style={{
-                      gridRowStart: timeToRowStart(event.time),
-                      gridRowEnd: `span ${durationToRowSpan(event.time)}`,
-                      gridColumnStart: nextColumn(),
-                    }}
-                  >
-                    {/* Content */}
-                    <div className="flex-1">
-                      {/* Time */}
-                      <div className="flex items-center gap-2 font-semibold py-2 text-csh-magenta">
-                        <Clock className="w-4 h-4" />
-                        {event.time}
+                      className={cn(
+                        "col-start-2 col-span-1 row-span-1 overflow-y-auto flex flex-wrap border-2 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-black",
+                        event.type === "main" && "border-4 border-primary/100 glow-csh"
+                      )}
+                      style={{
+                        gridRowStart: timeToRowStart(event.time),
+                        gridRowEnd: `span ${durationToRowSpan(event.time)}`,
+                        gridColumnStart: nextColumn(),
+                      }}
+                    >
+                      {/* Content */}
+                      <div className="flex-1">
+                        {/* Time */}
+                        <div className="flex items-center gap-2 font-semibold py-2 text-csh-magenta">
+                          <Clock className="w-4 h-4" />
+                          {event.time}
+                        </div>
+                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                          <h3 className="text-xl font-display font-semibold">
+                            {event.title}
+                          </h3>
+                          <span className={cn(
+                            "px-3 py-1 rounded-full text-xs font-medium border",
+                            typeColors[event.type]
+                          )}>
+                            {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                          </span>
+                        </div>
+                        <p className="text-muted-foreground mb-3 text-left">
+                          {event.description}
+                        </p>
+                        <div className="text-muted-foreground flex items-center gap-2 text-sm font-semibold">
+                          <MapPin className="w-4 h-4" />
+                          {event.location}
+                        </div>
                       </div>
-                      <div className="flex flex-wrap items-center gap-3 mb-2">
-                        <h3 className="text-xl font-display font-semibold">
-                          {event.title}
-                        </h3>
-                        <span className={cn(
-                          "px-3 py-1 rounded-full text-xs font-medium border",
-                          typeColors[event.type]
-                        )}>
-                          {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
-                        </span>
-                      </div>
-                      <p className="text-muted-foreground mb-3 text-left">
-                        {event.description}
-                      </p>
-                      <div className="text-muted-foreground flex items-center gap-2 text-sm font-semibold">
-                        <MapPin className="w-4 h-4" />
-                        {event.location}
-                      </div>
-                    </div>
-                  </button>
+                    </button>
+                    )
                 ))}
 
               </div>

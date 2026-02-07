@@ -11,5 +11,5 @@ export interface ScheduleEvent {
   address: string,
   capacity: string,
   dressCode: string,
-  type: "social" | "main" | "food" | "activity"
+  type: "social" | "main" | "food" | "activity" | "external"
 }

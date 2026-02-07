@@ -196,5 +196,29 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "",
     dressCode: "TBD",
     type: "food",
+  },
+  {
+    id: 17,
+    title: "IGM Symposium",
+    description: "https://www.rit.edu/computing/school-interactive-games-and-media/ims",
+    date: "Saturday, April 11, 2026",
+    time: "10:00 AM - 5:00 PM",
+    location: "RIT's MAGIC Spell Studios", // Confirm location
+    address: "1 Lomb Memorial Dr, Rochester, NY",
+    capacity: "",
+    dressCode: "",
+    type: "external",
+  },
+  {
+    id: 18,
+    title: "RIT Accepted Student Open House",
+    description: "https://www.rit.edu/admissions/accepted-open-house",
+    date: "Saturday, April 11, 2026",
+    time: "8:00 AM - 3:30 PM",
+    location: "RIT",
+    address: "1 Lomb Memorial Dr, Rochester, NY",
+    capacity: "",
+    dressCode: "",
+    type: "external",
   }
 ]
