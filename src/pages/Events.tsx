@@ -4,6 +4,8 @@ import { Calendar, MapPin, Clock, Users, Sparkles, ArrowRight, Ticket } from "lu
 import { Link } from "react-router-dom";
 
 import { events } from "./EventsData";
+import { typeColors } from "./Schedule";
+import { cn } from "@/lib/utils";
 
 const Events = () => {
   return (
@@ -131,6 +133,13 @@ const Events = () => {
                     <MapPin className="w-4 h-4 text-csh-magenta" />
                     {event.location}
                   </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className={cn(
+                      "px-3 py-1 rounded-full text-xs font-medium border",
+                      typeColors[event.type]
+                    )}>{event.type}</span>
+                  </div>
+
                 </div>
               </div>
             ))}
