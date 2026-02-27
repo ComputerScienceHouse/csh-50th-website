@@ -66,12 +66,12 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
   },
   {
     id: 6,
-    title: "Alumni Happy Hour",
-    description: "Informal eventing gathering for alumni to catch up over drinks.",
+    title: "After Hours Mixer",
+    description: "Informal gathering for alumni to catch up over drinks.",
     date: "Friday, April 10, 2026",
     time: "8:30 PM - 11:00 PM",
-    location: "Bars of Alumni Choosing", // PLACEHOLDER: Confirm location
-    address: "TBD",
+    location: "The Daily Refresher (Upstairs)",
+    address: "293 Alexander St Rochester, NY 14607",
     capacity: "",
     dressCode: "Casual",
     type: "social",
