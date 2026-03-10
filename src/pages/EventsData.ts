@@ -55,7 +55,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
   {
     id: 5,
     title: "Open Sauce Mixer",
-    description: "",
+    description: "Hang out with your friends and check out CSH projects that will be going to Open Sauce this year while enjoying a local staple: garbage plates from DogTown.",
     date: "Friday, April 10, 2026",
     time: "6:30 PM - 8:30 PM",
     location: "Douglass Sprague Perry Hall (DSP) 1250", // PLACEHOLDER: Confirm location
@@ -188,13 +188,13 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
   {
     id: 16,
     title: "Farewell Party at Swillburger",
-    description: "Before you head home, join us for a farewell brunch. Last chance to exchange contact info, take group photos, and say your goodbyes.",
+    description: "End the weekend with a relaxed brunch at a local favorite. Enjoy games, good food, and final farewells with the CSH community before heading home.",
     date: "Sunday, April 12, 2026",
-    time: "11:00 AM - 3:00 PM",
-    location: "", // Confirm location
+    time: "11:00 AM - 2:00 PM",
+    location: "Swillburger / The Playhouse",
     address: "",
     capacity: "",
-    dressCode: "TBD",
+    dressCode: "casual",
     type: "food",
   },
   {
