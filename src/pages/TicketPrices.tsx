@@ -211,7 +211,7 @@ const TicketPrices = () => {
 
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                 <p className="text-xs text-amber-400">
-                  <span className="font-semibold">Note:</span> You can attend without a ticket and pay cash, but purchasing helps CSH meet our minimum and makes the event possible!
+                  <span className="font-semibold">Note:</span> You can attend without a ticket and pay cash, but purchasing a ticket helps CSH meet the minimum price for hosting the event, and makes the event possible!
                 </p>
               </div>
             </div>
