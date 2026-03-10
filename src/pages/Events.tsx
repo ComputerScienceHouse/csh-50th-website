@@ -108,10 +108,12 @@ const Events = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.filter(e => (e.type.toLowerCase() != "main")).map(event => (
+            {events.map(event => (
               <div 
                 key={event.id} 
-                className="glass rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300"
+                className={cn("glass rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300",
+                  event.type === "main" && "border-2 border-primary/100 glow-csh"
+                )}
               >
                 <h3 className="text-xl font-display font-semibold mb-3">
                   {event.title}
