@@ -270,13 +270,13 @@ const Schedule = () => {
     return ( // Desktop Layout
       <Layout>
         {/* Notice Banner */}
-        <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
+        {/* <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
           <div className="container mx-auto text-center">
             <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
               ⚠️ While the main event is set in stone, some smaller events (including Sunday brunch) are a WIP and subject to change.
             </p>
           </div>
-        </div>
+        </div> */}
 
         {/* Header */}
         <section className="pt-12 pb-8">

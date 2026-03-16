@@ -51,8 +51,8 @@ const faqCategories = [
         answer: "Yes! The registration form must be filled out individually for all guests, so please fill it out on their behalf or send it to them accordingly. Guests must also have their own ticket for each event, or you can purchase one on their behalf.",
       },
       {
-        question: "Is there a deadline to register?",
-        answer: "The deadline to register is March 15th at 11:59PM.",
+        question: "Is there a deadline to register? What if I miss the deadline?",
+        answer: "The deadline to register is March 15th at 11:59PM. If you miss the deadline to register, unfortunately, we cannot offer you an event badge and swag bag. Additionally, we are unable to guarantee you a spot at any ticketed events. However, we still encourage you to attend any of the free events occurring over the course of the weekend.",
       },
     ],
   },
