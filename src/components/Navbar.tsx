@@ -10,6 +10,7 @@ const navLinks = [
   { name: "Events", path: "/events" },
   { name: "Other Events", path: "/otherevents"},
   { name: "Hotels", path: "/hotels" },
+  { name: "Ticket Prices", path: "/ticket-prices" },
   { name: "FAQ", path: "/faq" },
 ];
 
@@ -49,7 +50,7 @@ export function Navbar() {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-2">
             <Link to="/registration">
               <Button variant="hero" size="lg">
                 <UserPlus className="w-4 h-4" />
@@ -86,13 +87,13 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <a href="PLACEHOLDER" target="_blank" rel="noopener noreferrer" className="mt-2">
+              <div className="mt-2">
                 <Link to="/registration">
                   <Button variant="hero" className="w-full">
                     Register
                   </Button>
                 </Link>
-              </a>
+              </div>
             </div>
           </div>
         )}
