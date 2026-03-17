@@ -188,7 +188,7 @@ const Hotels = () => {
           
           <p className="text-center text-muted-foreground text-sm mt-8">
             {/* PLACEHOLDER: Update booking deadline when known */}
-            Special CSH Rates have expired, but we will have shuttles stopping at these hotels!
+            Special CSH Rates have expired, but we will have shuttles stopping at the Hampton Inn and Courtyard!
           </p>
         </div>
       </section>
