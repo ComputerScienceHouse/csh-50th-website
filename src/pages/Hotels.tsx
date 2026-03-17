@@ -13,7 +13,7 @@ const hotels = [
     website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCHEHX&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT",
     distance: "10 minutes from RIT",
     distanceToVenue: "15 minutes from The Wintergarden",
-    amenities: ["Free WiFi", "Free Parking", "Breakfast Included 6:00-10:00AM", "Indoor Pool", "Fitness Center", "Pet-Friendly Rooms"],
+    amenities: ["Shuttle to dinner venue", "Free WiFi", "Free Parking", "Breakfast Included 6:00-10:00AM", "Indoor Pool", "Fitness Center", "Pet-Friendly Rooms"],
     specialRate: "N/A: Expired", 
     bookingCode: null,
     featured: true,
@@ -27,7 +27,7 @@ const hotels = [
     website: "https://app.marriott.com/reslink?id=1768599322125&key=GRP&app=resvlink",
     distance: "10 minutes from RIT",
     distanceToVenue: "15 minutes from The Wintergarden",
-    amenities: ["Free WiFi", "On-site Restaurant", "Pool", "Fitness Center", "Business Center", "EV Charging Stations", "Free Parking", "Meeting/Event Space"],
+    amenities: ["Shuttle to dinner venue", "Free WiFi", "On-site Restaurant", "Pool", "Fitness Center", "Business Center", "EV Charging Stations", "Free Parking", "Meeting/Event Space"],
     specialRate: "N/A: Expired", 
     bookingCode: null, // PLACEHOLDER: Replace with actual booking code if applicable
     featured: false,
@@ -188,7 +188,7 @@ const Hotels = () => {
           
           <p className="text-center text-muted-foreground text-sm mt-8">
             {/* PLACEHOLDER: Update booking deadline when known */}
-            Book by March 11th to secure the special CSH rate. Rooms are limited!
+            Special CSH Rates have expired, but we will have shuttles stopping at these hotels!
           </p>
         </div>
       </section>
