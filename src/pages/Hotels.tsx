@@ -7,42 +7,42 @@ const hotels = [
   {
     id: 1,
     name: "Hampton Inn & Suites Rochester/Henrietta", 
-    description: "Conveniently located near RIT campus with locked special rates for CSH 50th attendees. There are 25 spots per night reserved from April 10-12, 2026.",
+    description: "Conveniently located near RIT campus with locked special rates for CSH 50th attendees. The group reservation is expired, but regular rooms may still be available.",
     address: "280 Clay Road, Rochester, NY 14623",
     phone: "(585) 475-1300",
-    website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCHEHX&groupCode=CHHCSC&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT",
+    website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCHEHX&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT",
     distance: "10 minutes from RIT",
     distanceToVenue: "15 minutes from The Wintergarden",
-    amenities: ["Free WiFi", "Free Parking", "Breakfast Included 6:00-10:00AM", "Indoor Pool", "Fitness Center", "Pet-Friendly Rooms"],
-    specialRate: "$159/night", 
+    amenities: ["Shuttle to dinner venue", "Free WiFi", "Free Parking", "Breakfast Included 6:00-10:00AM", "Indoor Pool", "Fitness Center", "Pet-Friendly Rooms"],
+    specialRate: "N/A: Expired", 
     bookingCode: null,
     featured: true,
   },
   {
     id: 2,
     name: "Courtyard by Marriott Rochester Brighton", 
-    description: "Located in a good mid-point between RIT and the venue, with a free shuttle to and from Rochester airport. There are 10 rooms per night reserved from April 10-13, 2026.",
+    description: "Located in a good mid-point between RIT and the venue, with a free shuttle to and from Rochester airport. The group reservation is expired, but regular rooms may still be available.",
     address: "33 Corporate Woods, Rochester, NY 14623", 
     phone: "(585) 292-1000", 
     website: "https://app.marriott.com/reslink?id=1768599322125&key=GRP&app=resvlink",
     distance: "10 minutes from RIT",
     distanceToVenue: "15 minutes from The Wintergarden",
-    amenities: ["Free WiFi", "On-site Restaurant", "Pool", "Fitness Center", "Business Center", "EV Charging Stations", "Free Parking", "Meeting/Event Space"],
-    specialRate: "$154/night", 
+    amenities: ["Shuttle to dinner venue", "Free WiFi", "On-site Restaurant", "Pool", "Fitness Center", "Business Center", "EV Charging Stations", "Free Parking", "Meeting/Event Space"],
+    specialRate: "N/A: Expired", 
     bookingCode: null, // PLACEHOLDER: Replace with actual booking code if applicable
     featured: false,
   },
   {
     id: 3,
     name: "Hilton Garden Inn Rochester Downtown",
-    description: "Located in downtown Rochester, it is a block away from the venue. There are 25 rooms per night reserved from April 10-12, 2026 for a single King bed.",
+    description: "Located in downtown Rochester, it is a block away from the venue. The group reservation is expired, but regular rooms may still be available.",
     address: "155 E Main St, Rochester, NY 14604", 
     phone: "(585) 232-5000", 
-    website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCEMGI&groupCode=91I&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT", 
+    website: "https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=ROCEMGI&arrivaldate=2026-04-10&departuredate=2026-04-12&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT", 
     distance: "20 minutes from RIT",
     distanceToVenue: "2 minutes (walking) from The Wintergarden",
     amenities: ["Free WiFi", "Non-smoking rooms", "On-site restaurant", "Indoor pool", "Fitness center", "Pet-friendly rooms"],
-    specialRate: "$169/night", // PLACEHOLDER: Replace with actual negotiated rate
+    specialRate: "N/A: Expired", // PLACEHOLDER: Replace with actual negotiated rate
     bookingCode: null,
     featured: false,
   },
@@ -188,7 +188,7 @@ const Hotels = () => {
           
           <p className="text-center text-muted-foreground text-sm mt-8">
             {/* PLACEHOLDER: Update booking deadline when known */}
-            Book by March 11th to secure the special CSH rate. Rooms are limited!
+            Special CSH Rates have expired, but we will have shuttles stopping at the Hampton Inn and Courtyard!
           </p>
         </div>
       </section>
