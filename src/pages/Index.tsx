@@ -152,7 +152,7 @@ const Index = () => {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <Calendar className="w-5 h-5 text-csh-magenta" />
-                    <span>Saturday, April 11, 2026 • Evening</span>
+                    <span>Saturday, April 11, 2026 • 5pm</span>
                   </div>
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <MapPin className="w-5 h-5 text-csh-magenta" />
