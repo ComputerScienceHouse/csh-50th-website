@@ -6,15 +6,28 @@ import { Link } from "react-router-dom";
 import { events } from "./EventsData";
 import { typeColors } from "./Schedule";
 import { cn } from "@/lib/utils";
+import EventPopup from "./EventPopup";
+import { ScheduleEvent } from "./ScheduleEvent";
+import { useState } from "react";
 
 const Events = () => {
+  const [openEvent, setOpenEvent] = useState<ScheduleEvent | null>(null);
+  /**
+   * Given an event, returns an EventPopup element
+   * @param event an event
+   * @returns EventPopup
+   */
+  function openEventPopup(event: ScheduleEvent) {
+    setOpenEvent(event);
+  }
+
   return (
     <Layout>
       {/* Notice Banner */}
       <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
         <div className="container mx-auto text-center">
           <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-            ⚠️ While the main event is set in stone, some smaller events (including Sunday brunch) are a WIP and subject to change.
+            ⚠️ Tickets are available for purchase! Check your email for more info. Reach out to 50th@csh.rit.edu with any questions!
           </p>
         </div>
       </div>
@@ -114,6 +127,7 @@ const Events = () => {
                 className={cn("glass rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300",
                   event.type === "main" && "border-2 border-primary/100 glow-csh"
                 )}
+                onClick={() => {openEventPopup(event)}}
               >
                 <h3 className="text-xl font-display font-semibold mb-3">
                   {event.title}
@@ -147,6 +161,25 @@ const Events = () => {
             ))}
           </div>
         </div>
+
+        {/* Popup */}
+        {openEvent && (
+          <EventPopup
+            id={openEvent.id}
+            title={openEvent.title}
+            description={openEvent.description}
+            date={openEvent.date}
+            time={openEvent.time}
+            location={openEvent.location}
+            address={openEvent.address}
+            capacity={openEvent.capacity}
+            dressCode={openEvent.dressCode}
+            type={openEvent.type}
+            onClose={() => setOpenEvent(null)}
+            typeColors = {typeColors}
+          />
+        )}
+
       </section>
 
       {/* CTA Section */}

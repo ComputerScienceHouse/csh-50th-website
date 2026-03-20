@@ -19,6 +19,15 @@ const Index = () => {
 
   return (
     <Layout>
+      {/* Notice Banner */}
+      <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
+        <div className="container mx-auto text-center">
+          <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
+            ⚠️ Tickets are available for purchase! Check your email for more info. Reach out to 50th@csh.rit.edu with any questions!
+          </p>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-8">
         {/* Background Effects */}
@@ -152,7 +161,7 @@ const Index = () => {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <Calendar className="w-5 h-5 text-csh-magenta" />
-                    <span>Saturday, April 11, 2026 • Evening</span>
+                    <span>Saturday, April 11, 2026 • 5pm</span>
                   </div>
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <MapPin className="w-5 h-5 text-csh-magenta" />

@@ -273,7 +273,7 @@ const Schedule = () => {
         <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
           <div className="container mx-auto text-center">
             <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-              ⚠️ While the main event is set in stone, some smaller events (including Sunday brunch) are a WIP and subject to change.
+              ⚠️ Tickets are available for purchase! Check your email for more info. Reach out to 50th@csh.rit.edu with any questions!
             </p>
           </div>
         </div>
@@ -407,7 +407,7 @@ const Schedule = () => {
                             "px-3 py-1 rounded-full text-xs font-medium border",
                             typeColors[event.type]
                           )}>
-                            {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                            {event.type === "main" ? "Main Event" : event.type}
                           </span>
                         </div>
                         <p className="text-muted-foreground mb-3 text-left">
@@ -459,7 +459,7 @@ const Schedule = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-blue-500/30" />
-                  <span className="text-sm text-muted-foreground">Social</span>
+                  <span className="text-sm text-muted-foreground">social</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-emerald-500/30" />
