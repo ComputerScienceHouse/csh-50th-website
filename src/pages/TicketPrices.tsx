@@ -14,7 +14,7 @@ const TicketPrices = () => {
             </h1>
             <div className="bg-amber-500/20 border-2 border-amber-500/50 rounded-xl p-4 mb-8">
               <p className="text-amber-400 font-bold text-lg">
-                ⚠️ Tickets are not yet available for purchase, but they will be in the coming weeks.
+                ⚠️ Tickets are available for purchase! Check your email for more info. Reach out to 50th@csh.rit.edu with any questions!
               </p>
             </div>
             <p className="text-muted-foreground text-lg mb-8">
@@ -184,7 +184,7 @@ const TicketPrices = () => {
                       <p className="font-semibold">All Inclusive</p>
                       <p className="text-xs text-muted-foreground">Open Bar + Meal + 50 Tokens</p>
                     </div>
-                    <p className="text-2xl font-display font-bold text-primary">$55</p>
+                    <p className="text-2xl font-display font-bold text-primary">WIP</p>
                   </div>
                 </div>
 
@@ -194,7 +194,7 @@ const TicketPrices = () => {
                       <p className="font-semibold">Standard</p>
                       <p className="text-xs text-muted-foreground">Meal Ticket + 50 Tokens</p>
                     </div>
-                    <p className="text-2xl font-display font-bold text-primary">$30</p>
+                    <p className="text-2xl font-display font-bold text-primary">WIP</p>
                   </div>
                 </div>
 
@@ -204,7 +204,7 @@ const TicketPrices = () => {
                       <p className="font-semibold">Tokens Only</p>
                       <p className="text-xs text-muted-foreground">50 Tokens</p>
                     </div>
-                    <p className="text-2xl font-display font-bold text-primary">$10</p>
+                    <p className="text-2xl font-display font-bold text-primary">WIP</p>
                   </div>
                 </div>
               </div>

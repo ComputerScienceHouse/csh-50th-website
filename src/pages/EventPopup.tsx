@@ -48,7 +48,7 @@ export default function EventPopup(event: EventPopupProps){
                                 "px-3 py-1 rounded-full text-xs font-medium border",
                                 event.typeColors[event.type]
                             )}>
-                                {event.type === "main" ? "Main Event" : event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                                {event.type === "main" ? "Main Event" : event.type}
                             </span>
                         </div>
                         <p className="text-muted-foreground mb-3 text-left">
