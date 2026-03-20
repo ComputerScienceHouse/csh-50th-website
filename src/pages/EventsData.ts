@@ -190,7 +190,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     title: "Farewell Party at Swillburger",
     description: "TICKETED EVENT! Before you head home, join us for a farewell brunch. Last chance to exchange contact info, take group photos, and say your goodbyes. Ticket packages include options for open bar, food, and play tokens.",
     date: "Sunday, April 12, 2026",
-    time: "11:00 AM - 3:00 PM",
+    time: "11:00 AM - 2:00 PM",
     location: "Swillburger/Playhouse", // Confirm location
     address: "820 South Clinton, Rochester, NY 14620",
     capacity: "All attendees",
