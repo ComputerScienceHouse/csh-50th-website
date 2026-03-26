@@ -27,7 +27,7 @@ const Events = () => {
       <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
         <div className="container mx-auto text-center">
           <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-            ⚠️ Tickets are available for purchase! Check your email for more info. Reach out to 50th@csh.rit.edu with any questions!
+            ⚠️ Tickets are available for purchase! Click on the "Tickets" tab for more info. Reach out to 50th@csh.rit.edu with any questions!
           </p>
         </div>
       </div>
@@ -46,7 +46,7 @@ const Events = () => {
               <a href="/registration" target="_blank" rel="noopener noreferrer">
                 <Button variant="hero" size="lg">
                   <Ticket className="w-5 h-5" />
-                  Register
+                  Late Registration
                 </Button>
               </a>
               <Link to="/schedule">
@@ -195,7 +195,7 @@ const Events = () => {
           <a href="/registration" target="_blank" rel="noopener noreferrer">
             <Button variant="hero" size="xl">
               <Ticket className="w-5 h-5" />
-              Register Now
+              Late Registration
               <ArrowRight className="w-5 h-5" />
             </Button>
           </a>
