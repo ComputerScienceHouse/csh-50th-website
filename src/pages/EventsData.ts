@@ -191,11 +191,23 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     description: "TICKETED EVENT! Before you head home, join us for a farewell brunch. Last chance to exchange contact info, take group photos, and say your goodbyes. Ticket packages include options for open bar, food, and play tokens.",
     date: "Sunday, April 12, 2026",
     time: "11:00 AM - 2:00 PM",
-    location: "Swillburger/Playhouse", // Confirm location
+    location: "Swillburger/Playhouse", 
     address: "820 South Clinton, Rochester, NY 14620",
     capacity: "All attendees",
     dressCode: "Casual",
     type: "food",
+  },
+  {
+    id: 19,
+    title: "Mechanical Keyboard Meetup",
+    description: "CSHers will be showing off their mechnical keyboard setups! Stop by to check it out and spend some time learning about keyboards. There will be special guests and giveaways!",
+    date: "Friday, April 10, 2026",
+    time: "12:30 PM - 2:00 PM",
+    location: "Douglass Sprague Perry Hall (DSP) Room 1250", // Confirm location
+    address: "43 Greenleaf Ct, Rochester, NY 14623",
+    capacity: "All attendees",
+    dressCode: "Casual",
+    type: "activity",
   },
   {
     id: 17,
