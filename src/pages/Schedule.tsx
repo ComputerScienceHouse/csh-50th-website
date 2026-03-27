@@ -62,6 +62,7 @@ export const typeColors: Record<string, string> = {
   main: "bg-gradient-csh text-primary-foreground",
   food: "bg-amber-500/70 text-amber-200 border-amber-500/30",
   activity: "bg-emerald-500/70 text-emerald-200 border-emerald-500/30",
+  seminar: "bg-purple-500/70 text-purple-200 border-purple-500/30",
   external: "bg-orange-500/70 text-orange-200 border-orange-500/30"
 };
 
@@ -273,7 +274,7 @@ const Schedule = () => {
         <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
           <div className="container mx-auto text-center">
             <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-              ⚠️ Tickets are available for purchase! Check your email for more info. Reach out to 50th@csh.rit.edu with any questions!
+              ⚠️ Tickets are available for purchase! Click on the "Tickets" tab for more info. Reach out to 50th@csh.rit.edu with any questions!
             </p>
           </div>
         </div>

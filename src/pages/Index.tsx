@@ -23,7 +23,7 @@ const Index = () => {
       <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
         <div className="container mx-auto text-center">
           <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-            ⚠️ Tickets are available for purchase! Check your email for more info. Reach out to 50th@csh.rit.edu with any questions!
+            ⚠️ Tickets are available for purchase! Click on the "Tickets" tab for more info. Reach out to 50th@csh.rit.edu with any questions!
           </p>
         </div>
       </div>
@@ -64,7 +64,7 @@ const Index = () => {
               <Link to="/registration">
                 <Button variant="hero" size="xl" className="w-full sm:w-auto">
                   <UserPlus className="w-5 h-5" />
-                  Register
+                  Late Registration
                 </Button>
               </Link>
             </div>

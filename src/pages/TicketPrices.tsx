@@ -10,14 +10,14 @@ const TicketPrices = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
-              Ticket <span className="text-gradient">Prices</span>
+              Ticket <span className="text-gradient">Purchasing</span>
             </h1>
-            <div className="bg-amber-500/20 border-2 border-amber-500/50 rounded-xl p-4 mb-8">
+            {/* <div className="bg-amber-500/20 border-2 border-amber-500/50 rounded-xl p-4 mb-8">
               <p className="text-amber-400 font-bold text-lg">
-                ⚠️ Tickets are available for purchase! Check your email for more info. Reach out to 50th@csh.rit.edu with any questions!
+                ⚠️ Tickets are available for purchase! Click on the "Tickets" tab for more info. Reach out to 50th@csh.rit.edu with any questions!
               </p>
-            </div>
-            <p className="text-muted-foreground text-lg mb-8">
+            </div> */}
+            {/* <p className="text-muted-foreground text-lg mb-8">
                 We will send an email to the email you provided at registration when tickets are available for purchase. If you haven't registered yet, please do so!
             </p>
             <a href="/registration" target="_blank" rel="noopener noreferrer">
@@ -25,7 +25,7 @@ const TicketPrices = () => {
                 <UserPlus className="w-5 h-5" />
                 Register For 50th
               </Button>
-            </a>
+            </a> */}
           </div>
         </div>
       </section>
@@ -40,8 +40,10 @@ const TicketPrices = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             {/* Open Sauce Mixer */}
             <div className="glass rounded-2xl p-8">
-              <h3 className="text-2xl font-display font-semibold mb-3">
-                Open Sauce Mixer
+              <h3 className="text-2xl font-display font-semibold mb-3 hover:underline">
+                <a href="https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=8EF606AA-ADED-4902-AE69-3610E0CDD7C0" target="_blank" rel="noopener noreferrer">
+                  Open Sauce Mixer
+                </a>
               </h3>
               
               <p className="text-muted-foreground text-sm mb-4">
@@ -92,8 +94,10 @@ const TicketPrices = () => {
                   Main Event
                 </span>
               </div>
-              <h3 className="text-2xl font-display font-semibold mb-3">
-                Formal Dinner
+              <h3 className="text-2xl font-display font-semibold mb-3 hover:underline">
+                <a href="https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=3F172321-51FE-45FE-81F4-369CCDBD7B85" target="_blank" rel="noopener noreferrer">
+                  Formal Dinner
+                </a>
               </h3>
               
               <p className="text-muted-foreground text-sm mb-4">
@@ -154,8 +158,10 @@ const TicketPrices = () => {
 
             {/* Farewell Brunch */}
             <div className="glass rounded-2xl p-8">
-              <h3 className="text-2xl font-display font-semibold mb-3">
-                Farewell Brunch
+              <h3 className="text-2xl font-display font-semibold mb-3 hover:underline">
+                <a href="https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=9B6701AD-A667-4D9B-9DB7-B9938CDE3FDF" target="_blank" rel="noopener noreferrer">
+                  Farewell Brunch
+                </a>
               </h3>
               
               <p className="text-muted-foreground text-sm mb-4">
@@ -182,19 +188,29 @@ const TicketPrices = () => {
                   <div className="flex justify-between items-start mb-2">
                     <div>
                       <p className="font-semibold">All Inclusive</p>
-                      <p className="text-xs text-muted-foreground">Open Bar + Meal + 50 Tokens</p>
+                      <p className="text-xs text-muted-foreground">3 Drink Tickets + Entree + Side + NA Drink + 50 Tokens</p>
                     </div>
-                    <p className="text-2xl font-display font-bold text-primary">WIP</p>
+                    <p className="text-2xl font-display font-bold text-primary">$40</p>
                   </div>
                 </div>
 
                 <div className="glass rounded-lg p-4 border border-border hover:border-primary/50 transition-colors">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <p className="font-semibold">Standard</p>
-                      <p className="text-xs text-muted-foreground">Meal Ticket + 50 Tokens</p>
+                      <p className="font-semibold">Drinks Only</p>
+                      <p className="text-xs text-muted-foreground">3 Drink Tickets</p>
                     </div>
-                    <p className="text-2xl font-display font-bold text-primary">WIP</p>
+                    <p className="text-2xl font-display font-bold text-primary">$11</p>
+                  </div>
+                </div>
+
+                <div className="glass rounded-lg p-4 border border-border hover:border-primary/50 transition-colors">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <p className="font-semibold">Meal Only</p>
+                      <p className="text-xs text-muted-foreground">Entree + Side + NA Drink</p>
+                    </div>
+                    <p className="text-2xl font-display font-bold text-primary">$18</p>
                   </div>
                 </div>
 
@@ -204,7 +220,7 @@ const TicketPrices = () => {
                       <p className="font-semibold">Tokens Only</p>
                       <p className="text-xs text-muted-foreground">50 Tokens</p>
                     </div>
-                    <p className="text-2xl font-display font-bold text-primary">WIP</p>
+                    <p className="text-2xl font-display font-bold text-primary">$12.50</p>
                   </div>
                 </div>
               </div>
@@ -220,7 +236,7 @@ const TicketPrices = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16">
+      {/* <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
             Ready to Celebrate 50 Years of CSH?
@@ -239,7 +255,7 @@ const TicketPrices = () => {
             </Button>
           </a>
         </div>
-      </section>
+      </section> */}
     </Layout>
   );
 };

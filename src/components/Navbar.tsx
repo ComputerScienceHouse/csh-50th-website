@@ -10,7 +10,7 @@ const navLinks = [
   { name: "Events", path: "/events" },
   { name: "Other Events", path: "/otherevents"},
   { name: "Hotels", path: "/hotels" },
-  { name: "Ticket Prices", path: "/ticket-prices" },
+  { name: "Tickets", path: "/ticket-prices" },
   { name: "FAQ", path: "/faq" },
 ];
 
@@ -54,7 +54,7 @@ export function Navbar() {
             <Link to="/registration">
               <Button variant="hero" size="lg">
                 <UserPlus className="w-4 h-4" />
-                Register
+                Late Registration
               </Button>
             </Link>
           </div>
@@ -90,7 +90,7 @@ export function Navbar() {
               <div className="mt-2">
                 <Link to="/registration">
                   <Button variant="hero" className="w-full">
-                    Register
+                    Late Registration
                   </Button>
                 </Link>
               </div>
