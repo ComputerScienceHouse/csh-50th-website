@@ -214,7 +214,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     title: "Seminar: Intro to GPUI and hacking on Zed",
     description: "Hosted by CSH's very own Nick Moshe (@nickm)! Learn how Zed.dev works under the hood, how to use its rust-native desktop app framework GPUI, and how to build custom plugins embedded into Zed itself.",
     date: "Friday, April 10, 2026",
-    time: "12:30 PM - 2:00 PM",
+    time: "3:00 PM - 4:00 PM",
     location: "CSH, DSP Floor 3",
     address: "43 Greenleaf Ct, Rochester, NY 14623",
     capacity: "All attendees",
