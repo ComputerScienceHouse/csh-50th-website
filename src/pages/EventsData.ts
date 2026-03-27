@@ -83,7 +83,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     description: "The check-in table will be available from 9am-1pm to accomadate attendees arriving in Rochester on Saturday. Stop by at any time to pick up your badge, swag bag, and event materials. Ask questions about the weekend's events and chat with CSHers.",
     date: "Saturday, April 11, 2026",
     time: "9:00 AM - 1:00 PM",
-    location: "TBD", // PLACEHOLDER: Confirm location
+    location: "TBD", 
     address: "TBD",
     capacity: "All attendees",
     dressCode: "Casual",
@@ -203,11 +203,23 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     description: "CSHers will be showing off their mechnical keyboard setups! Stop by to check it out and spend some time learning about keyboards. There will be special guests and giveaways!",
     date: "Friday, April 10, 2026",
     time: "12:30 PM - 2:00 PM",
-    location: "Douglass Sprague Perry Hall (DSP) Room 1250", // Confirm location
+    location: "Douglass Sprague Perry Hall (DSP) Room 1250", 
     address: "43 Greenleaf Ct, Rochester, NY 14623",
     capacity: "All attendees",
     dressCode: "Casual",
     type: "activity",
+  },
+  {
+    id: 20,
+    title: "Seminar: Intro to GPUI and hacking on Zed",
+    description: "Hosted by CSH's very own Nick Moshe (@nickm)! Learn how Zed.dev works under the hood, how to use its rust-native desktop app framework GPUI, and how to build custom plugins embedded into Zed itself.",
+    date: "Friday, April 10, 2026",
+    time: "12:30 PM - 2:00 PM",
+    location: "CSH, DSP Floor 3",
+    address: "43 Greenleaf Ct, Rochester, NY 14623",
+    capacity: "All attendees",
+    dressCode: "Casual",
+    type: "seminar",
   },
   {
     id: 17,
@@ -215,7 +227,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     description: "https://www.rit.edu/computing/school-interactive-games-and-media/ims",
     date: "Saturday, April 11, 2026",
     time: "10:00 AM - 5:00 PM",
-    location: "RIT's MAGIC Spell Studios", // Confirm location
+    location: "RIT's MAGIC Spell Studios", 
     address: "1 Lomb Memorial Dr, Rochester, NY",
     capacity: "",
     dressCode: "",

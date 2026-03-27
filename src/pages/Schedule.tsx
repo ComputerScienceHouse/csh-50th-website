@@ -62,6 +62,7 @@ export const typeColors: Record<string, string> = {
   main: "bg-gradient-csh text-primary-foreground",
   food: "bg-amber-500/70 text-amber-200 border-amber-500/30",
   activity: "bg-emerald-500/70 text-emerald-200 border-emerald-500/30",
+  seminar: "bg-purple-500/70 text-purple-200 border-purple-500/30",
   external: "bg-orange-500/70 text-orange-200 border-orange-500/30"
 };
 
