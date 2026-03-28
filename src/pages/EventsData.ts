@@ -212,7 +212,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
   {
     id: 20,
     title: "Seminar: Intro to GPUI and hacking on Zed",
-    description: "Hosted by CSH's very own Nick Moshe (@nickm)! Learn how Zed.dev works under the hood, how to use its rust-native desktop app framework GPUI, and how to build custom plugins embedded into Zed itself.",
+    description: "Hosted by Nick Moshe (@nickm)! Learn how Zed.dev works under the hood, how to use its rust-native desktop app framework GPUI, and how to build custom plugins embedded into Zed itself.",
     date: "Friday, April 10, 2026",
     time: "3:00 PM - 4:00 PM",
     location: "CSH, DSP Floor 3",
@@ -220,6 +220,18 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual",
     type: "seminar",
+  },
+  {
+    id: 21,
+    title: "Ultimate Frisbee Game!!",
+    description: "Hosted by @Mattyb! Come join us for a casual ultimate frisbee game on the GPC Turf Field. Everyone welcome! Bring your sneakers.",
+    date: "Saturday, April 11, 2026",
+    time: "10:00 AM - 12:00 PM",
+    location: "GPC Turf Field",
+    address: "",
+    capacity: "All attendees",
+    dressCode: "Casual",
+    type: "activity",
   },
   {
     id: 17,
