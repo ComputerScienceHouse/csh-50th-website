@@ -1,255 +1,261 @@
+import { useMemo } from "react";
+import { format, isAfter, isSameDay } from "date-fns";
+import { Calendar, Clock3, ExternalLink, MapPin, Ticket } from "lucide-react";
 import { Layout } from "@/components/Layout";
-import { CountdownTimer } from "@/components/CountdownTimer";
 import { Button } from "@/components/ui/button";
+import { CountdownTimer } from "@/components/CountdownTimer";
 import { Link } from "react-router-dom";
-import { UserPlus, Calendar, MapPin, Users, ArrowRight, Sparkles } from "lucide-react";
-import { useState, useEffect } from "react";
+import { events } from "./EventsData";
+import { getEventEnd, getEventStart, getEventStatus, getMapUrl, typeColors } from "./eventUtils";
+import { useLiveNow } from "@/lib/time";
+
+const FALLBACK_COUNTDOWN = "2026-04-10T09:00:00-04:00";
 
 const Index = () => {
-  const [wordIndex, setWordIndex] = useState(0);
-  const words = ["Remember", "Celebrate", "Reconnect"];
+  const now = useLiveNow(1000);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % words.length);
-    }, 3000); // Change word every 3 seconds
-
-    return () => clearInterval(interval);
+  const sortedEvents = useMemo(() => {
+    return [...events].sort((a, b) => getEventStart(a).getTime() - getEventStart(b).getTime());
   }, []);
+
+  const primaryEvents = useMemo(
+    () => sortedEvents.filter((event) => !event.isSupportEvent),
+    [sortedEvents]
+  );
+
+  const nextEvent = useMemo(() => {
+    return primaryEvents.find((event) => event.startDateTime && isAfter(getEventStart(event), now)) ?? null;
+  }, [primaryEvents, now]);
+
+  const activeSupportForNextEvent = useMemo(() => {
+    if (!nextEvent) {
+      return null;
+    }
+
+    return sortedEvents.find((event) => {
+      if (!event.isSupportEvent || event.relatedToId !== nextEvent.id || !event.startDateTime || !event.endDateTime) {
+        return false;
+      }
+
+      const start = getEventStart(event);
+      const end = getEventEnd(event);
+      return now >= start && now <= end;
+    }) ?? null;
+  }, [nextEvent, now, sortedEvents]);
+
+  const todaysEvents = useMemo(() => {
+    return primaryEvents.filter((event) => event.startDateTime && isSameDay(getEventStart(event), now));
+  }, [primaryEvents, now]);
+
+  const groupedByDay = useMemo(() => {
+    const groups: Record<string, typeof sortedEvents> = {};
+
+    sortedEvents.forEach((event) => {
+      if (!event.startDateTime) {
+        return;
+      }
+
+      const key = format(getEventStart(event), "yyyy-MM-dd");
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+      groups[key].push(event);
+    });
+
+    return groups;
+  }, [sortedEvents]);
+
+  const dayKeys = useMemo(() => Object.keys(groupedByDay).sort(), [groupedByDay]);
 
   return (
     <Layout>
-      {/* Notice Banner */}
-      <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
-        <div className="container mx-auto text-center">
-          <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-            ⚠️ Tickets are available for purchase! Click on the "Tickets" tab for more info. Reach out to 50th@csh.rit.edu with any questions!
-          </p>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-8">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-csh-magenta/20 rounded-full blur-[120px] animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-csh-red/20 rounded-full blur-[120px] animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center -mt-8">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 animate-fade-up">
-              <Sparkles className="w-4 h-4 text-csh-magenta" />
-              <span className="text-sm font-medium text-muted-foreground">
-                April 10-12, 2026 • Rochester, NY
-              </span>
+      <section className="border-b border-border bg-card/50">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+            <div>
+              <p className="text-[11px] md:text-xs uppercase tracking-wider text-csh-magenta font-semibold">Countdown To Next Event</p>
+              <p className="text-sm text-muted-foreground">{nextEvent ? nextEvent.title : "No upcoming events"}</p>
             </div>
-
-            {/* Main Headline - Logo */}
-            <div className="mb-6 animate-fade-up flex justify-center" style={{ animationDelay: "0.1s" }}>
-              <img 
-                src="/csh-50th-logo.png" 
-                alt="CSH 50th Anniversary" 
-                className="w-full max-w-md h-auto"
-              />
-            </div>
-
-            {/* Subheadline */}
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Celebrating 50 years of Computer Science House. Join us for an unforgettable celebration.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <Link to="/registration">
-                <Button variant="hero" size="xl" className="w-full sm:w-auto">
-                  <UserPlus className="w-5 h-5" />
-                  Late Registration
-                </Button>
-              </Link>
-            </div>
-
-            {/* Countdown */}
-            <div className="animate-fade-up" style={{ animationDelay: "0.4s" }}>
-              <p className="text-sm text-muted-foreground mb-4 font-medium">Countdown to the celebration</p>
-              <CountdownTimer />
-            </div>
+            <CountdownTimer targetDate={nextEvent?.startDateTime ?? FALLBACK_COUNTDOWN} currentTime={now} compact />
           </div>
         </div>
       </section>
 
-      {/* Event Highlights */}
-
-      {/* This needs to change to be more appealing to alumni, a block of text explaining, why you should come, why we're hosting this */}
-      <section className="py-24 bg-card/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-              A Weekend to <span className="text-gradient inline-block min-w-[200px] animate-[fadeInUp_0.6s_ease-out]" key={wordIndex} style={{ animation: 'fadeInUp 0.6s ease-out' }}>{words[wordIndex]}</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Three days of events, reconnections, and celebrations with CSH.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Friday Card */}
-            <div className="glass rounded-2xl p-8 hover:scale-105 transition-transform duration-300">
-              <div className="w-12 h-12 rounded-xl bg-gradient-csh flex items-center justify-center mb-6">
-                <Users className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-display font-semibold mb-2">Friday, April 10</h3>
-              <p className="text-muted-foreground mb-4">
-                Kick off the weekend with campus and floor tours, photo hunt, and a happy hour with fellow alumni.
+      <section className="border-b border-border bg-card/40">
+        <div className="container mx-auto px-4 py-5 md:py-7">
+          <div className="grid grid-cols-1 xl:grid-cols-[1.3fr_1fr] gap-5 items-start">
+            <div className="space-y-4">
+              <p className="uppercase tracking-[0.2em] text-xs text-csh-magenta font-semibold">Live Information Hub</p>
+              <h1 className="text-3xl md:text-5xl font-display font-black leading-tight">
+                CSH 50th Weekend
+              </h1>
+              <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
+                Welcome to 50th! Here you can find live updates on what's happening, how to get there, and what needs tickets.
               </p>
-              <Link to="/schedule" className="text-csh-magenta hover:text-csh-red transition-colors font-medium inline-flex items-center gap-1">
-                View Schedule <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link to="/schedule">
+                  <Button variant="hero" size="lg">Live Timeline</Button>
+                </Link>
+                <Link to="/events">
+                  <Button variant="hero-outline" size="lg">Event Directory</Button>
+                </Link>
+                <Link to="/ticket-prices">
+                  <Button variant="hero-outline" size="lg">
+                    <Ticket className="w-4 h-4" />
+                    Tickets
+                  </Button>
+                </Link>
+              </div>
             </div>
 
-            {/* Saturday Card */}
-            <div className="glass rounded-2xl p-8 hover:scale-105 transition-transform duration-300 border-2 border-primary/30">
-              <div className="w-12 h-12 rounded-xl bg-gradient-csh flex items-center justify-center mb-6">
-                <Sparkles className="w-6 h-6 text-primary-foreground" />
+            <aside className="glass rounded-2xl border border-border p-5">
+              <p className="text-xs uppercase tracking-wider text-csh-magenta font-semibold mb-2">Status Snapshot</p>
+              <div className="space-y-2 text-sm">
+                <p className="text-muted-foreground">Now: <span className="text-foreground font-semibold">{format(now, "EEE, MMM d • h:mm:ss a")}</span></p>
+                <p className="text-muted-foreground">Primary events today: <span className="text-foreground font-semibold">{todaysEvents.length}</span></p>
+                {activeSupportForNextEvent && (
+                  <p className="text-amber-300 font-semibold">Shuttle window is active for the upcoming dinner.</p>
+                )}
               </div>
-              <h3 className="text-xl font-display font-semibold mb-2">Saturday, April 11</h3>
-              <p className="text-muted-foreground mb-4">
-                Celebrate 5 decades of CSH with a formal dinner at The Wintergarden.
-              </p>
-              <Link to="/events" className="text-csh-magenta hover:text-csh-red transition-colors font-medium inline-flex items-center gap-1">
-                View Events <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Sunday Card */}
-            <div className="glass rounded-2xl p-8 hover:scale-105 transition-transform duration-300">
-              <div className="w-12 h-12 rounded-xl bg-gradient-csh flex items-center justify-center mb-6">
-                <Calendar className="w-6 h-6 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-display font-semibold mb-2">Sunday, April 12</h3>
-              <p className="text-muted-foreground mb-4">
-                Wrap up with farewell brunch, final goodbyes, and departures.
-              </p>
-              <Link to="/events" className="text-csh-magenta hover:text-csh-red transition-colors font-medium inline-flex items-center gap-1">
-                View Events <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      {/* Main Event Highlight */}
-      <section className="py-24">
+      <section className="py-8 md:py-10">
         <div className="container mx-auto px-4">
-          <div className="glass rounded-3xl p-8 md:p-16 relative overflow-hidden">
-            {/* Background Accent */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-csh opacity-10 rounded-full blur-3xl" />
-            
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <span className="text-csh-magenta font-semibold text-sm uppercase tracking-wider">
-                  Main Event
-                </span>
-                <h2 className="text-3xl md:text-5xl font-display font-bold mt-2 mb-6">
-                  50th Anniversary <span className="text-gradient">Gala Dinner</span>
-                </h2>
-                <p className="text-muted-foreground mb-6">
-                  {/* PLACEHOLDER: Update venue name and details when confirmed */}
-                  Join us at The Wintergarden for an elegant evening, celebrating five decades of CSH.
-                  Enjoy a formal dinner, keynote speeches, and time to reconnect with friends old and new.
-                </p>
+          <div className="grid grid-cols-1 xl:grid-cols-[1.2fr_1fr] gap-5">
+            <article className="glass rounded-2xl border border-border p-5 md:p-6">
+              <div className="flex items-center justify-between gap-3 mb-4">
+                <h2 className="text-2xl md:text-3xl font-display font-bold">Next Event</h2>
+                {nextEvent?.ticketRequired && (
+                  <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-200">
+                    Ticket required
+                  </span>
+                )}
+              </div>
+
+              {nextEvent ? (
+                <>
+                  <h3 className="text-xl md:text-2xl font-display font-semibold mb-2">{nextEvent.title}</h3>
+                  <p className="text-muted-foreground mb-4">{nextEvent.description}</p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-sm">
+                    <div className="rounded-lg border border-border bg-muted/20 p-3">
+                      <p className="text-muted-foreground mb-1">Date</p>
+                      <p className="font-semibold inline-flex gap-2 items-center"><Calendar className="w-4 h-4 text-csh-magenta" />{nextEvent.date}</p>
+                    </div>
+                    <div className="rounded-lg border border-border bg-muted/20 p-3">
+                      <p className="text-muted-foreground mb-1">Time</p>
+                      <p className="font-semibold inline-flex gap-2 items-center"><Clock3 className="w-4 h-4 text-csh-magenta" />{nextEvent.time}</p>
+                    </div>
+                    <div className="rounded-lg border border-border bg-muted/20 p-3">
+                      <p className="text-muted-foreground mb-1">Location</p>
+                      <p className="font-semibold inline-flex gap-2 items-center"><MapPin className="w-4 h-4 text-csh-magenta" />{nextEvent.location}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3">
+                    <a href={getMapUrl(nextEvent)} target="_blank" rel="noopener noreferrer">
+                      <Button variant="hero" size="sm">
+                        <MapPin className="w-4 h-4" />
+                        Open Directions
+                      </Button>
+                    </a>
+                    {nextEvent.ticketRequired && nextEvent.ticketUrl && (
+                      <a href={nextEvent.ticketUrl} target="_blank" rel="noopener noreferrer">
+                        <Button variant="hero-outline" size="sm">
+                          <Ticket className="w-4 h-4" />
+                          Buy Ticket
+                        </Button>
+                      </a>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <p className="text-muted-foreground">No future events found in the schedule data.</p>
+              )}
+            </article>
+
+            <article className="glass rounded-2xl border border-border p-5 md:p-6">
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">Today</h2>
+              {todaysEvents.length > 0 ? (
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Calendar className="w-5 h-5 text-csh-magenta" />
-                    <span>Saturday, April 11, 2026 • 5pm</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <MapPin className="w-5 h-5 text-csh-magenta" />
-                    {/* PLACEHOLDER: Update venue name and address when confirmed */}
-                    <span>The Wintergarden • Rochester, NY</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Users className="w-5 h-5 text-csh-magenta" />
-                    <span>500+ Alumni & Members Expected</span>
-                  </div>
+                  {todaysEvents.map((event) => {
+                    const status = getEventStatus(event, now);
+                    return (
+                      <div key={event.id} className="rounded-lg border border-border bg-muted/20 p-3">
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <p className="font-semibold">{event.title}</p>
+                          <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold uppercase ${
+                            status === "live"
+                              ? "bg-emerald-500/15 text-emerald-200"
+                              : status === "upcoming"
+                                ? "bg-sky-500/15 text-sky-200"
+                                : "bg-muted text-muted-foreground"
+                          }`}>
+                            {status}
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-1">{event.time}</p>
+                        <p className="text-xs text-muted-foreground">{event.location}</p>
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-
-              <div className="flex justify-center lg:justify-end">
-                <div className="bg-gradient-csh rounded-2xl p-1">
-                  <div className="bg-card rounded-xl p-8 text-center">
-                    <p className="text-sm text-muted-foreground mb-2">Cocktail Semi Formal</p>
-                    <p className="text-6xl font-display font-bold text-gradient mb-2">50</p>
-                    <p className="text-xl font-display font-semibold">Years of CSH</p>
-                    <p className="text-muted-foreground text-sm mt-4">1976 - 2026</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+              ) : (
+                <p className="text-muted-foreground">No events scheduled today.</p>
+              )}
+            </article>
           </div>
+
+          {activeSupportForNextEvent && (
+            <article className="mt-5 rounded-2xl border border-amber-400/40 bg-amber-500/10 p-5 md:p-6">
+              <p className="text-xs uppercase tracking-[0.18em] text-amber-300 font-semibold mb-2">Dinner Logistics</p>
+              <h3 className="text-xl md:text-2xl font-display font-bold mb-2">{activeSupportForNextEvent.title}</h3>
+              <p className="text-muted-foreground mb-3">{activeSupportForNextEvent.description}</p>
+              <div className="flex flex-wrap gap-3 text-sm">
+                <span className="inline-flex items-center gap-2 text-muted-foreground"><Clock3 className="w-4 h-4 text-amber-300" />{activeSupportForNextEvent.time}</span>
+                <span className="inline-flex items-center gap-2 text-muted-foreground"><MapPin className="w-4 h-4 text-amber-300" />{activeSupportForNextEvent.location}</span>
+              </div>
+            </article>
+          )}
         </div>
       </section>
 
-      {/* Quick Links Section */}
-      <section className="py-24 bg-card/50">
+      <section className="pb-12">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Everything You Need
-            </h2>
-            <p className="text-muted-foreground">
-              Plan your trip and get all the details for the celebration weekend.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link to="/schedule" className="group">
-              <div className="glass rounded-xl p-6 h-full hover:bg-muted/30 transition-colors">
-                <Calendar className="w-8 h-8 text-csh-magenta mb-4" />
-                <h3 className="font-display font-semibold mb-2 group-hover:text-csh-magenta transition-colors">
-                  Full Schedule
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  See the timing for all events during the weekend
-                </p>
+          <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">Weekend Itinerary</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {dayKeys.map((dayKey) => (
+              <div key={dayKey} className="glass rounded-2xl border border-border p-4">
+                <h3 className="text-xl font-display font-semibold mb-1">{format(new Date(`${dayKey}T00:00:00-04:00`), "EEEE")}</h3>
+                <p className="text-sm text-muted-foreground mb-3">{format(new Date(`${dayKey}T00:00:00-04:00`), "MMMM d, yyyy")}</p>
+                <div className="space-y-2">
+                  {groupedByDay[dayKey].map((event) => (
+                    <div key={event.id} className="rounded-lg border border-border bg-muted/20 p-3">
+                      <div className="flex items-start justify-between gap-2 mb-1">
+                        <p className="font-semibold text-sm">{event.title}</p>
+                        <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase ${typeColors[event.type]}`}>
+                          {event.type}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{event.time}</p>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer" className="text-csh-magenta hover:text-csh-red text-xs font-semibold inline-flex items-center gap-1">
+                          Directions <ExternalLink className="w-3 h-3" />
+                        </a>
+                        {event.ticketRequired && event.ticketUrl && (
+                          <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer" className="text-csh-magenta hover:text-csh-red text-xs font-semibold inline-flex items-center gap-1">
+                            Purchase <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </Link>
-
-            <Link to="/events" className="group">
-              <div className="glass rounded-xl p-6 h-full hover:bg-muted/30 transition-colors">
-                <Sparkles className="w-8 h-8 text-csh-magenta mb-4" />
-                <h3 className="font-display font-semibold mb-2 group-hover:text-csh-magenta transition-colors">
-                  Events
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Detailed info on all activities and gatherings
-                </p>
-              </div>
-            </Link>
-
-            <Link to="/hotels" className="group">
-              <div className="glass rounded-xl p-6 h-full hover:bg-muted/30 transition-colors">
-                <MapPin className="w-8 h-8 text-csh-magenta mb-4" />
-                <h3 className="font-display font-semibold mb-2 group-hover:text-csh-magenta transition-colors">
-                  Hotels & Transport
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Accommodation deals and getting around
-                </p>
-              </div>
-            </Link>
-
-            <Link to="/faq" className="group">
-              <div className="glass rounded-xl p-6 h-full hover:bg-muted/30 transition-colors">
-                <Users className="w-8 h-8 text-csh-magenta mb-4" />
-                <h3 className="font-display font-semibold mb-2 group-hover:text-csh-magenta transition-colors">
-                  FAQ
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Common questions answered
-                </p>
-              </div>
-            </Link>
+            ))}
           </div>
         </div>
       </section>

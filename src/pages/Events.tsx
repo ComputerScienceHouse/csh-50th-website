@@ -1,204 +1,135 @@
+import { useMemo, useState } from "react";
+import { format } from "date-fns";
+import { Calendar, ExternalLink, MapPin, Search, Ticket } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Clock, Users, Sparkles, ArrowRight, Ticket } from "lucide-react";
-import { Link } from "react-router-dom";
-
+import { Input } from "@/components/ui/input";
 import { events } from "./EventsData";
-import { typeColors } from "./Schedule";
-import { cn } from "@/lib/utils";
-import EventPopup from "./EventPopup";
-import { ScheduleEvent } from "./ScheduleEvent";
-import { useState } from "react";
+import { getEventStart, getMapUrl, typeColors } from "./eventUtils";
+
+const eventTypes = ["all", "main", "activity", "social", "food", "seminar", "external"] as const;
+type EventTypeFilter = (typeof eventTypes)[number];
 
 const Events = () => {
-  const [openEvent, setOpenEvent] = useState<ScheduleEvent | null>(null);
-  /**
-   * Given an event, returns an EventPopup element
-   * @param event an event
-   * @returns EventPopup
-   */
-  function openEventPopup(event: ScheduleEvent) {
-    setOpenEvent(event);
-  }
+  const [query, setQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState<EventTypeFilter>("all");
+
+  const filteredEvents = useMemo(() => {
+    return [...events]
+      .sort((a, b) => getEventStart(a).getTime() - getEventStart(b).getTime())
+      .filter((event) => {
+        const matchesType = typeFilter === "all" ? true : event.type === typeFilter;
+        const q = query.trim().toLowerCase();
+        const matchesQuery =
+          q.length === 0 ||
+          event.title.toLowerCase().includes(q) ||
+          event.description.toLowerCase().includes(q) ||
+          event.location.toLowerCase().includes(q);
+
+        return matchesType && matchesQuery;
+      });
+  }, [query, typeFilter]);
 
   return (
     <Layout>
-      {/* Notice Banner */}
-      <div className="bg-amber-500/20 border-2 border-amber-500/50 py-4 px-4">
-        <div className="container mx-auto text-center">
-          <p className="text-amber-400 font-bold text-sm md:text-base tracking-wider">
-            ⚠️ Tickets are available for purchase! Click on the "Tickets" tab for more info. Reach out to 50th@csh.rit.edu with any questions!
+      <section className="relative overflow-hidden py-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(251,191,36,0.2),transparent_40%),radial-gradient(circle_at_85%_0%,rgba(217,119,6,0.15),transparent_35%)]" />
+        <div className="container mx-auto px-4 relative z-10">
+          <p className="uppercase tracking-[0.2em] text-xs text-csh-magenta font-semibold">Event Explorer</p>
+          <h1 className="text-4xl md:text-6xl font-display font-black mt-2 mb-3">Everything Happening This Weekend</h1>
+          <p className="text-muted-foreground max-w-3xl text-lg">
+            Browse by type, search by keyword, and jump straight to directions and ticket purchase from one place.
           </p>
         </div>
-      </div>
+      </section>
 
-      {/* Header */}
-      <section className="pt-12 pb-8">
+      <section className="pb-6">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
-              Weekend <span className="text-gradient">Events</span>
-            </h1>
-            <p className="text-muted-foreground text-lg mb-8">
-              From casual meetups to the main gala dinner, here's everything happening during the 50th anniversary celebration.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="/registration" target="_blank" rel="noopener noreferrer">
-                <Button variant="hero" size="lg">
-                  <Ticket className="w-5 h-5" />
-                  Late Registration
-                </Button>
-              </a>
-              <Link to="/schedule">
-                <Button variant="hero-outline" size="lg">
-                  <Calendar className="w-5 h-5" />
-                  View Full Schedule
-                </Button>
-              </Link>
+          <div className="glass rounded-2xl p-4 md:p-5 border border-border">
+            <div className="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
+              <div className="relative w-full lg:max-w-md">
+                <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
+                <Input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  className="pl-9"
+                  placeholder="Search title, location, or topic"
+                />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {eventTypes.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setTypeFilter(type)}
+                    className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wider transition ${
+                      typeFilter === type
+                        ? "bg-gradient-csh text-primary-foreground"
+                        : "bg-muted text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Event Highlight */}
-      <section className="py-12">
+      <section className="pb-16">
         <div className="container mx-auto px-4">
-          {events.filter(e => e.type.toLowerCase() == "main").map(event => (
-            <div key={event.id} className="glass rounded-3xl p-8 md:p-12 border-2 border-primary/30 glow-csh">
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="w-5 h-5 text-csh-magenta" />
-                <span className="text-csh-magenta font-semibold text-sm uppercase tracking-wider">
-                  Main Event
-                </span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-                {event.title}
-              </h2>
-              <p className="text-muted-foreground text-lg mb-8 max-w-3xl">
-                {event.description}
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="flex items-start gap-3">
-                  <Calendar className="w-5 h-5 text-csh-magenta mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Date</p>
-                    <p className="text-muted-foreground text-sm">{event.date}</p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {filteredEvents.map((event) => (
+              <article key={event.id} className="glass rounded-2xl border border-border p-5 flex flex-col">
+                <div className="flex flex-wrap gap-2 mb-3">
+                  <span className={`rounded-full border px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider ${typeColors[event.type]}`}>
+                    {event.type}
+                  </span>
+                  {event.ticketRequired && (
+                    <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-200">
+                      Ticket required
+                    </span>
+                  )}
                 </div>
-                <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-csh-magenta mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Time</p>
-                    <p className="text-muted-foreground text-sm">{event.time}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-csh-magenta mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Location</p>
-                    <p className="text-muted-foreground text-sm">{event.location}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Users className="w-5 h-5 text-csh-magenta mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Dress Code</p>
-                    <p className="text-muted-foreground text-sm">{event.dressCode}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Other Events Grid */}
-      <section className="py-12 bg-card/50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-display font-bold mb-8 text-center">
-            All Weekend Events
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map(event => (
-              <div 
-                key={event.id} 
-                className={cn("glass rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300",
-                  event.type === "main" && "border-2 border-primary/100 glow-csh"
-                )}
-                onClick={() => {openEventPopup(event)}}
-              >
-                <h3 className="text-xl font-display font-semibold mb-3">
-                  {event.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                  {event.description}
-                </p>
-                
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Calendar className="w-4 h-4 text-csh-magenta" />
-                    {event.date}
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock className="w-4 h-4 text-csh-magenta" />
-                    {event.time}
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin className="w-4 h-4 text-csh-magenta" />
-                    {event.location}
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className={cn(
-                      "px-3 py-1 rounded-full text-xs font-medium border",
-                      typeColors[event.type]
-                    )}>{event.type}</span>
-                  </div>
+                <h2 className="text-xl font-display font-bold mb-2">{event.title}</h2>
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-4">{event.description}</p>
 
+                <div className="space-y-2 text-sm mb-4">
+                  <p className="inline-flex items-center gap-2 text-muted-foreground"><Calendar className="w-4 h-4 text-csh-magenta" />{event.startDateTime ? format(getEventStart(event), "EEE, MMM d") : event.date}</p>
+                  <p className="inline-flex items-center gap-2 text-muted-foreground"><Calendar className="w-4 h-4 text-csh-magenta" />{event.time}</p>
+                  <p className="inline-flex items-center gap-2 text-muted-foreground"><MapPin className="w-4 h-4 text-csh-magenta" />{event.location}</p>
                 </div>
-              </div>
+
+                <div className="mt-auto flex flex-wrap gap-2">
+                  <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
+                    <Button size="sm" variant="hero-outline">
+                      <MapPin className="w-4 h-4" />Directions
+                    </Button>
+                  </a>
+                  {event.ticketRequired && event.ticketUrl ? (
+                    <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">
+                      <Button size="sm" variant="hero">
+                        <Ticket className="w-4 h-4" />Buy
+                      </Button>
+                    </a>
+                  ) : (
+                    <a href="/registration" target="_blank" rel="noopener noreferrer" className="text-csh-magenta hover:text-csh-red text-xs font-semibold inline-flex items-center gap-1 self-center">
+                      RSVP <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
+                </div>
+              </article>
             ))}
           </div>
-        </div>
 
-        {/* Popup */}
-        {openEvent && (
-          <EventPopup
-            id={openEvent.id}
-            title={openEvent.title}
-            description={openEvent.description}
-            date={openEvent.date}
-            time={openEvent.time}
-            location={openEvent.location}
-            address={openEvent.address}
-            capacity={openEvent.capacity}
-            dressCode={openEvent.dressCode}
-            type={openEvent.type}
-            onClose={() => setOpenEvent(null)}
-            typeColors = {typeColors}
-          />
-        )}
-
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-            Ready to Join the Celebration?
-          </h2>
-          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            Don't miss out on this once-in-a-lifetime anniversary celebration. Get your tickets now!
-          </p>
-          {/* PLACEHOLDER: Replace with actual ticket purchase URL */}
-          <a href="/registration" target="_blank" rel="noopener noreferrer">
-            <Button variant="hero" size="xl">
-              <Ticket className="w-5 h-5" />
-              Late Registration
-              <ArrowRight className="w-5 h-5" />
-            </Button>
-          </a>
+          {filteredEvents.length === 0 && (
+            <div className="glass rounded-2xl border border-border p-10 text-center mt-8">
+              <h3 className="text-2xl font-display font-bold mb-2">No matches yet</h3>
+              <p className="text-muted-foreground">Try another keyword or clear the type filter.</p>
+            </div>
+          )}
         </div>
       </section>
     </Layout>
