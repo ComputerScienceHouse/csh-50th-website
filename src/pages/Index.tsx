@@ -60,14 +60,14 @@ const Index = () => {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+            {/* <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-up" style={{ animationDelay: "0.3s" }}>
               <Link to="/registration">
                 <Button variant="hero" size="xl" className="w-full sm:w-auto">
                   <UserPlus className="w-5 h-5" />
                   Late Registration
                 </Button>
               </Link>
-            </div>
+            </div> */}
 
             {/* Countdown */}
             <div className="animate-fade-up" style={{ animationDelay: "0.4s" }}>

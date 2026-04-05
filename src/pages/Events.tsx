@@ -43,12 +43,12 @@ const Events = () => {
               From casual meetups to the main gala dinner, here's everything happening during the 50th anniversary celebration.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="/registration" target="_blank" rel="noopener noreferrer">
+              {/* <a href="/registration" target="_blank" rel="noopener noreferrer">
                 <Button variant="hero" size="lg">
                   <Ticket className="w-5 h-5" />
                   Late Registration
                 </Button>
-              </a>
+              </a> */}
               <Link to="/schedule">
                 <Button variant="hero-outline" size="lg">
                   <Calendar className="w-5 h-5" />
@@ -192,13 +192,13 @@ const Events = () => {
             Don't miss out on this once-in-a-lifetime anniversary celebration. Get your tickets now!
           </p>
           {/* PLACEHOLDER: Replace with actual ticket purchase URL */}
-          <a href="/registration" target="_blank" rel="noopener noreferrer">
+          {/* <a href="/registration" target="_blank" rel="noopener noreferrer">
             <Button variant="hero" size="xl">
               <Ticket className="w-5 h-5" />
               Late Registration
               <ArrowRight className="w-5 h-5" />
             </Button>
-          </a>
+          </a> */}
         </div>
       </section>
     </Layout>
