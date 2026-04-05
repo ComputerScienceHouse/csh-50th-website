@@ -35,10 +35,10 @@ const Events = () => {
       <section className="relative overflow-hidden py-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(251,191,36,0.2),transparent_40%),radial-gradient(circle_at_85%_0%,rgba(217,119,6,0.15),transparent_35%)]" />
         <div className="container mx-auto px-4 relative z-10">
-          <p className="uppercase tracking-[0.2em] text-xs text-csh-magenta font-semibold">Event Explorer</p>
+          <p className="uppercase tracking-[0.2em] text-xs text-csh-magenta font-semibold">CSH 50th</p>
           <h1 className="text-4xl md:text-6xl font-display font-black mt-2 mb-3">Everything Happening This Weekend</h1>
           <p className="text-muted-foreground max-w-3xl text-lg">
-            Browse by type, search by keyword, and jump straight to directions and ticket purchase from one place.
+            See every event happening at 50th! Browse by type, search by name, and get directions or tickets, all in one place. 
           </p>
         </div>
       </section>

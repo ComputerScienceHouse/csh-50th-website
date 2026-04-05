@@ -31,7 +31,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/ticket-prices" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/tickets" className="text-muted-foreground hover:text-foreground transition-colors">
                   Ticket Deck
                 </Link>
               </li>

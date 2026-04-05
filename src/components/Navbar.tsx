@@ -8,7 +8,7 @@ const navLinks = [
   { name: "Live", path: "/" },
   { name: "Timeline", path: "/schedule" },
   { name: "All Events", path: "/events" },
-  { name: "Tickets", path: "/ticket-prices" },
+  { name: "Tickets", path: "/tickets" },
 ];
 
 export function Navbar() {
@@ -48,7 +48,7 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-2">
-            <Link to="/ticket-prices">
+            <Link to="/tickets">
               <Button variant="hero" size="lg">
                 <Ticket className="w-4 h-4" />
                 Buy Tickets
@@ -85,7 +85,7 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="mt-2">
-                <Link to="/ticket-prices">
+                <Link to="/tickets">
                   <Button variant="hero" className="w-full">
                     Buy Tickets
                   </Button>

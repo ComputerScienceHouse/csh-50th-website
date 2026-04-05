@@ -187,7 +187,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     description: "",
     date: "Saturday, April 11, 2026",
     time: "5:00 PM - 6:00 PM",
-    location: "Asychronous", 
+    location: "Asynchronous", 
     address: "N/A",
     capacity: "All attendees",
     dressCode: "",
