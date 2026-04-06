@@ -56,8 +56,8 @@ export function CountdownTimer({ targetDate, currentTime, compact = false }: Cou
     <div className={`flex ${compact ? "gap-2 md:gap-3" : "gap-3 md:gap-6"} justify-center`}>
       {timeBlocks.map((block, index) => (
         <div key={block.label} className="flex flex-col items-center">
-          <div className={`glass rounded-xl ${compact ? "px-2 py-2 md:px-3 md:py-2 min-w-[52px] md:min-w-[68px]" : "p-3 md:p-6 min-w-[60px] md:min-w-[100px]"}`}>
-            <span className={`${compact ? "text-lg md:text-2xl" : "text-2xl md:text-5xl"} font-display font-bold text-gradient`}>
+          <div className={`glass rounded-xl flex items-center justify-center text-center ${compact ? "px-2 py-2 md:px-3 md:py-2 min-w-[52px] md:min-w-[68px]" : "p-3 md:p-6 min-w-[60px] md:min-w-[100px]"}`}>
+            <span className={`${compact ? "text-lg md:text-2xl" : "text-2xl md:text-5xl"} block w-full text-center font-display font-bold text-gradient`}>
               {block.value.toString().padStart(2, "0")}
             </span>
           </div>
