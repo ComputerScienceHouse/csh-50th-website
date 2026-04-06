@@ -1,22 +1,19 @@
 import { useMemo } from "react";
 import { isAfter } from "date-fns";
-import { Calendar, Clock3, MapPin, Ticket } from "lucide-react";
+import { Calendar, Clock3, MapPin } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Link } from "react-router-dom";
-import { events } from "./EventsData";
 import { getEventStart, getEventStatus, getMapUrl, typeColors } from "./eventUtils";
+import { useEvents } from "../lib/events";
 import { useLiveNow } from "@/lib/time";
 
 const FALLBACK_COUNTDOWN = "2026-04-10T09:00:00-04:00";
 
 const Index = () => {
   const now = useLiveNow(1000);
-
-  const sortedEvents = useMemo(() => {
-    return [...events].sort((a, b) => getEventStart(a).getTime() - getEventStart(b).getTime());
-  }, []);
+  const { events: sortedEvents, isLoading, isError } = useEvents();
 
   const primaryEvents = useMemo(
     () => sortedEvents.filter((event) => !event.isSupportEvent),
@@ -38,7 +35,9 @@ const Index = () => {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
             <div>
               <p className="text-[11px] md:text-xs uppercase tracking-wider text-csh-magenta font-semibold">Next Up</p>
-              <p className="text-sm text-muted-foreground">{nextEvent ? nextEvent.title : "No upcoming events"}</p>
+              <p className="text-sm text-muted-foreground">
+                {isLoading ? "Loading live events..." : isError ? "Unable to load live events" : nextEvent ? nextEvent.title : "No upcoming events"}
+              </p>
             </div>
             <CountdownTimer targetDate={nextEvent?.startDateTime ?? FALLBACK_COUNTDOWN} currentTime={now} compact />
           </div>
@@ -60,7 +59,11 @@ const Index = () => {
               </div>
             </div>
 
-            {happeningNowEvents.length > 0 ? (
+            {isLoading ? (
+              <p className="text-muted-foreground">Loading current events...</p>
+            ) : isError ? (
+              <p className="text-muted-foreground">Unable to load events right now.</p>
+            ) : happeningNowEvents.length > 0 ? (
               <div className="space-y-3">
                 {happeningNowEvents.map((event) => (
                   <div key={event.id} className="rounded-lg border border-border bg-muted/20 p-4">
@@ -69,9 +72,16 @@ const Index = () => {
                         <p className="font-semibold text-lg">{event.title}</p>
                         <p className="text-sm text-muted-foreground">{event.description}</p>
                       </div>
-                      <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase ${typeColors[event.type]}`}>
-                        {event.type}
-                      </span>
+                      <div className="flex flex-wrap gap-2 justify-end">
+                        {(event.tags ?? []).map((tag) => (
+                          <span
+                            key={tag}
+                            className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold lowercase ${typeColors[tag] ?? "bg-muted text-muted-foreground border-border"}`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                     <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                       <span className="inline-flex items-center gap-2"><Clock3 className="w-4 h-4 text-csh-magenta" />{event.time}</span>
@@ -99,16 +109,26 @@ const Index = () => {
                 <div>
                   <h3 className="text-xl md:text-2xl font-display font-semibold">Next Up</h3>
                 </div>
-                {nextEvent?.ticketRequired && (
-                  <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-200">
-                    Ticket required
-                  </span>
-                )}
               </div>
 
               {nextEvent ? (
                 <>
                   <h4 className="text-lg md:text-xl font-display font-semibold mb-2">{nextEvent.title}</h4>
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    {(nextEvent.tags ?? []).map((tag) => (
+                      <span
+                        key={tag}
+                        className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold lowercase ${typeColors[tag] ?? "bg-muted text-muted-foreground border-border"}`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {nextEvent.ticketUrl && (
+                      <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-200">
+                        Ticket available
+                      </span>
+                    )}
+                  </div>
                   <p className="text-muted-foreground mb-4">{nextEvent.description}</p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-sm">
@@ -126,7 +146,7 @@ const Index = () => {
                     </div>
                   </div>
 
-                  {nextEvent.location !== "Asyncronous" && (
+                  {nextEvent.location !== "Asynchronous" && nextEvent.location !== "Asyncronous" && (
                     <div className="flex flex-wrap gap-3">
                       <a href={getMapUrl(nextEvent)} target="_blank" rel="noopener noreferrer">
                         <Button variant="hero" size="sm">

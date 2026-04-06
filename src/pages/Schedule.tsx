@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 import { format } from "date-fns";
-import { Calendar, Clock3, ExternalLink, MapPin, Ticket } from "lucide-react";
+import { Calendar, Clock3, MapPin, Ticket } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { events } from "./EventsData";
 import { getEventStart, getEventStatus, getMapUrl, typeColors } from "./eventUtils";
+import { useEvents } from "../lib/events";
 import { useLiveNow } from "@/lib/time";
 
 const statusStyles = {
@@ -16,10 +16,7 @@ const statusStyles = {
 const Schedule = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const now = useLiveNow(1000);
-
-  const sortedEvents = useMemo(() => {
-    return [...events].sort((a, b) => getEventStart(a).getTime() - getEventStart(b).getTime());
-  }, []);
+  const { events: sortedEvents, isLoading, isError } = useEvents();
 
   const grouped = useMemo(() => {
     const byDay: Record<string, typeof sortedEvents> = {};
@@ -77,92 +74,106 @@ const Schedule = () => {
 
       <section className="py-10">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 xl:grid-cols-[320px_1fr] gap-6">
-            <aside className="glass rounded-2xl p-5 h-fit xl:sticky xl:top-40">
-              <h2 className="font-display text-2xl font-bold mb-3">Status Board</h2>
-              <div className="space-y-3 text-sm">
-                <div className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-3">
-                  <p className="text-emerald-200 font-semibold">Live now</p>
-                  <p className="text-muted-foreground mt-1">{sortedEvents.filter((e) => getEventStatus(e, now) === "live").length} event(s)</p>
+          {isLoading ? (
+            <div className="glass rounded-2xl border border-border p-10 text-center">
+              <h3 className="text-2xl font-display font-bold mb-2">Loading timeline</h3>
+              <p className="text-muted-foreground">Fetching the weekend schedule from the backend.</p>
+            </div>
+          ) : isError ? (
+            <div className="glass rounded-2xl border border-border p-10 text-center">
+              <h3 className="text-2xl font-display font-bold mb-2">Unable to load timeline</h3>
+              <p className="text-muted-foreground">The schedule feed could not be loaded right now.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 xl:grid-cols-[320px_1fr] gap-6">
+              <aside className="glass rounded-2xl p-5 h-fit xl:sticky xl:top-40">
+                <h2 className="font-display text-2xl font-bold mb-3">Status Board</h2>
+                <div className="space-y-3 text-sm">
+                  <div className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-3">
+                    <p className="text-emerald-200 font-semibold">Live now</p>
+                    <p className="text-muted-foreground mt-1">{sortedEvents.filter((e) => getEventStatus(e, now) === "live").length} event(s)</p>
+                  </div>
+                  <div className="rounded-xl border border-sky-400/30 bg-sky-500/10 p-3">
+                    <p className="text-sky-200 font-semibold">Upcoming</p>
+                    <p className="text-muted-foreground mt-1">{sortedEvents.filter((e) => getEventStatus(e, now) === "upcoming").length} event(s)</p>
+                  </div>
+                  <div className="rounded-xl border border-border bg-muted/20 p-3">
+                    <p className="text-muted-foreground font-semibold">Completed</p>
+                    <p className="text-muted-foreground mt-1">{sortedEvents.filter((e) => getEventStatus(e, now) === "past").length} event(s)</p>
+                  </div>
                 </div>
-                <div className="rounded-xl border border-sky-400/30 bg-sky-500/10 p-3">
-                  <p className="text-sky-200 font-semibold">Upcoming</p>
-                  <p className="text-muted-foreground mt-1">{sortedEvents.filter((e) => getEventStatus(e, now) === "upcoming").length} event(s)</p>
-                </div>
-                <div className="rounded-xl border border-border bg-muted/20 p-3">
-                  <p className="text-muted-foreground font-semibold">Completed</p>
-                  <p className="text-muted-foreground mt-1">{sortedEvents.filter((e) => getEventStatus(e, now) === "past").length} event(s)</p>
-                </div>
-              </div>
-            </aside>
+              </aside>
 
-            <div className="space-y-4">
-              {activeEvents.map((event) => {
-                const status = getEventStatus(event, now);
+              <div className="space-y-4">
+                {activeEvents.map((event) => {
+                  const status = getEventStatus(event, now);
 
-                return (
-                  <article key={event.id} className="glass rounded-2xl border border-border p-5 md:p-6">
-                    <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${statusStyles[status]}`}>
-                          {status}
-                        </span>
-                        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${typeColors[event.type]}`}>
-                          {event.type}
-                        </span>
-                        {event.ticketRequired && (
-                          <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-200">
-                            Ticket required
+                  return (
+                    <article key={event.id} className="glass rounded-2xl border border-border p-5 md:p-6">
+                      <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${statusStyles[status]}`}>
+                            {status}
                           </span>
-                        )}
+                          {event.ticketRequired && (
+                            <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-200">
+                              Ticket required
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs md:text-sm text-muted-foreground">
+                          {event.startDateTime ? format(getEventStart(event), "EEEE, MMM d") : event.date}
+                        </p>
                       </div>
-                      <p className="text-xs md:text-sm text-muted-foreground">
-                        {event.startDateTime ? format(getEventStart(event), "EEEE, MMM d") : event.date}
-                      </p>
-                    </div>
 
-                    <h3 className="text-2xl font-display font-bold mb-2">{event.title}</h3>
-                    <p className="text-muted-foreground mb-4">{event.description}</p>
+                      <h3 className="text-2xl font-display font-bold mb-2">{event.title}</h3>
+                      <div className="mb-4 flex flex-wrap gap-2">
+                        {(event.tags ?? []).map((tag) => (
+                          <span
+                            key={tag}
+                            className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold lowercase ${typeColors[tag] ?? "bg-muted text-muted-foreground border-border"}`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-muted-foreground mb-4">{event.description}</p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm mb-4">
-                      <div className="rounded-lg bg-muted/25 p-3 border border-border">
-                        <p className="text-muted-foreground mb-1">Time</p>
-                        <p className="font-semibold inline-flex items-center gap-2"><Clock3 className="w-4 h-4 text-csh-magenta" />{event.time}</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm mb-4">
+                        <div className="rounded-lg bg-muted/25 p-3 border border-border">
+                          <p className="text-muted-foreground mb-1">Time</p>
+                          <p className="font-semibold inline-flex items-center gap-2"><Clock3 className="w-4 h-4 text-csh-magenta" />{event.time}</p>
+                        </div>
+                        <div className="rounded-lg bg-muted/25 p-3 border border-border">
+                          <p className="text-muted-foreground mb-1">Date</p>
+                          <p className="font-semibold inline-flex items-center gap-2"><Calendar className="w-4 h-4 text-csh-magenta" />{event.date}</p>
+                        </div>
+                        <div className="rounded-lg bg-muted/25 p-3 border border-border">
+                          <p className="text-muted-foreground mb-1">Location</p>
+                          <p className="font-semibold inline-flex items-center gap-2"><MapPin className="w-4 h-4 text-csh-magenta" />{event.location}</p>
+                        </div>
                       </div>
-                      <div className="rounded-lg bg-muted/25 p-3 border border-border">
-                        <p className="text-muted-foreground mb-1">Date</p>
-                        <p className="font-semibold inline-flex items-center gap-2"><Calendar className="w-4 h-4 text-csh-magenta" />{event.date}</p>
-                      </div>
-                      <div className="rounded-lg bg-muted/25 p-3 border border-border">
-                        <p className="text-muted-foreground mb-1">Location</p>
-                        <p className="font-semibold inline-flex items-center gap-2"><MapPin className="w-4 h-4 text-csh-magenta" />{event.location}</p>
-                      </div>
-                    </div>
 
-                    <div className="flex flex-wrap gap-3">
-                      <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
-                        <Button variant="hero-outline" size="sm">
-                          <MapPin className="w-4 h-4" />Directions
-                        </Button>
-                      </a>
-                      {event.ticketRequired && event.ticketUrl && (
-                        <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">
-                          <Button variant="hero" size="sm">
-                            <Ticket className="w-4 h-4" />Purchase
+                      <div className="flex flex-wrap gap-3">
+                        <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
+                          <Button variant="hero-outline" size="sm">
+                            <MapPin className="w-4 h-4" />Directions
                           </Button>
                         </a>
-                      )}
-                      {!event.ticketRequired && (
-                        <a href="/registration" target="_blank" rel="noopener noreferrer" className="text-csh-magenta hover:text-csh-red text-sm font-semibold inline-flex items-center gap-1 self-center">
-                          RSVP or registration <ExternalLink className="w-4 h-4" />
-                        </a>
-                      )}
-                    </div>
-                  </article>
-                );
-              })}
+                        {event.ticketUrl && (
+                          <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">
+                            <Button variant="hero" size="sm">
+                              <Ticket className="w-4 h-4" />Purchase
+                            </Button>
+                          </a>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
     </Layout>

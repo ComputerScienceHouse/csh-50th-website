@@ -11,12 +11,13 @@ export interface ScheduleEvent {
   address: string,
   capacity: string,
   dressCode: string,
-  type: "social" | "main" | "food" | "activity" | "seminar" | "external",
+  type?: "social" | "main" | "food" | "activity" | "seminar" | "external" | "tour",
   startDateTime?: string,
   endDateTime?: string,
   ticketRequired?: boolean,
   ticketUrl?: string,
   mapUrl?: string,
   isSupportEvent?: boolean,
-  relatedToId?: number
+  relatedToId?: number,
+  tags?: string[]
 }

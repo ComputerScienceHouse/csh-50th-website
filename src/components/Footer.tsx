@@ -6,9 +6,9 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
-            <span className="text-2xl font-display font-bold text-gradient">CSH Reunion Weekend Live</span>
+            <span className="text-2xl font-display font-bold text-gradient">CSH 50th Weekend</span>
             <p className="mt-4 text-muted-foreground max-w-md">
-              Purpose-built for a live alumni weekend: what is next, where to be, and which events need a ticket.
+              Celebrating 50 years of Computer Science House.
             </p>
           </div>
 

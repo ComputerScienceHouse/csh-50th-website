@@ -3,11 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Clock, Users, Sparkles, ArrowRight, Ticket } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import { events } from "./EventsData";
-import { typeColors } from "./Schedule";
+import { typeColors } from "./eventUtils";
 import { cn } from "@/lib/utils";
+import { useEvents } from "../lib/events";
 
 const OtherEvents = () => {
+  const { events, isLoading, isError } = useEvents();
+  const externalEvents = events.filter((event) => event.tags?.includes("external"));
+
   return (
     <Layout>
       {/* Notice Banner */}
@@ -38,9 +41,19 @@ const OtherEvents = () => {
       {/* Events Grid */}
       <section className="pb-24 bg-card/50">
         <div className="container mx-auto px-4">
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.filter(e => (e.type.toLowerCase() == "external")).map(event => (
+          {isLoading ? (
+            <div className="glass rounded-2xl border border-border p-10 text-center">
+              <h3 className="text-2xl font-display font-bold mb-2">Loading other events</h3>
+              <p className="text-muted-foreground">Fetching the event feed from the backend.</p>
+            </div>
+          ) : isError ? (
+            <div className="glass rounded-2xl border border-border p-10 text-center">
+              <h3 className="text-2xl font-display font-bold mb-2">Unable to load other events</h3>
+              <p className="text-muted-foreground">The event feed could not be loaded right now.</p>
+            </div>
+          ) : externalEvents.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {externalEvents.map((event) => (
               <div 
                 key={event.id} 
                 className="glass rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300"
@@ -74,8 +87,14 @@ const OtherEvents = () => {
 
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="glass rounded-2xl border border-border p-10 text-center">
+              <h3 className="text-2xl font-display font-bold mb-2">No other events yet</h3>
+              <p className="text-muted-foreground">Nothing external has been published in the backend feed.</p>
+            </div>
+          )}
         </div>
       </section>
 
