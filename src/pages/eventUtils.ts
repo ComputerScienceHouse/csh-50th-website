@@ -5,8 +5,10 @@ export const typeColors: Record<string, string> = {
   social: "bg-sky-500/70 text-sky-100 border-sky-400/40",
   main: "bg-gradient-csh text-primary-foreground border-primary/30",
   food: "bg-amber-500/70 text-amber-100 border-amber-400/40",
+  drinks: "bg-red-500/70 text-red-100 border-red-400/40",
   activity: "bg-emerald-500/70 text-emerald-100 border-emerald-400/40",
   seminar: "bg-fuchsia-500/70 text-fuchsia-100 border-fuchsia-400/40",
+  giveaway: "bg-indigo-500/70 text-indigo-100 border-indigo-400/40",
   external: "bg-orange-500/70 text-orange-100 border-orange-400/40",
   tour: "bg-cyan-500/70 text-cyan-100 border-cyan-400/40",
 };
