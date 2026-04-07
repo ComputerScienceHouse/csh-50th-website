@@ -25,6 +25,14 @@ export function getMapUrl(event: ScheduleEvent): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
+export function shouldShowDirections(event: ScheduleEvent): boolean {
+  const blockedValues = ["asynchronous", "asyncronous"];
+  const address = event.address?.trim().toLowerCase() ?? "";
+  const location = event.location?.trim().toLowerCase() ?? "";
+
+  return !blockedValues.includes(address) && !blockedValues.includes(location);
+}
+
 export function getEventStart(event: ScheduleEvent): Date {
   if (event.startDateTime) {
     return parseISO(event.startDateTime);

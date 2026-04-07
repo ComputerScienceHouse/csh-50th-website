@@ -4,7 +4,7 @@ import { Calendar, MapPin, Search, Ticket } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getEventStart, getMapUrl, typeColors } from "./eventUtils";
+import { getEventStart, getMapUrl, shouldShowDirections, typeColors } from "./eventUtils";
 import { useEvents } from "../lib/events";
 
 const Events = () => {
@@ -122,11 +122,13 @@ const Events = () => {
                     </div>
 
                     <div className="mt-auto flex flex-wrap gap-2">
-                      <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" variant="hero-outline">
-                          <MapPin className="w-4 h-4" />Directions
-                        </Button>
-                      </a>
+                      {shouldShowDirections(event) && (
+                        <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="hero-outline">
+                            <MapPin className="w-4 h-4" />Directions
+                          </Button>
+                        </a>
+                      )}
                       {event.ticketUrl && (
                         <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">
                           <Button size="sm" variant="hero">

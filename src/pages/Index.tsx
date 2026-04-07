@@ -5,7 +5,7 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { Link } from "react-router-dom";
-import { getEventStart, getEventStatus, getMapUrl, typeColors } from "./eventUtils";
+import { getEventStart, getEventStatus, getMapUrl, shouldShowDirections, typeColors } from "./eventUtils";
 import { useEvents } from "../lib/events";
 import { useLiveNow } from "@/lib/time";
 
@@ -87,7 +87,7 @@ const Index = () => {
                       <span className="inline-flex items-center gap-2"><Clock3 className="w-4 h-4 text-csh-magenta" />{event.time}</span>
                       <span className="inline-flex items-center gap-2"><MapPin className="w-4 h-4 text-csh-magenta" />{event.location}</span>
                     </div>
-                    {event.location !== "Asynchronous" && (
+                    {shouldShowDirections(event) && (
                       <div className="mt-4">
                         <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
                           <Button variant="hero" size="sm">
@@ -146,7 +146,7 @@ const Index = () => {
                     </div>
                   </div>
 
-                  {nextEvent.location !== "Asynchronous" && nextEvent.location !== "Asyncronous" && (
+                  {shouldShowDirections(nextEvent) && (
                     <div className="flex flex-wrap gap-3">
                       <a href={getMapUrl(nextEvent)} target="_blank" rel="noopener noreferrer">
                         <Button variant="hero" size="sm">

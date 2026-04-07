@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { Calendar, Clock3, MapPin, Ticket } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { getEventStart, getEventStatus, getMapUrl, typeColors } from "./eventUtils";
+import { getEventStart, getEventStatus, getMapUrl, shouldShowDirections, typeColors } from "./eventUtils";
 import { useEvents } from "../lib/events";
 import { useLiveNow } from "@/lib/time";
 
@@ -155,11 +155,13 @@ const Schedule = () => {
                       </div>
 
                       <div className="flex flex-wrap gap-3">
-                        <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
-                          <Button variant="hero-outline" size="sm">
-                            <MapPin className="w-4 h-4" />Directions
-                          </Button>
-                        </a>
+                        {shouldShowDirections(event) && (
+                          <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
+                            <Button variant="hero-outline" size="sm">
+                              <MapPin className="w-4 h-4" />Directions
+                            </Button>
+                          </a>
+                        )}
                         {event.ticketUrl && (
                           <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">
                             <Button variant="hero" size="sm">
