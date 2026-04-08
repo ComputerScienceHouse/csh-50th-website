@@ -51,12 +51,12 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-2">
-            <Link to="/registration">
+            {/* <Link to="/registration">
               <Button variant="hero" size="lg">
                 <UserPlus className="w-4 h-4" />
                 Late Registration
               </Button>
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -88,11 +88,11 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="mt-2">
-                <Link to="/registration">
+                {/* <Link to="/registration">
                   <Button variant="hero" className="w-full">
                     Late Registration
                   </Button>
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
