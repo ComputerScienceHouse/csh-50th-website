@@ -27,7 +27,7 @@ export function getMapUrl(event: ScheduleEvent): string {
 }
 
 export function shouldShowDirections(event: ScheduleEvent): boolean {
-  const blockedValues = ["asynchronous", "asyncronous"];
+  const blockedValues = ["asynchronous", "asyncronous", "see description"];
   const address = event.address?.trim().toLowerCase() ?? "";
   const location = event.location?.trim().toLowerCase() ?? "";
 
