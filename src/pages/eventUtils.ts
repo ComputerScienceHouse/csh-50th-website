@@ -11,6 +11,7 @@ export const typeColors: Record<string, string> = {
   giveaway: "bg-indigo-500/70 text-indigo-100 border-indigo-400/40",
   external: "bg-orange-500/70 text-orange-100 border-orange-400/40",
   tour: "bg-cyan-500/70 text-cyan-100 border-cyan-400/40",
+  transportation: "bg-slate-500/70 text-slate-100 border-slate-400/40",
 };
 
 export function getMapUrl(event: ScheduleEvent): string {
