@@ -101,7 +101,7 @@ const Events = () => {
                       {(event.tags ?? []).map((tag) => (
                         <span
                           key={tag}
-                          className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold lowercase ${typeColors[tag] ?? "bg-muted text-muted-foreground border-border"}`}
+                          className={`rounded-full border px-2.5 py-1 text-xs font-semibold lowercase ${typeColors[tag] ?? "bg-muted text-muted-foreground border-border"}`}
                         >
                           {tag}
                         </span>
