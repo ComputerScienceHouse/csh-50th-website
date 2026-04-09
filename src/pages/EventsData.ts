@@ -154,7 +154,7 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     title: "Photo Hunt Ends",
     description: "",
     date: "Saturday, April 11, 2026",
-    time: "5:00 PM - 6:00 PM",
+    time: "2:00 PM - 3:00 PM",
     location: "Asychronous", 
     address: "N/A",
     capacity: "All attendees",
