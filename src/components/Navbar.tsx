@@ -10,6 +10,7 @@ const navLinks = [
   { name: "All Events", path: "/events" },
   { name: "Tickets", path: "/tickets" },
   { name: "Merch", path: "/merch" },
+  { name: "Parking", path: "/parking" },
   { name: "Need Floor Access?", path: "/floor-access" },
 ];
 
