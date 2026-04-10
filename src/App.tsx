@@ -12,6 +12,7 @@ import TicketPrices from "./pages/TicketPrices";
 import FloorAccess from "./pages/FloorAccess";
 import Merch from "./pages/Merch";
 import MerchLink from "./pages/MerchLink";
+import Parking from "./pages/Parking";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/floor-access" element={<FloorAccess />} />
           <Route path="/merch" element={<Merch />} />
           <Route path="/merch-link" element={<MerchLink />} />
+          <Route path="/parking" element={<Parking />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
