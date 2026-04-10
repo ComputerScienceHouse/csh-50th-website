@@ -10,22 +10,8 @@ const TicketPrices = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-display font-bold mb-4">
-              Ticket <span className="text-gradient">Purchasing</span>
+              Ticket <span className="text-gradient">Information</span>
             </h1>
-            {/* <div className="bg-amber-500/20 border-2 border-amber-500/50 rounded-xl p-4 mb-8">
-              <p className="text-amber-400 font-bold text-lg">
-                ⚠️ Tickets are available for purchase! Click on the "Tickets" tab for more info. Reach out to 50th@csh.rit.edu with any questions!
-              </p>
-            </div> */}
-            {/* <p className="text-muted-foreground text-lg mb-8">
-                We will send an email to the email you provided at registration when tickets are available for purchase. If you haven't registered yet, please do so!
-            </p>
-            <a href="/registration" target="_blank" rel="noopener noreferrer">
-              <Button variant="hero" size="lg">
-                <UserPlus className="w-5 h-5" />
-                Register For 50th
-              </Button>
-            </a> */}
           </div>
         </div>
       </section>
@@ -45,6 +31,14 @@ const TicketPrices = () => {
                   Open Sauce Mixer
                 </a>
               </h3>
+
+              <div className="mb-4">
+                <a href="https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=8EF606AA-ADED-4902-AE69-3610E0CDD7C0" target="_blank" rel="noopener noreferrer">
+                  <Button variant="hero-outline" size="sm">
+                    Get Ticket
+                  </Button>
+                </a>
+              </div>
               
               <p className="text-muted-foreground text-sm mb-4">
                 Hang out with your friends and check out CSH projects that will be going to Open Sauce this year while enjoying a local staple: garbage plates from DogTown.".
@@ -99,6 +93,14 @@ const TicketPrices = () => {
                   Formal Dinner
                 </a>
               </h3>
+
+              <div className="mb-4">
+                <a href="https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=3F172321-51FE-45FE-81F4-369CCDBD7B85" target="_blank" rel="noopener noreferrer">
+                  <Button variant="hero-outline" size="sm">
+                    Get Ticket
+                  </Button>
+                </a>
+              </div>
               
               <p className="text-muted-foreground text-sm mb-4">
                 The highlight of the weekend! Join us for an elegant formal dinner celebrating 50 years of CSH. Enjoy a delicious meal, keynote speeches from notable alumni, awards ceremony honoring CSH's legacy, and plenty of time to reconnect with friends.
@@ -163,6 +165,14 @@ const TicketPrices = () => {
                   Farewell Brunch
                 </a>
               </h3>
+
+              <div className="mb-4">
+                <a href="https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=9B6701AD-A667-4D9B-9DB7-B9938CDE3FDF" target="_blank" rel="noopener noreferrer">
+                  <Button variant="hero-outline" size="sm">
+                    Get Ticket
+                  </Button>
+                </a>
+              </div>
               
               <p className="text-muted-foreground text-sm mb-4">
                 End the weekend with a relaxed brunch at a local favorite. Enjoy games, good food, and final farewells with the CSH community before heading home.

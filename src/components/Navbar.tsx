@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, UserPlus } from "lucide-react";
+import { Menu, X, Ticket } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "Schedule", path: "/schedule" },
-  { name: "Events", path: "/events" },
-  { name: "Other Events", path: "/otherevents"},
-  { name: "Hotels", path: "/hotels" },
-  { name: "Tickets", path: "/ticket-prices" },
-  { name: "FAQ", path: "/faq" },
+  { name: "Live", path: "/" },
+  { name: "Timeline", path: "/schedule" },
+  { name: "All Events", path: "/events" },
+  { name: "Tickets", path: "/tickets" },
 ];
 
 export function Navbar() {
@@ -51,12 +48,12 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-2">
-            {/* <Link to="/registration">
+            <Link to="/tickets">
               <Button variant="hero" size="lg">
-                <UserPlus className="w-4 h-4" />
-                Late Registration
+                <Ticket className="w-4 h-4" />
+                Buy Tickets
               </Button>
-            </Link> */}
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -88,11 +85,11 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="mt-2">
-                {/* <Link to="/registration">
+                <Link to="/tickets">
                   <Button variant="hero" className="w-full">
-                    Late Registration
+                    Buy Tickets
                   </Button>
-                </Link> */}
+                </Link>
               </div>
             </div>
           </div>

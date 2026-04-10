@@ -1,5 +1,9 @@
 import { ScheduleEvent } from "./ScheduleEvent";
 
+const OPEN_SAUCE_TICKET_URL = "https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=8EF606AA-ADED-4902-AE69-3610E0CDD7C0";
+const DINNER_TICKET_URL = "https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=3F172321-51FE-45FE-81F4-369CCDBD7B85";
+const FAREWELL_TICKET_URL = "https://rittickets.com/Online/seatSelect.asp?createBO::WSmap=1&BOparam::WSmap::loadBestAvailable::performance_ids=9B6701AD-A667-4D9B-9DB7-B9938CDE3FDF";
+
 /**
  * Holds the data for events shown on the Schedule Page
  */
@@ -15,6 +19,8 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual",
     type: "social",
+    startDateTime: "2026-04-10T09:00:00-04:00",
+    endDateTime: "2026-04-10T20:00:00-04:00",
   },
   {
     id: 2,
@@ -27,6 +33,8 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual",
     type: "activity",
+    startDateTime: "2026-04-10T09:00:00-04:00",
+    endDateTime: "2026-04-10T20:00:00-04:00",
   },
   {
     id: 3,
@@ -39,6 +47,8 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "",
     type: "activity",
+    startDateTime: "2026-04-10T09:00:00-04:00",
+    endDateTime: "2026-04-10T10:00:00-04:00",
   },
   // {
   //   id: 4,
@@ -63,6 +73,11 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual",
     type: "activity",
+    startDateTime: "2026-04-10T18:30:00-04:00",
+    endDateTime: "2026-04-10T20:30:00-04:00",
+    ticketRequired: true,
+    ticketUrl: OPEN_SAUCE_TICKET_URL,
+    mapUrl: "https://maps.google.com/?q=43+Greenleaf+Ct,+Rochester,+NY+14623",
   },
   {
     id: 6,
@@ -75,6 +90,9 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Nightime dressy",
     type: "social",
+    startDateTime: "2026-04-10T20:30:00-04:00",
+    endDateTime: "2026-04-10T23:00:00-04:00",
+    mapUrl: "https://maps.google.com/?q=293+Alexander+St,+Rochester,+NY+14607",
 
   },
   {
@@ -88,6 +106,8 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual",
     type: "social",
+    startDateTime: "2026-04-11T09:00:00-04:00",
+    endDateTime: "2026-04-11T13:00:00-04:00",
   },
   {
     id: 8,
@@ -100,6 +120,9 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual (comfortable walking shoes)",
     type: "activity",
+    startDateTime: "2026-04-11T09:00:00-04:00",
+    endDateTime: "2026-04-11T13:00:00-04:00",
+    mapUrl: "https://maps.google.com/?q=43+Greenleaf+Ct,+Rochester,+NY+14623",
   },
   // {
   //   id: 9,
@@ -136,6 +159,10 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "",
     dressCode: "",
     type: "social",
+    startDateTime: "2026-04-11T15:30:00-04:00",
+    endDateTime: "2026-04-11T17:00:00-04:00",
+    isSupportEvent: true,
+    relatedToId: 12,
   },
   {
     id: 12,
@@ -148,18 +175,27 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",      
     dressCode: "Cocktail Semi Formal",
     type: "main",
+    startDateTime: "2026-04-11T17:00:00-04:00",
+    endDateTime: "2026-04-11T22:00:00-04:00",
+    ticketRequired: true,
+    ticketUrl: DINNER_TICKET_URL,
+    mapUrl: "https://maps.google.com/?q=1+Bausch+and+Lomb+Pl,+Rochester,+NY+14604",
   },
   {
     id: 13,
     title: "Photo Hunt Ends",
     description: "",
     date: "Saturday, April 11, 2026",
+    time: "5:00 PM - 6:00 PM",
+    location: "Asynchronous", 
     time: "2:00 PM - 3:00 PM",
     location: "Asychronous", 
     address: "N/A",
     capacity: "All attendees",
     dressCode: "",
     type: "activity",
+    startDateTime: "2026-04-11T17:00:00-04:00",
+    endDateTime: "2026-04-11T18:00:00-04:00",
   },
   // {
   //   id: 14,
@@ -184,6 +220,10 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "",
     dressCode: "",
     type: "social",
+    startDateTime: "2026-04-11T22:00:00-04:00",
+    endDateTime: "2026-04-11T23:00:00-04:00",
+    isSupportEvent: true,
+    relatedToId: 12,
   },
   {
     id: 16,
@@ -196,6 +236,11 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual",
     type: "food",
+    startDateTime: "2026-04-12T11:00:00-04:00",
+    endDateTime: "2026-04-12T14:00:00-04:00",
+    ticketRequired: true,
+    ticketUrl: FAREWELL_TICKET_URL,
+    mapUrl: "https://maps.google.com/?q=820+S+Clinton+Ave,+Rochester,+NY+14620",
   },
   {
     id: 19,
@@ -208,6 +253,9 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual",
     type: "activity",
+    startDateTime: "2026-04-10T12:30:00-04:00",
+    endDateTime: "2026-04-10T14:00:00-04:00",
+    mapUrl: "https://maps.google.com/?q=43+Greenleaf+Ct,+Rochester,+NY+14623",
   },
   {
     id: 20,
@@ -220,6 +268,9 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "All attendees",
     dressCode: "Casual",
     type: "seminar",
+    startDateTime: "2026-04-10T15:00:00-04:00",
+    endDateTime: "2026-04-10T16:00:00-04:00",
+    mapUrl: "https://maps.google.com/?q=43+Greenleaf+Ct,+Rochester,+NY+14623",
   },
   {
     id: 21,
@@ -244,6 +295,9 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "",
     dressCode: "",
     type: "external",
+    startDateTime: "2026-04-11T10:00:00-04:00",
+    endDateTime: "2026-04-11T17:00:00-04:00",
+    mapUrl: "https://maps.google.com/?q=1+Lomb+Memorial+Dr,+Rochester,+NY",
   },
   {
     id: 18,
@@ -256,5 +310,8 @@ export const events: ScheduleEvent[] = [ // PLACEHOLDERS: Update all event times
     capacity: "",
     dressCode: "",
     type: "external",
+    startDateTime: "2026-04-11T08:00:00-04:00",
+    endDateTime: "2026-04-11T15:30:00-04:00",
+    mapUrl: "https://maps.google.com/?q=1+Lomb+Memorial+Dr,+Rochester,+NY",
   }
 ]

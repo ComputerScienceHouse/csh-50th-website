@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Calendar, Clock, MapPin, Users } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, Ticket, ExternalLink } from "lucide-react";
 import { ScheduleEvent } from "./ScheduleEvent";
 
 /**
@@ -72,6 +72,20 @@ export default function EventPopup(event: EventPopupProps){
                             <span className="text-muted-foreground">Attire:</span>
                             <span className="font-semibold text-sm">{event.dressCode}</span>
                         </div>
+                        {event.ticketRequired && (
+                            <div className="mt-4 flex flex-wrap items-center gap-3">
+                                <span className="inline-flex items-center rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-300">
+                                    <Ticket className="w-3 h-3 mr-1" />
+                                    Ticket required
+                                </span>
+                                {event.ticketUrl && (
+                                    <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-csh-magenta hover:text-csh-red text-sm font-semibold">
+                                        Purchase ticket
+                                        <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

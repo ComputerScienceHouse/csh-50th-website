@@ -1,0 +1,66 @@
+import { parseISO } from "date-fns";
+import { ScheduleEvent } from "./ScheduleEvent";
+
+export const typeColors: Record<string, string> = {
+  social: "bg-sky-500/70 text-sky-100 border-sky-400/40",
+  main: "bg-gradient-csh text-primary-foreground border-primary/30",
+  food: "bg-amber-500/70 text-amber-100 border-amber-400/40",
+  drinks: "bg-red-500/70 text-red-100 border-red-400/40",
+  activity: "bg-emerald-500/70 text-emerald-100 border-emerald-400/40",
+  seminar: "bg-fuchsia-500/70 text-fuchsia-100 border-fuchsia-400/40",
+  giveaway: "bg-indigo-500/70 text-indigo-100 border-indigo-400/40",
+  external: "bg-orange-500/70 text-orange-100 border-orange-400/40",
+  tour: "bg-cyan-500/70 text-cyan-100 border-cyan-400/40",
+  transportation: "bg-slate-500/70 text-slate-100 border-slate-400/40",
+};
+
+export function getMapUrl(event: ScheduleEvent): string {
+  if (event.mapUrl) {
+    return event.mapUrl;
+  }
+
+  const query = event.address && event.address !== "TBD" && event.address !== "N/A"
+    ? event.address
+    : event.location;
+
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+export function shouldShowDirections(event: ScheduleEvent): boolean {
+  const blockedValues = ["asynchronous", "asyncronous", "see description"];
+  const address = event.address?.trim().toLowerCase() ?? "";
+  const location = event.location?.trim().toLowerCase() ?? "";
+
+  return !blockedValues.includes(address) && !blockedValues.includes(location);
+}
+
+export function getEventStart(event: ScheduleEvent): Date {
+  if (event.startDateTime) {
+    return parseISO(event.startDateTime);
+  }
+
+  return new Date("2999-01-01T00:00:00Z");
+}
+
+export function getEventEnd(event: ScheduleEvent): Date {
+  if (event.endDateTime) {
+    return parseISO(event.endDateTime);
+  }
+
+  return new Date("2999-01-01T00:00:00Z");
+}
+
+export function getEventStatus(event: ScheduleEvent, now: Date): "live" | "upcoming" | "past" {
+  const start = getEventStart(event);
+  const end = getEventEnd(event);
+
+  if (now >= start && now <= end) {
+    return "live";
+  }
+
+  if (start > now) {
+    return "upcoming";
+  }
+
+  return "past";
+}

@@ -2,70 +2,47 @@ import { Link } from "react-router-dom";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card/50">
+    <footer className="border-t border-border bg-card/60">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
-            <span className="text-2xl font-display font-bold text-gradient">
-              CSH 50th Anniversary
-            </span>
+            <span className="text-2xl font-display font-bold text-gradient">CSH 50th Weekend</span>
             <p className="mt-4 text-muted-foreground max-w-md">
-              Celebrating 50 years of Computer Science House. 
-              Join us for a weekend of memories, connections, and celebration.
+              Celebrating 50 years of Computer Science House.
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h4 className="font-display font-semibold text-foreground mb-4">Quick Links</h4>
+            <h4 className="font-display font-semibold text-foreground mb-4">Explore</h4>
             <ul className="space-y-2">
               <li>
+                <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Live Home
+                </Link>
+              </li>
+              <li>
                 <Link to="/schedule" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Schedule
+                  Timeline
                 </Link>
               </li>
               <li>
                 <Link to="/events" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Events
+                  All Events
                 </Link>
               </li>
               <li>
-                <Link to="/hotels" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Hotels & Transport
+                <Link to="/tickets" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Ticket Deck
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">
-                  FAQ
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* External Links */}
-          <div>
-            <h4 className="font-display font-semibold text-foreground mb-4">External</h4>
-            <ul className="space-y-2">
-              {/* PLACEHOLDER: Replace with actual URLs */}
-              <li>
-                <a 
-                  href="/registration" 
-                  target="_blank" 
+                <a
+                  href="/registration"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Registration
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://csh.rit.edu" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  CSH Website
                 </a>
               </li>
             </ul>
@@ -74,7 +51,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2026 Computer Science House. All rights reserved.
+            © 2026 Computer Science House Reunion Weekend.
           </p>
         </div>
       </div>
