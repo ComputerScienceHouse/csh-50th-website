@@ -9,6 +9,7 @@ const navLinks = [
   { name: "Timeline", path: "/schedule" },
   { name: "All Events", path: "/events" },
   { name: "Tickets", path: "/tickets" },
+  { name: "Need Floor Access?", path: "/floor-access" },
 ];
 
 export function Navbar() {
