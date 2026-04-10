@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Ticket } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -51,12 +51,12 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-2">
-            <Link to="/tickets">
+            <a href="https://www.rit.edu/giving/ComputerScienceHouse" target="_blank" rel="noopener noreferrer">
               <Button variant="hero" size="lg">
-                <Ticket className="w-4 h-4" />
-                Buy Tickets
+                <Heart className="w-4 h-4" />
+                Donate
               </Button>
-            </Link>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -88,11 +88,11 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="mt-2">
-                <Link to="/tickets">
+                <a href="https://www.rit.edu/giving/ComputerScienceHouse" target="_blank" rel="noopener noreferrer">
                   <Button variant="hero" className="w-full">
-                    Buy Tickets
+                    Donate
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
