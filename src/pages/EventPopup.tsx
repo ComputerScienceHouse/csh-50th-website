@@ -10,78 +10,69 @@ interface EventPopupProps extends ScheduleEvent {
   typeColors: Record<string, string>
 }
 
-export default function EventPopup(event: EventPopupProps){
+export default function EventPopup({ onClose, typeColors, ...event }: EventPopupProps) {
+    const eventTypeClass = event.type ? (typeColors[event.type] ?? "bg-muted text-muted-foreground border-border") : "bg-muted text-muted-foreground border-border";
 
   return (
-    <div // gray background
-        id="eventPopup"
-        className={cn(
-            "z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-screen h-screen bg-black bg-opacity-50",
-        )}
-    >  
-        {/* If the user clicks anywhere, then the popup is closed */}
-        <button 
-            onClick={event.onClose}
-            className={cn(
-                "w-screen h-screen",
-            )}
+        <div
+            id="eventPopup"
+            className="fixed inset-0 z-50 bg-black/60 p-4 md:p-8"
+            onClick={onClose}
         >
             <div
+                role="dialog"
+                aria-modal="true"
                 className={cn(
-                "z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-y-auto flex flex-wrap border-2 border-csh-magenta p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] bg-black",
-                event.type === "main" && "border-4 border-primary/100 glow-csh"
+                    "mx-auto mt-[8vh] max-h-[84vh] w-full max-w-3xl overflow-y-auto rounded-2xl border-2 border-csh-magenta bg-black p-6 transition-all duration-300",
+                    event.type === "main" && "border-4 border-primary/100 glow-csh"
                 )}
-            >   
+                onClick={(popupEvent) => popupEvent.stopPropagation()}
+            >
                 <div className="flex flex-row items-start gap-4">
-                    {/* Content */}
                     <div className="flex-1">
-                        {/* Time */}
-                        <div className="flex items-center gap-2 text-csh-magenta font-semibold py-2">
-                            <Clock className="w-4 h-4" />
+                        <div className="flex items-center gap-2 py-2 font-semibold text-csh-magenta">
+                            <Clock className="h-4 w-4" />
                             {event.time}
                         </div>
-                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                        <div className="mb-2 flex flex-wrap items-center gap-3">
                             <h3 className="text-xl font-display font-semibold text-white">
                                 {event.title}
                             </h3>
-                            <span className={cn(
-                                "px-3 py-1 rounded-full text-xs font-medium border",
-                                event.typeColors[event.type]
-                            )}>
-                                {event.type === "main" ? "Main Event" : event.type}
+                            <span className={cn("rounded-full border px-3 py-1 text-xs font-medium", eventTypeClass)}>
+                                {event.type === "main" ? "Main Event" : event.type ?? "event"}
                             </span>
                         </div>
-                        <p className="text-muted-foreground mb-3 text-left">
+                        <p className="mb-3 text-left text-muted-foreground">
                             {event.description}
                         </p>
-                        <div className="flex items-center gap-2 font-semibold pb-1">
-                            <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <div className="flex items-center gap-2 pb-1 font-semibold">
+                            <Calendar className="h-4 w-4 text-muted-foreground" />
                             {event.date}
                         </div>
-                        <div className="flex items-center gap-2 text-sm font-semibold pb-1">
-                            <MapPin className="w-4 h-4 text-muted-foreground" />
+                        <div className="flex items-center gap-2 pb-1 text-sm font-semibold">
+                            <MapPin className="h-4 w-4 text-muted-foreground" />
                             {event.location} | {event.address}
                         </div>
-                        <div className="flex items-center gap-2 text-sm pb-1">
-                            <Users className="w-5 h-5 mt-0.5 text-muted-foreground" />
+                        <div className="flex items-center gap-2 pb-1 text-sm">
+                            <Users className="mt-0.5 h-5 w-5 text-muted-foreground" />
                             <span className="text-muted-foreground">Capacity:</span>
-                            <span className="font-semibold text-sm">{event.capacity}</span>
+                            <span className="text-sm font-semibold">{event.capacity}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm pb-1">
-                            <Users className="w-5 h-5 mt-0.5 text-muted-foreground" />
+                        <div className="flex items-center gap-2 pb-1 text-sm">
+                            <Users className="mt-0.5 h-5 w-5 text-muted-foreground" />
                             <span className="text-muted-foreground">Attire:</span>
-                            <span className="font-semibold text-sm">{event.dressCode}</span>
+                            <span className="text-sm font-semibold">{event.dressCode}</span>
                         </div>
                         {event.ticketRequired && (
                             <div className="mt-4 flex flex-wrap items-center gap-3">
                                 <span className="inline-flex items-center rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-300">
-                                    <Ticket className="w-3 h-3 mr-1" />
+                                    <Ticket className="mr-1 h-3 w-3" />
                                     Ticket required
                                 </span>
                                 {event.ticketUrl && (
-                                    <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-csh-magenta hover:text-csh-red text-sm font-semibold">
+                                    <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-csh-magenta hover:text-csh-red">
                                         Purchase ticket
-                                        <ExternalLink className="w-3 h-3" />
+                                        <ExternalLink className="h-3 w-3" />
                                     </a>
                                 )}
                             </div>
@@ -89,7 +80,6 @@ export default function EventPopup(event: EventPopupProps){
                     </div>
                 </div>
             </div>
-        </button>
     </div>
   );
 };
