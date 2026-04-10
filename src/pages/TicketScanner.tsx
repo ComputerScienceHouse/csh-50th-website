@@ -17,6 +17,19 @@ type BufferStatus = "idle" | "ready" | "error";
 type ScanFlash = "none" | "success" | "error";
 type BufferSource = "camera" | "barcode-scanner" | "manual";
 
+type LegacyNavigator = Navigator & {
+  getUserMedia?: (
+    constraints: MediaStreamConstraints,
+    successCallback: (stream: MediaStream) => void,
+    errorCallback: (error: Error) => void,
+  ) => void;
+  webkitGetUserMedia?: (
+    constraints: MediaStreamConstraints,
+    successCallback: (stream: MediaStream) => void,
+    errorCallback: (error: Error) => void,
+  ) => void;
+};
+
 const TicketScanner = () => {
   const { events, isLoading, isError } = useEvents();
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -39,6 +52,7 @@ const TicketScanner = () => {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [isStartingCamera, setIsStartingCamera] = useState(false);
   const [cameraError, setCameraError] = useState("");
+  const [cameraStatus, setCameraStatus] = useState("Camera idle.");
   const [scanFlash, setScanFlash] = useState<ScanFlash>("none");
 
   const submitUrl = "https://csh50th-website-backend-csh-50th-draft-site.apps.okd4.csh.rit.edu/scan-ticket";
@@ -53,6 +67,23 @@ const TicketScanner = () => {
   }, [events, selectedEventId]);
 
   const canScan = selectedEventId.length > 0;
+
+  const getUserMediaCompat = useCallback(async (constraints: MediaStreamConstraints): Promise<MediaStream> => {
+    if (navigator.mediaDevices?.getUserMedia) {
+      return navigator.mediaDevices.getUserMedia(constraints);
+    }
+
+    const legacyNavigator = navigator as LegacyNavigator;
+    const legacyGetUserMedia = legacyNavigator.getUserMedia || legacyNavigator.webkitGetUserMedia;
+
+    if (!legacyGetUserMedia) {
+      throw new Error("Camera APIs unavailable in this context");
+    }
+
+    return await new Promise<MediaStream>((resolve, reject) => {
+      legacyGetUserMedia.call(legacyNavigator, constraints, resolve, reject);
+    });
+  }, []);
 
   const triggerScanFlash = useCallback((flashType: Exclude<ScanFlash, "none">) => {
     setScanFlash(flashType);
@@ -178,30 +209,67 @@ const TicketScanner = () => {
 
   const startCameraScanner = useCallback(async () => {
     if (!videoRef.current) {
-      return;
-    }
-
-    if (!navigator.mediaDevices?.getUserMedia) {
-      setCameraError("This browser does not support local camera access.");
+      setCameraError("Camera preview element is not ready yet.");
       return;
     }
 
     if (!window.isSecureContext) {
       setCameraError("Camera access requires HTTPS (or localhost). This page cannot access cameras over insecure HTTP.");
+      setCameraStatus("Blocked: insecure context.");
       return;
     }
 
-    if (!canScan) {
-      setScanStatus("error");
-      setCameraError("Choose an event before starting the camera scanner.");
+    const legacyNavigator = navigator as LegacyNavigator;
+    const hasCameraApi = Boolean(navigator.mediaDevices?.getUserMedia || legacyNavigator.getUserMedia || legacyNavigator.webkitGetUserMedia);
+
+    if (!hasCameraApi) {
+      setCameraError("Camera API is unavailable in this Safari context. If embedded, allow camera in iframe permissions and Safari Website Settings.");
+      setCameraStatus("Camera API unavailable in current browser context.");
       return;
     }
 
     setIsStartingCamera(true);
     setCameraError("");
+    setCameraStatus("Requesting camera permission...");
     stopCameraScanner();
 
     try {
+      // iOS Safari may not prompt reliably unless getUserMedia is called directly in this user gesture.
+      const requestWithTimeout = async (constraints: MediaStreamConstraints, timeoutMs = 10000) => {
+        return await Promise.race([
+          getUserMediaCompat(constraints),
+          new Promise<never>((_, reject) => {
+            window.setTimeout(() => reject(new Error("Camera permission request timed out.")), timeoutMs);
+          }),
+        ]);
+      };
+
+      let permissionStream: MediaStream | null = null;
+      const candidateConstraints: MediaStreamConstraints[] = [
+        selectedCameraId
+          ? { video: { deviceId: { exact: selectedCameraId } }, audio: false }
+          : { video: { facingMode: { ideal: "environment" } }, audio: false },
+        { video: true, audio: false },
+      ];
+
+      for (const constraints of candidateConstraints) {
+        try {
+          permissionStream = await requestWithTimeout(constraints);
+          break;
+        } catch {
+          // Try the next fallback constraint.
+        }
+      }
+
+      if (!permissionStream) {
+        throw new Error("No camera stream could be opened.");
+      }
+
+      setCameraStatus("Permission granted. Starting scanner...");
+      permissionStream.getTracks().forEach((track) => track.stop());
+
+      await refreshCameras();
+
       const reader = new BrowserMultiFormatReader();
       reader.possibleFormats = [
         BarcodeFormat.QR_CODE,
@@ -222,6 +290,9 @@ const TicketScanner = () => {
         BarcodeFormat.RSS_EXPANDED,
       ];
       scannerReaderRef.current = reader;
+
+      videoRef.current.setAttribute("playsinline", "true");
+      videoRef.current.setAttribute("autoplay", "true");
 
       const controls = await reader.decodeFromVideoDevice(
         selectedCameraId || undefined,
@@ -252,14 +323,25 @@ const TicketScanner = () => {
 
       scannerControlsRef.current = controls;
       setIsCameraActive(true);
+      setCameraStatus("Camera active. Point at a QR or barcode.");
       await refreshCameras();
-    } catch {
-      setCameraError("Unable to access camera. Check browser permissions and use HTTPS or localhost.");
+    } catch (error) {
+      const errorName = error instanceof Error ? error.name : "";
+      const errorMessage = error instanceof Error ? error.message : "Unknown camera error";
+
+      if (errorName === "NotAllowedError" || errorName === "PermissionDeniedError") {
+        setCameraError("Camera permission was denied. In iOS Safari: aA > Website Settings > Camera > Allow.");
+      } else if (errorName === "NotFoundError" || errorName === "DevicesNotFoundError") {
+        setCameraError("No local camera was found on this device.");
+      } else {
+        setCameraError("Unable to access camera. Check browser permissions and use HTTPS. If this page is embedded, allow camera in iframe Permissions-Policy.");
+      }
+      setCameraStatus(`Camera start failed: ${errorName || "Error"} - ${errorMessage}`);
       setIsCameraActive(false);
     } finally {
       setIsStartingCamera(false);
     }
-  }, [canScan, handleCameraScan, refreshCameras, selectedCameraId, stopCameraScanner]);
+  }, [getUserMediaCompat, handleCameraScan, refreshCameras, selectedCameraId, stopCameraScanner]);
 
   useEffect(() => {
     refreshCameras();
@@ -480,6 +562,8 @@ const TicketScanner = () => {
                 {cameraError && (
                   <p className="text-sm text-red-300">{cameraError}</p>
                 )}
+
+                <p className="text-xs text-muted-foreground">{cameraStatus}</p>
 
                 {!cameraError && (
                   <p className="text-xs text-muted-foreground">
