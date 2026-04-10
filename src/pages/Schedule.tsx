@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { getEventStart, getEventStatus, getMapUrl, shouldShowDirections, typeColors } from "./eventUtils";
 import { useEvents } from "../lib/events";
 import { useLiveNow } from "@/lib/time";
+import EventPopup from "./EventPopup";
+import { ScheduleEvent } from "./ScheduleEvent";
 
 const statusStyles = {
   live: "border-emerald-400/40 bg-emerald-500/15 text-emerald-200",
@@ -15,6 +17,7 @@ const statusStyles = {
 
 const Schedule = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
   const now = useLiveNow(1000);
   const { events: sortedEvents, isLoading, isError } = useEvents();
 
@@ -109,7 +112,7 @@ const Schedule = () => {
                   const status = getEventStatus(event, now);
 
                   return (
-                    <article key={event.id} className="glass rounded-2xl border border-border p-5 md:p-6">
+                    <article key={event.id} className="glass cursor-pointer rounded-2xl border border-border p-5 transition-colors hover:bg-muted/20 md:p-6" onClick={() => setSelectedEvent(event)}>
                       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${statusStyles[status]}`}>
@@ -154,7 +157,7 @@ const Schedule = () => {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-3" onClick={(popupEvent) => popupEvent.stopPropagation()}>
                         {shouldShowDirections(event) && (
                           <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
                             <Button variant="hero-outline" size="sm">
@@ -178,6 +181,14 @@ const Schedule = () => {
           )}
         </div>
       </section>
+
+      {selectedEvent && (
+        <EventPopup
+          {...selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          typeColors={typeColors}
+        />
+      )}
     </Layout>
   );
 };

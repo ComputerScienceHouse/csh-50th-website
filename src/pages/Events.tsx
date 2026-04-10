@@ -6,10 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getEventStart, getMapUrl, shouldShowDirections, typeColors } from "./eventUtils";
 import { useEvents } from "../lib/events";
+import EventPopup from "./EventPopup";
+import { ScheduleEvent } from "./ScheduleEvent";
 
 const Events = () => {
   const [query, setQuery] = useState("");
   const [tagFilter, setTagFilter] = useState<string>("all");
+  const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
   const { events, isLoading, isError } = useEvents();
 
   const eventTags = useMemo(() => {
@@ -95,7 +98,7 @@ const Events = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {filteredEvents.map((event) => (
-                  <article key={event.id} className="glass rounded-2xl border border-border p-5 flex flex-col">
+                  <article key={event.id} className="glass cursor-pointer rounded-2xl border border-border p-5 flex flex-col transition-colors hover:bg-muted/20" onClick={() => setSelectedEvent(event)}>
                     <h2 className="text-xl font-display font-bold mb-2">{event.title}</h2>
                     <div className="flex flex-wrap gap-2 mb-3">
                       {(event.tags ?? []).map((tag) => (
@@ -121,7 +124,7 @@ const Events = () => {
                       <p className="inline-flex items-center gap-2 text-muted-foreground"><MapPin className="w-4 h-4 text-csh-magenta" />{event.location}</p>
                     </div>
 
-                    <div className="mt-auto flex flex-wrap gap-2">
+                    <div className="mt-auto flex flex-wrap gap-2" onClick={(popupEvent) => popupEvent.stopPropagation()}>
                       {shouldShowDirections(event) && (
                         <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
                           <Button size="sm" variant="hero-outline">
@@ -151,6 +154,14 @@ const Events = () => {
           )}
         </div>
       </section>
+
+      {selectedEvent && (
+        <EventPopup
+          {...selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          typeColors={typeColors}
+        />
+      )}
     </Layout>
   );
 };

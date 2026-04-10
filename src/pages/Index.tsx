@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { isAfter } from "date-fns";
 import { Calendar, Clock3, MapPin } from "lucide-react";
 import { Layout } from "@/components/Layout";
@@ -8,12 +8,15 @@ import { Link } from "react-router-dom";
 import { getEventStart, getEventStatus, getMapUrl, shouldShowDirections, typeColors } from "./eventUtils";
 import { useEvents } from "../lib/events";
 import { useLiveNow } from "@/lib/time";
+import EventPopup from "./EventPopup";
+import { ScheduleEvent } from "./ScheduleEvent";
 
 const FALLBACK_COUNTDOWN = "2026-04-10T09:00:00-04:00";
 
 const Index = () => {
   const now = useLiveNow(1000);
   const { events: sortedEvents, isLoading, isError } = useEvents();
+  const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
 
   const primaryEvents = useMemo(
     () => sortedEvents.filter((event) => !event.isSupportEvent),
@@ -80,7 +83,7 @@ const Index = () => {
             ) : happeningNowEvents.length > 0 ? (
               <div className="space-y-3">
                 {happeningNowEvents.map((event) => (
-                  <div key={event.id} className="rounded-lg border border-border bg-muted/20 p-4">
+                  <div key={event.id} className="cursor-pointer rounded-lg border border-border bg-muted/20 p-4 transition-colors hover:bg-muted/30" onClick={() => setSelectedEvent(event)}>
                     <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
                       <div>
                         <p className="font-semibold text-lg">{event.title}</p>
@@ -102,7 +105,7 @@ const Index = () => {
                       <span className="inline-flex items-center gap-2"><MapPin className="w-4 h-4 text-csh-magenta" />{event.location}</span>
                     </div>
                     {shouldShowDirections(event) && (
-                      <div className="mt-4">
+                      <div className="mt-4" onClick={(popupEvent) => popupEvent.stopPropagation()}>
                         <a href={getMapUrl(event)} target="_blank" rel="noopener noreferrer">
                           <Button variant="hero" size="sm">
                             <MapPin className="w-4 h-4" />
@@ -126,7 +129,7 @@ const Index = () => {
               </div>
 
               {nextEvent ? (
-                <>
+                <div className="cursor-pointer rounded-xl border border-border/60 p-3 transition-colors hover:bg-muted/20" onClick={() => setSelectedEvent(nextEvent)}>
                   <h4 className="text-lg md:text-xl font-display font-semibold mb-2">{nextEvent.title}</h4>
                   <div className="mb-4 flex flex-wrap gap-2">
                     {(nextEvent.tags ?? []).map((tag) => (
@@ -161,7 +164,7 @@ const Index = () => {
                   </div>
 
                   {shouldShowDirections(nextEvent) && (
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-3" onClick={(popupEvent) => popupEvent.stopPropagation()}>
                       <a href={getMapUrl(nextEvent)} target="_blank" rel="noopener noreferrer">
                         <Button variant="hero" size="sm">
                           <MapPin className="w-4 h-4" />
@@ -171,7 +174,7 @@ const Index = () => {
                     </div>
                   )}
 
-                  <div className="mt-6 flex flex-wrap gap-3">
+                  <div className="mt-6 flex flex-wrap gap-3" onClick={(popupEvent) => popupEvent.stopPropagation()}>
                     <Link to="/schedule">
                       <Button variant="hero-outline" size="lg">Live Timeline</Button>
                     </Link>
@@ -179,7 +182,7 @@ const Index = () => {
                       <Button variant="ghost" size="lg">All Events</Button>
                     </Link>
                   </div>
-                </>
+                </div>
               ) : (
                 <p className="text-muted-foreground">No future events found in the schedule data.</p>
               )}
@@ -187,6 +190,14 @@ const Index = () => {
           </article>
         </div>
       </section>
+
+      {selectedEvent && (
+        <EventPopup
+          {...selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          typeColors={typeColors}
+        />
+      )}
     </Layout>
   );
 };
