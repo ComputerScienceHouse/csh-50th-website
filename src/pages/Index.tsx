@@ -30,6 +30,20 @@ const Index = () => {
 
   return (
     <Layout>
+      <section className="relative overflow-hidden border-b border-border bg-card/60">
+        <div className="absolute inset-0 bg-gradient-to-br from-csh-magenta/10 via-transparent to-csh-red/10" aria-hidden="true" />
+        <div className="container relative mx-auto px-4 py-10 md:py-14">
+          <div className="max-w-4xl">
+            <h1 className="text-3xl md:text-5xl font-display font-extrabold leading-tight">
+              CSH 50th Anniversary Live Event Hub
+            </h1>
+            <p className="mt-4 max-w-3xl text-sm md:text-base text-muted-foreground">
+              The official live dashboard for the 50th anniversary weekend. See what events are happening and what's coming up next.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="border-b border-border bg-card/50">
         <div className="container mx-auto px-4 py-3">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
