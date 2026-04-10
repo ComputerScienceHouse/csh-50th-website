@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +14,8 @@ import FloorAccess from "./pages/FloorAccess";
 import Merch from "./pages/Merch";
 import MerchLink from "./pages/MerchLink";
 import Parking from "./pages/Parking";
+
+const TicketScanner = lazy(() => import("./pages/TicketScanner"));
 
 const queryClient = new QueryClient();
 
@@ -32,6 +35,14 @@ const App = () => (
           <Route path="/merch" element={<Merch />} />
           <Route path="/merch-link" element={<MerchLink />} />
           <Route path="/parking" element={<Parking />} />
+          <Route
+            path="/ticket-scanner"
+            element={(
+              <Suspense fallback={<div className="min-h-screen grid place-items-center">Loading scanner...</div>}>
+                <TicketScanner />
+              </Suspense>
+            )}
+          />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
