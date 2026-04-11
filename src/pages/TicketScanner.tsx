@@ -471,13 +471,10 @@ const TicketScanner = () => {
           <p className="uppercase tracking-[0.2em] text-xs text-csh-magenta font-semibold">Admin Tool</p>
           <h1 className="text-4xl md:text-6xl font-display font-black mt-2 mb-3">Ticket Scanner</h1>
           <p className="text-muted-foreground max-w-3xl text-lg">
-            Select an event, then scan with a camera or barcode scanner. The most recent code stays buffered until you submit it.
+            Select an event, then scan with a camera or barcode scanner. VIP list = free entry, no ticket needed.
           </p>
           <p className="text-muted-foreground/90 max-w-3xl text-sm mt-2">
-            Camera access is local to each device and browser session. Only this device's connected cameras can be used.
-          </p>
-          <p className="text-muted-foreground/80 max-w-3xl text-xs mt-2">
-            Submissions go to <span className="font-semibold">{submitUrl}</span> and send <span className="font-semibold">event_id</span> and <span className="font-semibold">ticket_id</span>.
+            Camera data does not leave your device.
           </p>
         </div>
       </section>
