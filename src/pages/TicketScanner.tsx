@@ -62,6 +62,7 @@ const TicketScanner = () => {
   const [cameraStatus, setCameraStatus] = useState("Camera idle.");
   const [scanFlash, setScanFlash] = useState<ScanFlash>("none");
   const [vipList, setVipList] = useState<VipCheckIn[]>([]);
+  const [vipSearchTerm, setVipSearchTerm] = useState("");
   const [vipListStatus, setVipListStatus] = useState<"idle" | "loading" | "error">("idle");
   const [vipListError, setVipListError] = useState("");
   const [updatingCheckInId, setUpdatingCheckInId] = useState("");
@@ -80,9 +81,20 @@ const TicketScanner = () => {
 
   const canScan = selectedEventId.length > 0;
 
+  const filteredVipList = useMemo(() => {
+    const normalizedSearchTerm = vipSearchTerm.trim().toLowerCase();
+
+    if (!normalizedSearchTerm) {
+      return vipList;
+    }
+
+    return vipList.filter((person) => person.person_name.toLowerCase().includes(normalizedSearchTerm));
+  }, [vipList, vipSearchTerm]);
+
   const loadVipList = useCallback(async (eventId: string, signal?: AbortSignal) => {
     if (!eventId) {
       setVipList([]);
+      setVipSearchTerm("");
       setVipListStatus("idle");
       setVipListError("");
       return;
@@ -107,6 +119,7 @@ const TicketScanner = () => {
       }
 
       setVipList([]);
+      setVipSearchTerm("");
       setVipListStatus("error");
       setVipListError(error instanceof Error ? error.message : "Unable to load VIP list.");
     }
@@ -429,6 +442,7 @@ const TicketScanner = () => {
       void loadVipList(selectedEventId, controller.signal);
     } else {
       setVipList([]);
+      setVipSearchTerm("");
       setVipListStatus("idle");
       setVipListError("");
     }
@@ -717,8 +731,22 @@ const TicketScanner = () => {
                     </p>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {vipList.length} total, {vipList.filter((person) => person.checked_in).length} checked in
+                    {filteredVipList.length} shown, {vipList.filter((person) => person.checked_in).length} checked in
                   </p>
+                </div>
+
+                <div>
+                  <label htmlFor="vip-search" className="text-sm font-semibold text-foreground mb-2 inline-block">
+                    Search by name
+                  </label>
+                  <Input
+                    id="vip-search"
+                    value={vipSearchTerm}
+                    onChange={(event) => setVipSearchTerm(event.target.value)}
+                    placeholder="Type a name to filter the list"
+                    autoComplete="off"
+                    disabled={!selectedEventId}
+                  />
                 </div>
 
                 {vipListStatus === "loading" && (
@@ -737,9 +765,13 @@ const TicketScanner = () => {
                   <p className="text-sm text-muted-foreground">No VIP entries were returned for this event.</p>
                 )}
 
-                {vipList.length > 0 && (
+                {selectedEventId && vipListStatus !== "loading" && vipList.length > 0 && filteredVipList.length === 0 && (
+                  <p className="text-sm text-muted-foreground">No VIP names matched your search.</p>
+                )}
+
+                {filteredVipList.length > 0 && (
                   <div className="grid gap-2">
-                    {vipList.map((person) => (
+                    {filteredVipList.map((person) => (
                       <div
                         key={person.id}
                         className={`flex flex-col gap-3 rounded-lg border p-3 sm:flex-row sm:items-center sm:justify-between ${
