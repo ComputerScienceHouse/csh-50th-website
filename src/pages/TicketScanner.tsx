@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BarcodeFormat, BrowserCodeReader, BrowserMultiFormatReader, type IScannerControls } from "@zxing/browser";
+import { DecodeHintType } from "@zxing/library";
 import { Camera, CheckCircle2, QrCode, Ticket, XCircle } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -270,25 +271,28 @@ const TicketScanner = () => {
 
       await refreshCameras();
 
-      const reader = new BrowserMultiFormatReader();
-      reader.possibleFormats = [
-        BarcodeFormat.QR_CODE,
-        BarcodeFormat.AZTEC,
-        BarcodeFormat.DATA_MATRIX,
-        BarcodeFormat.PDF_417,
-        BarcodeFormat.CODABAR,
-        BarcodeFormat.CODE_128,
-        BarcodeFormat.CODE_39,
-        BarcodeFormat.CODE_93,
-        BarcodeFormat.EAN_13,
-        BarcodeFormat.EAN_8,
-        BarcodeFormat.UPC_A,
-        BarcodeFormat.UPC_E,
-        BarcodeFormat.UPC_EAN_EXTENSION,
-        BarcodeFormat.ITF,
-        BarcodeFormat.RSS_14,
-        BarcodeFormat.RSS_EXPANDED,
-      ];
+      const readerHints = new Map<DecodeHintType, unknown>([
+        [DecodeHintType.TRY_HARDER, true],
+        [DecodeHintType.POSSIBLE_FORMATS, [
+          BarcodeFormat.QR_CODE,
+          BarcodeFormat.AZTEC,
+          BarcodeFormat.DATA_MATRIX,
+          BarcodeFormat.PDF_417,
+          BarcodeFormat.CODABAR,
+          BarcodeFormat.CODE_128,
+          BarcodeFormat.CODE_39,
+          BarcodeFormat.CODE_93,
+          BarcodeFormat.EAN_13,
+          BarcodeFormat.EAN_8,
+          BarcodeFormat.UPC_A,
+          BarcodeFormat.UPC_E,
+          BarcodeFormat.UPC_EAN_EXTENSION,
+          BarcodeFormat.ITF,
+          BarcodeFormat.RSS_14,
+          BarcodeFormat.RSS_EXPANDED,
+        ]],
+      ]);
+      const reader = new BrowserMultiFormatReader(readerHints);
       scannerReaderRef.current = reader;
 
       videoRef.current.setAttribute("playsinline", "true");
@@ -315,7 +319,7 @@ const TicketScanner = () => {
           if (error) {
             const ignorable = new Set(["NotFoundException", "ChecksumException", "FormatException"]);
             if (!ignorable.has(error.name)) {
-              setCameraError("Camera is running, but decoding failed on this frame.");
+              return;
             }
           }
         }
@@ -434,7 +438,13 @@ const TicketScanner = () => {
                 </p>
               </div>
 
-              <div className="space-y-3 rounded-xl border border-border bg-muted/20 p-4">
+                <div
+                  className={`space-y-3 rounded-xl border p-4 transition-colors ${
+                    bufferStatus === "ready"
+                      ? "border-emerald-400/70 bg-emerald-500/10 shadow-[0_0_0_1px_rgba(16,185,129,0.22)]"
+                      : "border-border bg-muted/20"
+                  }`}
+                >
                 <div className="flex flex-col gap-3 md:flex-row md:items-end">
                   <div className="w-full md:flex-1">
                     <label className="text-sm font-semibold text-foreground mb-2 inline-block">Camera</label>
@@ -480,8 +490,8 @@ const TicketScanner = () => {
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm text-muted-foreground">
-                    {lastBufferedTicketId ? `Last buffered code: ${lastBufferedTicketId}` : "No ticket code buffered yet."}
+                  <p className={`text-sm ${lastBufferedTicketId ? "text-emerald-200" : "text-muted-foreground"}`}>
+                    {lastBufferedTicketId ? `Ready to submit: ${lastBufferedTicketId}` : "No ticket code buffered yet."}
                   </p>
                   <div className="flex gap-2">
                     <Button
@@ -504,7 +514,7 @@ const TicketScanner = () => {
                       onClick={handleSubmitTicket}
                       disabled={submissionStatus === "submitting" || !canScan || ticketIdInput.trim().length === 0}
                     >
-                      {submissionStatus === "submitting" ? "Submitting..." : "Submit"}
+                      {submissionStatus === "submitting" ? "Submitting..." : bufferStatus === "ready" ? "Submit Ready Ticket" : "Submit"}
                     </Button>
                   </div>
                 </div>
@@ -586,9 +596,9 @@ const TicketScanner = () => {
                   </p>
                 )}
                 {bufferStatus === "ready" && (
-                  <p className="text-sm text-emerald-300 inline-flex items-center gap-2">
+                  <p className="text-sm text-emerald-300 inline-flex items-center gap-2 font-semibold">
                     <CheckCircle2 className="w-4 h-4" />
-                    Buffered <span className="font-semibold">{ticketIdInput}</span> from <span className="font-semibold">{bufferSource ?? "input"}</span>. Click Submit when ready.
+                    Ticket buffered and ready to submit: <span className="font-semibold">{ticketIdInput}</span> from <span className="font-semibold">{bufferSource ?? "input"}</span>.
                   </p>
                 )}
                 {submissionStatus === "success" && (
