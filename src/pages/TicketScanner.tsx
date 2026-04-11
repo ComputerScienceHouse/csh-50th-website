@@ -17,6 +17,12 @@ import { useEvents } from "@/lib/events";
 type BufferStatus = "idle" | "ready" | "error";
 type ScanFlash = "none" | "success" | "error";
 type BufferSource = "camera" | "barcode-scanner" | "manual";
+type VipCheckIn = {
+  id: string;
+  event_id: number;
+  person_name: string;
+  checked_in: boolean;
+};
 
 type LegacyNavigator = Navigator & {
   getUserMedia?: (
@@ -55,8 +61,13 @@ const TicketScanner = () => {
   const [cameraError, setCameraError] = useState("");
   const [cameraStatus, setCameraStatus] = useState("Camera idle.");
   const [scanFlash, setScanFlash] = useState<ScanFlash>("none");
+  const [vipList, setVipList] = useState<VipCheckIn[]>([]);
+  const [vipListStatus, setVipListStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [vipListError, setVipListError] = useState("");
+  const [updatingCheckInId, setUpdatingCheckInId] = useState("");
 
-  const submitUrl = "https://csh50th-website-backend-csh-50th-draft-site.apps.okd4.csh.rit.edu/scan-ticket";
+  const backendBaseUrl = "https://csh50th-website-backend-csh-50th-draft-site.apps.okd4.csh.rit.edu";
+  const submitUrl = `${backendBaseUrl}/scan-ticket`;
 
   const selectedEventName = useMemo(() => {
     if (!selectedEventId) {
@@ -68,6 +79,38 @@ const TicketScanner = () => {
   }, [events, selectedEventId]);
 
   const canScan = selectedEventId.length > 0;
+
+  const loadVipList = useCallback(async (eventId: string, signal?: AbortSignal) => {
+    if (!eventId) {
+      setVipList([]);
+      setVipListStatus("idle");
+      setVipListError("");
+      return;
+    }
+
+    setVipListStatus("loading");
+    setVipListError("");
+
+    try {
+      const response = await fetch(`${backendBaseUrl}/event-check-ins/${eventId}`, { signal });
+
+      if (!response.ok) {
+        throw new Error(`VIP list request failed (${response.status})`);
+      }
+
+      const data = (await response.json()) as VipCheckIn[];
+      setVipList(data);
+      setVipListStatus("idle");
+    } catch (error) {
+      if (signal?.aborted) {
+        return;
+      }
+
+      setVipList([]);
+      setVipListStatus("error");
+      setVipListError(error instanceof Error ? error.message : "Unable to load VIP list.");
+    }
+  }, [backendBaseUrl]);
 
   const getUserMediaCompat = useCallback(async (constraints: MediaStreamConstraints): Promise<MediaStream> => {
     if (navigator.mediaDevices?.getUserMedia) {
@@ -185,6 +228,34 @@ const TicketScanner = () => {
       triggerScanFlash("error");
     }
   }, [canScan, selectedEventName, submitUrl, ticketIdInput, triggerScanFlash]);
+
+  const handleToggleVipCheckIn = useCallback(async (checkIn: VipCheckIn) => {
+    setUpdatingCheckInId(checkIn.id);
+    setVipListError("");
+
+    try {
+      const response = await fetch(`${backendBaseUrl}/event-check-ins/${checkIn.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          checked_in: !checkIn.checked_in,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Check-in update failed (${response.status})`);
+      }
+
+      const updatedCheckIn = (await response.json()) as VipCheckIn;
+      setVipList((current) => current.map((entry) => (entry.id === updatedCheckIn.id ? updatedCheckIn : entry)));
+    } catch (error) {
+      setVipListError(error instanceof Error ? error.message : "Unable to update check-in status.");
+    } finally {
+      setUpdatingCheckInId("");
+    }
+  }, [backendBaseUrl]);
 
   const stopCameraScanner = useCallback(() => {
     scannerControlsRef.current?.stop();
@@ -350,6 +421,22 @@ const TicketScanner = () => {
   useEffect(() => {
     refreshCameras();
   }, [refreshCameras]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    if (selectedEventId) {
+      void loadVipList(selectedEventId, controller.signal);
+    } else {
+      setVipList([]);
+      setVipListStatus("idle");
+      setVipListError("");
+    }
+
+    return () => {
+      controller.abort();
+    };
+  }, [loadVipList, selectedEventId]);
 
   useEffect(() => {
     return () => {
@@ -618,6 +705,68 @@ const TicketScanner = () => {
                     <Camera className="w-4 h-4" />
                     Sending buffered ticket to the backend...
                   </p>
+                )}
+              </div>
+
+              <div className="rounded-xl border border-border bg-muted/20 p-4 space-y-4">
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">VIP List</p>
+                    <p className="text-xs text-muted-foreground">
+                      {selectedEventId ? `Check in people for ${selectedEventName || "this event"}.` : "Choose an event to load its VIP list."}
+                    </p>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {vipList.length} total, {vipList.filter((person) => person.checked_in).length} checked in
+                  </p>
+                </div>
+
+                {vipListStatus === "loading" && (
+                  <p className="text-sm text-muted-foreground">Loading VIP list...</p>
+                )}
+
+                {vipListStatus === "error" && (
+                  <p className="text-sm text-red-300">{vipListError || "Unable to load VIP list."}</p>
+                )}
+
+                {!selectedEventId && (
+                  <p className="text-sm text-muted-foreground">Select an event to see the people expected for check-in.</p>
+                )}
+
+                {selectedEventId && vipListStatus !== "loading" && vipList.length === 0 && (
+                  <p className="text-sm text-muted-foreground">No VIP entries were returned for this event.</p>
+                )}
+
+                {vipList.length > 0 && (
+                  <div className="grid gap-2">
+                    {vipList.map((person) => (
+                      <div
+                        key={person.id}
+                        className={`flex flex-col gap-3 rounded-lg border p-3 sm:flex-row sm:items-center sm:justify-between ${
+                          person.checked_in ? "border-emerald-400/60 bg-emerald-500/10" : "border-border bg-background/40"
+                        }`}
+                      >
+                        <div>
+                          <p className="font-semibold text-foreground">{person.person_name}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {person.checked_in ? "Checked in" : "Not checked in yet"}
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          variant={person.checked_in ? "hero-outline" : "hero"}
+                          onClick={() => handleToggleVipCheckIn(person)}
+                          disabled={updatingCheckInId === person.id}
+                        >
+                          {updatingCheckInId === person.id
+                            ? "Updating..."
+                            : person.checked_in
+                              ? "Mark Not Checked In"
+                              : "Mark Checked In"}
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
